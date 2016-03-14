@@ -31,10 +31,16 @@
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.attack_button = new System.Windows.Forms.Button();
             this.damage_chart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.reset_button = new System.Windows.Forms.Button();
+            this.steven = new System.Windows.Forms.DataVisualization.Charting.Chart();
             ((System.ComponentModel.ISupportInitialize)(this.damage_chart)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.steven)).BeginInit();
             this.SuspendLayout();
             // 
             // attack_button
@@ -63,8 +69,12 @@
             series1.Legend = "Legend1";
             series1.Name = "Damage Roll";
             series1.YValuesPerPoint = 2;
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Damage Roll Sorted";
             this.damage_chart.Series.Add(series1);
-            this.damage_chart.Size = new System.Drawing.Size(646, 400);
+            this.damage_chart.Series.Add(series2);
+            this.damage_chart.Size = new System.Drawing.Size(506, 400);
             this.damage_chart.TabIndex = 1;
             this.damage_chart.Text = "chart1";
             // 
@@ -78,11 +88,28 @@
             this.reset_button.UseVisualStyleBackColor = true;
             this.reset_button.Click += new System.EventHandler(this.reset_button_Click);
             // 
+            // steven
+            // 
+            chartArea2.Name = "ChartArea1";
+            this.steven.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.steven.Legends.Add(legend2);
+            this.steven.Location = new System.Drawing.Point(536, 21);
+            this.steven.Name = "steven";
+            series3.ChartArea = "ChartArea1";
+            series3.Legend = "Legend1";
+            series3.Name = "Series1";
+            this.steven.Series.Add(series3);
+            this.steven.Size = new System.Drawing.Size(300, 300);
+            this.steven.TabIndex = 3;
+            this.steven.Text = "chart1";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(670, 523);
+            this.ClientSize = new System.Drawing.Size(890, 663);
+            this.Controls.Add(this.steven);
             this.Controls.Add(this.reset_button);
             this.Controls.Add(this.damage_chart);
             this.Controls.Add(this.attack_button);
@@ -90,6 +117,7 @@
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.damage_chart)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.steven)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -99,6 +127,7 @@
         private System.Windows.Forms.Button attack_button;
         private System.Windows.Forms.DataVisualization.Charting.Chart damage_chart;
         private System.Windows.Forms.Button reset_button;
+        private System.Windows.Forms.DataVisualization.Charting.Chart steven;
     }
 }
 

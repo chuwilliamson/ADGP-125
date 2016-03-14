@@ -1,50 +1,59 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 
-public interface IDamager
-{
-    /// <summary>
-    /// OUTGOING DAMAGE
-    /// </summary>
-    /// <returns>return how much damage was SENT</returns>
-    float Damage();
-}
-public interface IDamageable //do damage and take damage
-{
-    /// <summary>
-    /// INCOMING DAMAGE
-    /// </summary>
-    /// Perform damage on an object, it is the implementing class's responsibility to perform the
-    /// damage mitigation
-    void TakeDamage(int amount);
-}
 
 public abstract class Unit //can not use new on an abstract class, we only use it to better define it's subclasses
 {
+
     protected int health;
     protected int defense;
     protected int attack;
     protected int level;
     protected int experience;
     //ratings for hp ap and att
-    public Unit(){}
-    
-} 
+    public Unit() { }
 
-class Ninja : Unit, IDamageable
+}
+class Warrior : Unit, IDamageable, IAbilities
 {
-    public Ninja(int h,int d,int a, int e) 
+    public List<Ability> abilities
     {
-        this.health = h;
-        this.defense = d;
-        this.attack = a;
-        this.experience = 0;
+        get { throw new NotImplementedException(); }
+        set { throw new NotImplementedException(); }
     }
-    private List<Ability> _abilities;
-    private void AddAbility(Ability a)
+
+    public void TakeDamage(int amount) { }
+
+    public void AddAbility(Ability a)
     {
-        _abilities.Add(a);
+        throw new NotImplementedException();
+    }
+
+    public Warrior() { }
+}
+
+
+class Ninja : Unit, IDamageable, IAbilities
+{
+
+    public Ninja()
+    {
+        health = 0;
+        defense = 0;
+        attack = 0;
+        experience = 0;
+
+    }
+
+    public List<Ability> abilities
+    {
+        get { throw new NotImplementedException(); }
+        set { throw new NotImplementedException(); }
+    }
+
+    public void AddAbility(Ability a)
+    {
+        throw new NotImplementedException();
     }
 
     public void TakeDamage(int amount)
@@ -53,29 +62,37 @@ class Ninja : Unit, IDamageable
     }
 }
 
-class Ability : IDamager
-{
-    public Ability(int p, int c) { power = p; cost = c; }
-    int power;
-    int cost;
 
-    public float Damage()
-    {
-        //do a random roll
-        //explain why just using a random roll is bad
-        //introduce statistical distribution and how it can be used
-        //to keep the graph in a general area
-        Random random = new Random();
-        int roll = random.Next(0, 21);
-        return roll * power;
-    }
-}
 
 
 class Utilities
 {
+    enum CombatStates
+    {
+        INIT, START, TURN, TARGET, RESOLVE, END,
+    }
     void Test()
     {
+       
+        ///setup abilities
+        Ability slash = new Ability(5, 3);
+        Ability slam = new Ability(3, 3);               
+        
+        ///setup parties
+        List<Unit> goodGuys = new List<Unit>();
+        List<Unit> badGuys = new List<Unit>();
+        
+        ///setup units
+        Unit Dylan = new Warrior();
+        Unit Zak = new Ninja();
+        Unit Rory = new Warrior();
+        Unit Donte = new Ninja();
 
+        
+        ///setup parties
+        goodGuys.Add(Dylan);
+        goodGuys.Add(Zak);
+        badGuys.Add(Rory);
+        badGuys.Add(Donte);
     }
 }
