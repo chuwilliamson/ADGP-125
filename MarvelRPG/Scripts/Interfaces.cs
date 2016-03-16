@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 
 public interface IDamager
@@ -18,3 +19,13 @@ public interface IDamageable //do damage and take damage
     /// damage mitigation
     void TakeDamage(int amount);
 }
+
+public interface IAttribute
+{
+    int Strength { get; set; }
+    int Agility { get; set; }
+    int Intelligence { get; set; }
+}
+
+//when to make decisions?
+//

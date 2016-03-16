@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TurnBasedRPG.Properties {
+namespace MarvelRPG.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace TurnBasedRPG.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("TurnBasedRPG.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MarvelRPG.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -73,9 +73,9 @@ namespace TurnBasedRPG.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap psylocke_small {
+        internal static System.Drawing.Bitmap Psylocke_small {
             get {
-                object obj = ResourceManager.GetObject("psylocke_small", resourceCulture);
+                object obj = ResourceManager.GetObject("Psylocke_small", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
