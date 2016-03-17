@@ -3,12 +3,15 @@
 
 namespace Abilities
 {
-    public class Slam : Singleton<Slam>, IDamager
+    public class Slam : IDamager, IAbility
     {
-        public Slam() { }
-
-        private int _power = 5;
-        private int _cost = 3;
+        private Slam() { }
+        static Slam() { }
+        private static Slam _instance = new Slam();
+        public static Slam instance { get { return _instance; } }
+              
+        public int power { get; set; }
+        public int cost { get; set; }
 
         public float Damage
         {
@@ -20,18 +23,22 @@ namespace Abilities
                 //to keep the graph in a general area
                 Random random = new Random();
                 int roll = random.Next(1, 21);
-                return roll * _power;
+                return roll * power;
             }
+        }
+
+        public void Execute()
+        {
+            throw new NotImplementedException();
         }
     }
 
-    public class Slash : Singleton<Slash>, IDamager
+    public class Slash : IDamager, IAbility
     {
-        public Slash() { }
-
-        private int _power = 5;
-        private int _cost = 3;
-
+        private Slash() { }
+        static Slash() { }
+        private static Slash _instance = new Slash();
+        public static Slash instance { get { return _instance; } }
         public float Damage
         {
             get
@@ -42,8 +49,37 @@ namespace Abilities
                 //to keep the graph in a general area
                 Random random = new Random();
                 int roll = random.Next(1, 21);
-                return roll * _power;
+                return roll * power;
             }
+        }
+        public int cost
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+        public int power
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public void Execute()
+        {
+            throw new NotImplementedException();
         }
     }
 }

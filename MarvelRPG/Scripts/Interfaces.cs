@@ -22,10 +22,19 @@ public interface IDamageable //do damage and take damage
 
 public interface IAttribute
 {
+    int Durability { get; set; }
     int Strength { get; set; }
-    int Agility { get; set; }
+    int Fighting_Skills { get; set; }
+    int Speed { get; set; }
+    int EnergyProjection { get; set; }
     int Intelligence { get; set; }
 }
 
+public interface IAbility
+{
+    int cost { get; set; }
+    int power { get; set; }
+    void Execute();
+}
 //when to make decisions?
 //

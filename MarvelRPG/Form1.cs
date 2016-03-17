@@ -1,21 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
+﻿using System.Windows.Forms;
+using System;
+using HtmlAgilityPack;
 namespace MarvelRPG
 {
+
     public partial class Form1 : Form
     {
         public Form1()
         {
             InitializeComponent();
-        }     
+        }
 
         private void RadioButtonChecked(object sender, EventArgs e)
         {
@@ -32,22 +26,38 @@ namespace MarvelRPG
                     break;
             }
         }
-        
-        private void PopulateStuff(object s, EventArgs events)
-        {
-            Abilities.Slam sa = Abilities.Slam.instance;
-            label1.Text = "SLAM DAMAGE" + sa.Damage.ToString();                        
-            chart1_trashcan.Series["student_heights"].Points.AddY(sa.Damage);
-        }
 
-        private void label1_Click(object sender, EventArgs e)
+        private void PopulateDescription(object s, EventArgs events)
         {
+
 
         }
 
-        private void chart1_trashcan_Click(object sender, EventArgs e)
+
+        private void ClickMeButton_Click(object sender, EventArgs e)
         {
-            
+            var webGet = new HtmlWeb();
+            var document = webGet.Load(web_url.Text);
+            string classValue = "title";
+            var tags = document.DocumentNode.SelectNodes("//span[@class='" + classValue + "']");
+            int count = 1;
+            if (tags != null)
+            {
+                foreach (HtmlNode node in tags)
+                {
+                    web_info.Text += node.InnerHtml + ":" + node.InnerText + Environment.NewLine;
+                    count++;
+                }
+            }
+            else
+                web_info.Text = "Could not get the web info";
+
+
+        }
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
+ 
