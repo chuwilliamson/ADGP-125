@@ -1,5 +1,5 @@
 ﻿using System;
-
+using MarvelRPG;
 
 namespace Abilities
 {
@@ -9,7 +9,7 @@ namespace Abilities
         static Slam() { }
         private static Slam _instance = new Slam();
         public static Slam instance { get { return _instance; } }
-              
+
         public int power { get; set; }
         public int cost { get; set; }
 
@@ -39,6 +39,7 @@ namespace Abilities
         static Slash() { }
         private static Slash _instance = new Slash();
         public static Slash instance { get { return _instance; } }
+        private int _cost, _power;
         public float Damage
         {
             get
@@ -51,30 +52,17 @@ namespace Abilities
                 int roll = random.Next(1, 21);
                 return roll * power;
             }
-        }
+        } 
+
         public int cost
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
-
-            set
-            {
-                throw new NotImplementedException();
-            }
+            get { return _cost; }
+             set { _cost = value; }
         }
         public int power
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
-
-            set
-            {
-                throw new NotImplementedException();
-            }
+            get { return _power; }
+             set { _power = value; }
         }
 
         public void Execute()

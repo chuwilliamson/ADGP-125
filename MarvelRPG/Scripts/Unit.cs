@@ -1,33 +1,95 @@
-﻿
-public abstract class Unit 
+﻿using System;
+using System.Collections.Generic;
+
+namespace MarvelRPG
 {
-    protected int health;
-    protected int defense;
-    protected int attack;
-    protected int level;
+    [Serializable()]
+    class Unit : IAttributes
+    {        
+        private int 
+            _durability,
+            _strength, 
+            _fighting, 
+            _speed, 
+            _energy, 
+            _intelligence;
 
-    protected int experience;
-    //ratings for hp ap and att
-    public Unit() { }
+        public int Durability
+        {
+            get
+            {
+                return _durability;
+            }
 
-}
+            set
+            {
+                _durability = value;
+            }
+        }
 
-class Warrior : Unit, IDamageable
-{
-    public Warrior() { }
-    public void TakeDamage(int amount)
-    {
-        health -= amount;
-    }
-}
+        public int Energy
+        {
+            get
+            {
+                return _energy;
+            }
 
+            set
+            {
+                _energy = value;
+            }
+        }
 
-class Ninja : Unit, IDamageable 
-{
-    public Ninja(){}        
-    
-    public void TakeDamage(int amount)
-    {
-        health -= amount;
+        public int Fighting
+        {
+            get
+            {
+                return _fighting;
+            }
+
+            set
+            {
+                _fighting = value;
+            }
+        }
+
+        public int Intelligence
+        {
+            get
+            {
+                return _intelligence;
+            }
+
+            set
+            {
+                _intelligence = value;
+            }
+        }
+
+        public int Speed
+        {
+            get
+            {
+                return _speed;
+            }
+
+            set
+            {
+                _speed = value;
+            }
+        }
+
+        public int Strength
+        {
+            get
+            {
+                return _strength;
+            }
+
+            set
+            {
+                _strength = value;
+            }
+        }
     }
 }
