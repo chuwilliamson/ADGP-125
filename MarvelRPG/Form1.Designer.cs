@@ -2,6 +2,7 @@
 {
     partial class Form1
     {
+
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -29,14 +30,15 @@
         private void InitializeComponent()
         {
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.radioButton3 = new System.Windows.Forms.RadioButton();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.Confirm = new System.Windows.Forms.Button();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.web_info = new System.Windows.Forms.TextBox();
+            this.classGroupBox1 = new System.Windows.Forms.GroupBox();
+            this.removeButton = new System.Windows.Forms.Button();
+            this.addButton = new System.Windows.Forms.Button();
+            this.webTextBox1 = new System.Windows.Forms.TextBox();
+            this.partyBox = new System.Windows.Forms.GroupBox();
+            this.saveButton = new System.Windows.Forms.Button();
+            this.loadButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.groupBox1.SuspendLayout();
+            this.classGroupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -50,102 +52,115 @@
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
-            // groupBox1
+            // classGroupBox1
             // 
-            this.groupBox1.Controls.Add(this.radioButton3);
-            this.groupBox1.Controls.Add(this.radioButton1);
-            this.groupBox1.Controls.Add(this.Confirm);
-            this.groupBox1.Controls.Add(this.radioButton2);
-            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(637, 12);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(115, 495);
-            this.groupBox1.TabIndex = 1;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Class";
+            this.classGroupBox1.Controls.Add(this.removeButton);
+            this.classGroupBox1.Controls.Add(this.addButton);
+            this.classGroupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.classGroupBox1.Location = new System.Drawing.Point(637, 12);
+            this.classGroupBox1.Name = "classGroupBox1";
+            this.classGroupBox1.Size = new System.Drawing.Size(115, 302);
+            this.classGroupBox1.TabIndex = 1;
+            this.classGroupBox1.TabStop = false;
+            this.classGroupBox1.Text = "Class";
             // 
-            // radioButton3
+            // removeButton
             // 
-            this.radioButton3.AutoSize = true;
-            this.radioButton3.Location = new System.Drawing.Point(6, 76);
-            this.radioButton3.Name = "radioButton3";
-            this.radioButton3.Size = new System.Drawing.Size(68, 21);
-            this.radioButton3.TabIndex = 2;
-            this.radioButton3.TabStop = true;
-            this.radioButton3.Text = "Rogue";
-            this.radioButton3.UseVisualStyleBackColor = true;
-            this.radioButton3.CheckedChanged += new System.EventHandler(this.RadioButtonChecked);
+            this.removeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.removeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.removeButton.Location = new System.Drawing.Point(6, 271);
+            this.removeButton.Name = "removeButton";
+            this.removeButton.Size = new System.Drawing.Size(103, 25);
+            this.removeButton.TabIndex = 4;
+            this.removeButton.Text = "Remove";
+            this.removeButton.UseVisualStyleBackColor = true;
+            this.removeButton.Click += new System.EventHandler(this.removeButton_Click);
             // 
-            // radioButton1
+            // addButton
             // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(6, 22);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(82, 21);
-            this.radioButton1.TabIndex = 0;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "Psylocke";
-            this.radioButton1.UseVisualStyleBackColor = true;
-            this.radioButton1.CheckedChanged += new System.EventHandler(this.RadioButtonChecked);
+            this.addButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.addButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.addButton.Location = new System.Drawing.Point(6, 240);
+            this.addButton.Name = "addButton";
+            this.addButton.Size = new System.Drawing.Size(103, 25);
+            this.addButton.TabIndex = 3;
+            this.addButton.Text = "Add";
+            this.addButton.UseVisualStyleBackColor = true;
+            this.addButton.Click += new System.EventHandler(this.addButton_Click);
             // 
-            // Confirm
+            // webTextBox1
             // 
-            this.Confirm.Location = new System.Drawing.Point(0, 457);
-            this.Confirm.Name = "Confirm";
-            this.Confirm.Size = new System.Drawing.Size(115, 38);
-            this.Confirm.TabIndex = 3;
-            this.Confirm.Text = "Confirm";
-            this.Confirm.UseVisualStyleBackColor = true;
-            this.Confirm.Click += new System.EventHandler(this.Confirm_Click);
+            this.webTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.webTextBox1.Location = new System.Drawing.Point(298, 12);
+            this.webTextBox1.Multiline = true;
+            this.webTextBox1.Name = "webTextBox1";
+            this.webTextBox1.Size = new System.Drawing.Size(333, 495);
+            this.webTextBox1.TabIndex = 6;
             // 
-            // radioButton2
+            // partyBox
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(6, 49);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(54, 21);
-            this.radioButton2.TabIndex = 1;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "Hulk";
-            this.radioButton2.UseVisualStyleBackColor = true;
-            this.radioButton2.CheckedChanged += new System.EventHandler(this.RadioButtonChecked);
+            this.partyBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.partyBox.Location = new System.Drawing.Point(782, 12);
+            this.partyBox.Name = "partyBox";
+            this.partyBox.Size = new System.Drawing.Size(115, 302);
+            this.partyBox.TabIndex = 7;
+            this.partyBox.TabStop = false;
+            this.partyBox.Text = "Party";
             // 
-            // web_info
+            // saveButton
             // 
-            this.web_info.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.web_info.Location = new System.Drawing.Point(298, 12);
-            this.web_info.Multiline = true;
-            this.web_info.Name = "web_info";
-            this.web_info.Size = new System.Drawing.Size(333, 495);
-            this.web_info.TabIndex = 6;
+            this.saveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.saveButton.Location = new System.Drawing.Point(649, 378);
+            this.saveButton.Name = "saveButton";
+            this.saveButton.Size = new System.Drawing.Size(103, 25);
+            this.saveButton.TabIndex = 8;
+            this.saveButton.Text = "Save";
+            this.saveButton.UseVisualStyleBackColor = true;
+            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
+            // 
+            // loadButton
+            // 
+            this.loadButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.loadButton.Location = new System.Drawing.Point(782, 378);
+            this.loadButton.Name = "loadButton";
+            this.loadButton.Size = new System.Drawing.Size(103, 25);
+            this.loadButton.TabIndex = 9;
+            this.loadButton.Text = "Load";
+            this.loadButton.UseVisualStyleBackColor = true;
+            this.loadButton.Click += new System.EventHandler(this.loadButton_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(768, 545);
-            this.Controls.Add(this.web_info);
-            this.Controls.Add(this.groupBox1);
+            this.ClientSize = new System.Drawing.Size(950, 545);
+            this.Controls.Add(this.loadButton);
+            this.Controls.Add(this.saveButton);
+            this.Controls.Add(this.partyBox);
+            this.Controls.Add(this.webTextBox1);
+            this.Controls.Add(this.classGroupBox1);
             this.Controls.Add(this.pictureBox1);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Character Selection";
+            this.Load += new System.EventHandler(this.Form1Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.classGroupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
+
         #endregion
 
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.RadioButton radioButton1;
-        private System.Windows.Forms.Button Confirm;
-        private System.Windows.Forms.RadioButton radioButton3;
-        private System.Windows.Forms.TextBox web_info;
+        private System.Windows.Forms.GroupBox classGroupBox1;
+        private System.Windows.Forms.Button addButton;
+        private System.Windows.Forms.TextBox webTextBox1;
+        private System.Windows.Forms.Button removeButton;
+        private System.Windows.Forms.GroupBox partyBox;
+        private System.Windows.Forms.Button saveButton;
+        private System.Windows.Forms.Button loadButton;
     }
 }
 

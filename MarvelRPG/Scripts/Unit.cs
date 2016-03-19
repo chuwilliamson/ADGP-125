@@ -1,95 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 
 namespace MarvelRPG
 {
-    [Serializable()]
-    class Unit : IAttributes
-    {        
-        private int 
-            _durability,
-            _strength, 
-            _fighting, 
-            _speed, 
-            _energy, 
-            _intelligence;
 
-        public int Durability
+
+    [Serializable]    
+    public class Unit : IAttributes
+    {
+        private Unit() { }
+        public Unit(int d, int s, int f, int spd, int e, int i)
         {
-            get
-            {
-                return _durability;
-            }
-
-            set
-            {
-                _durability = value;
-            }
+            name = "default";
+            durability = d;
+            strength = s;
+            fighting = f;
+            speed = spd;
+            energy = e;
+            intelligence = i;
         }
-
-        public int Energy
-        {
-            get
-            {
-                return _energy;
-            }
-
-            set
-            {
-                _energy = value;
-            }
-        }
-
-        public int Fighting
-        {
-            get
-            {
-                return _fighting;
-            }
-
-            set
-            {
-                _fighting = value;
-            }
-        }
-
-        public int Intelligence
-        {
-            get
-            {
-                return _intelligence;
-            }
-
-            set
-            {
-                _intelligence = value;
-            }
-        }
-
-        public int Speed
-        {
-            get
-            {
-                return _speed;
-            }
-
-            set
-            {
-                _speed = value;
-            }
-        }
-
-        public int Strength
-        {
-            get
-            {
-                return _strength;
-            }
-
-            set
-            {
-                _strength = value;
-            }
-        }
+        private string name;
+        private int durability;
+        private int strength;
+        private int fighting;
+        private int speed;
+        private int energy;
+        private int intelligence;
+        public string Name { get { return name; } set { name = value; } }
+        public int Durability { get { return durability; } set { durability = value; } }
+        public int Energy { get { return energy; } set { energy = value; } }
+        public int Fighting { get { return fighting; } set { fighting = value; } }
+        public int Intelligence { get { return intelligence; } set { intelligence = value; } }
+        public int Speed { get { return speed; } set { speed = value; } }
+        public int Strength { get { return strength; } set { strength = value; } }
     }
 }

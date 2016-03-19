@@ -1,24 +1,55 @@
-﻿using System.Windows.Forms;
+﻿
 using System;
 using System.Linq;
-using HtmlAgilityPack;
+using System.Collections;
+using System.Collections.Generic;
+using System.Windows.Forms;
 using System.Text.RegularExpressions;
+
+using HtmlAgilityPack;
 
 namespace MarvelRPG
 {
+    enum Characters
+    {
+        Psylocke, Hulk, Rogue, Thor, Juggernaut
+    }
 
     public partial class Form1 : Form
     {
-        CharInfo tmpChar;
+        private Party party = new Party();
+        private List<string> validClasses = new List<string>();       
+        private Unit tmpChar;        
         private string currentSelection = "";
-        public Form1()
+
+        private void Form1Load(object sender, EventArgs e)
         {
-            InitializeComponent(); 
-            //initialize your game
-            //have the gamestate run
+            var values = Enum.GetValues(typeof(Characters));
+            int offset = 25;
+            foreach (Enum v in values)
+            {
+                validClasses.Add(v.ToString());
+                string name = v.ToString();
+                RadioButton rb = new RadioButton();
+                rb.AutoSize = true;
+                rb.Location = new System.Drawing.Point(6, offset);
+                rb.Name = "radioButton_"+v.ToString();
+                rb.Size = new System.Drawing.Size(68, 21);
+                rb.TabIndex = 2;
+                rb.TabStop = true;
+                rb.Text = name;
+                rb.UseVisualStyleBackColor = true;
+                rb.CheckedChanged += new System.EventHandler(RadioButtonChecked);
+                classGroupBox1.Controls.Add(rb);
+                offset += 25;
+            }
 
         }
- 
+
+        public Form1()
+        {
+            InitializeComponent();
+        }
 
         private void RadioButtonChecked(object sender, EventArgs e)
         {
@@ -26,37 +57,15 @@ namespace MarvelRPG
             currentSelection = rb.Text;
             UpdateDescription(currentSelection);
         }
+        
+    
 
-
-        private void Confirm_Click(object sender, EventArgs e)
-        {             
-            Utilities.SerializeXML(currentSelection, (object)tmpChar);
-            UpdateDescription(currentSelection);
-        }
-        [Serializable()]
-        internal class CharInfo
-        {
-            public CharInfo(int d, int s, int f, int spd, int e, int i) 
-            {
-                Durability = d;
-                Strength = s;
-                Fighting = f;
-                Speed = spd;
-                Energy = e;
-                Intelligence = i;
-            }
-            int Durability;
-            int Strength;
-            int Fighting;
-            int Speed;
-            int Energy;
-            int Intelligence;
-        }
         private void UpdateDescription(string info)
         {
-            web_info.Text = "";
+            webTextBox1.Text = "";
             pictureBox1.Image = null;
             pictureBox1.ImageLocation = null;
+           
             switch (currentSelection)
             {
                 case "Hulk":
@@ -80,56 +89,96 @@ namespace MarvelRPG
             var document = webGet.Load(marvelData + currentSelection);
             var docTable = document.DocumentNode.SelectNodes("//table");
             string charInfo = "";
-
+            Regex regex = new Regex("Durability|Strength|Fighting Skills|Speed|Energy Projection|Intelligence");
             if (docTable != null)
             {
                 foreach (HtmlNode table in docTable)
                 {
-                    if (table.SelectNodes("tr") != null)
-                        foreach (HtmlNode row in table.SelectNodes("tr"))
+                    foreach (HtmlNode row in table.SelectNodes("tr"))
+                    {
+                        foreach (HtmlNode cell in row.SelectNodes("td"))
                         {
-                            if (row.SelectNodes("td") != null)
-                                foreach (HtmlNode cell in row.SelectNodes("td"))
-                                {
-                                    Regex regex = new Regex
-                                        ("Durability|Strength|Fighting Skills|Speed|Energy Projection|Intelligence");
-                                    if (regex.IsMatch(cell.InnerText))                                    
-                                        charInfo += cell.InnerText;
-                                    
-                                    //format for their wiki is all jacked up
-                                    //Durability: \n &#160; 5 is the format...
-                                    if (cell.InnerText.Contains("&#160; "))
-                                    {
-                                        string strip = cell.InnerText.Replace("&#160; ", "").Replace("\n", "");
-                                        charInfo += strip + Environment.NewLine;
-                                    }
-                                }
+                            if (regex.IsMatch(cell.InnerText))
+                                charInfo += cell.InnerText;
+
+                            //format for their wiki is all jacked up
+                            //Durability: \n &#160; 5 is the format...
+                            if (cell.InnerText.Contains("&#160; "))
+                            {
+                                string strip = cell.InnerText.Replace("&#160; ", "").Replace("\n", "");
+                                charInfo += strip + Environment.NewLine;
+                            }
                         }
+                    }
                 }
 
             }
             else
             {
-                web_info.Text = "Could not get the web info";
+                webTextBox1.Text = "Could not get the web info";
             }
             string test = new String(charInfo.Where(x => Char.IsDigit(x)).ToArray());
             int[] nums = new int[test.Count()];
-            for(int i = 0; i < test.Count(); i++)
-            {                
+            for (int i = 0; i < test.Count(); i++)
+            {
                 nums[i] = int.Parse(test[i].ToString());
             }
-            
+
             ///create a temporary character
-            tmpChar = new CharInfo(nums[0], nums[1], nums[2], nums[3], nums[4], nums[5]); 
-            
+            tmpChar = new Unit(nums[0], nums[1], nums[2], nums[3], nums[4], nums[5]);
+            tmpChar.Name = currentSelection;
+
             ///formattings
             charInfo = charInfo.Replace("Fighting Skills", "Fighting");
             charInfo = charInfo.Replace("Energy Projection", "Energy");
-            charInfo = charInfo.Replace("Bio:", Environment.NewLine + "Bio:" + Environment.NewLine + "    " );
-            web_info.Text = charInfo;
+            charInfo = charInfo.Replace("Bio:", Environment.NewLine + "Bio:" + Environment.NewLine);
+            webTextBox1.Text = charInfo;
 
         }
-        
-   
+ 
+        private void saveButton_Click(object sender, EventArgs e)
+        {
+            Utilities.SerializeXML("Party", party);
+        }
+
+        private void loadButton_Click(object sender, EventArgs e)
+        {
+           party =  Utilities.DeserializeXML<Party>("Party");
+            UpdateParty();
+        }
+
+        private void removeButton_Click(object sender, EventArgs e)
+        {
+            RadioButton rb = sender as RadioButton;            
+            Unit toRemove = party.units.Find(u => u.Name == rb.Text);
+            party.units.Remove(toRemove);
+
+        }
+
+        private void UpdateParty()
+        {
+            int offset = 25;
+            foreach(Unit u in party.units)
+            {
+                Label l = new Label();
+                
+                l.Location = new System.Drawing.Point(6, offset);
+                l.Size = new System.Drawing.Size(68, 21);
+                l.AutoSize = true;
+                l.Text = u.Name;
+                offset += 25;
+                partyBox.Controls.Add(l);
+            }
+        }
+
+        private void addButton_Click(object sender, EventArgs e)
+        {
+            RadioButton rb = sender as RadioButton;
+            if (party.units == null)
+                party.units.Add(tmpChar);
+            if(!party.units.Contains(tmpChar) )
+                party.units.Add(tmpChar);
+            UpdateParty();
+        }
     }
 }
