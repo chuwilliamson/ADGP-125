@@ -21,9 +21,11 @@ namespace MarvelRPG
         private Party party = new Party();
         private List<string> validClasses = new List<string>();
         private string currentSelection = "";
+        string savePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"/My Games/MarvelRPG";
 
         private void Form1Load(object sender, EventArgs e)
         {
+                        
             var values = Enum.GetValues(typeof(Characters));
             int offset = 25;
             foreach (Enum v in values)
@@ -61,32 +63,46 @@ namespace MarvelRPG
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-            Utilities.SerializeXML("Party", party);
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            string path = savePath + @"/Parties/";
+            if (Directory.Exists(path))
+            {
+                saveFileDialog.InitialDirectory = path;
+            }
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string fileName = Path.GetFileName(saveFileDialog.FileName);               
+                
+                fileName = fileName.Replace(".xml", "");
+                Utilities.SerializeXML(fileName, party, path);
+
+            }
+            
         }
 
         private void loadButton_Click(object sender, EventArgs e)
         {
             party.units.Clear();
-            string fileName = null;
+            string fileName;
             OpenFileDialog selectFileDialog = new OpenFileDialog();
-            selectFileDialog.InitialDirectory = Environment.CurrentDirectory;
+            string path = savePath + @"/Parties/";
+            if (Directory.Exists(path))
+            {
+                selectFileDialog.InitialDirectory = path;
+            }
             if (selectFileDialog.ShowDialog() == DialogResult.OK)
             {
-                fileName = selectFileDialog.SafeFileName;
+                fileName = selectFileDialog.FileName;
                 fileName = fileName.Replace(".xml", "");
+                
                 party = Utilities.DeserializeXML<Party>(fileName);
             }
-            else
-            {
-                return;
-            }
-            
+            else return; 
             updateParty();
         }
 
         private void removeButton_Click(object sender, EventArgs e)
-        {
-
+        { 
             Unit toRemove = party.units.Find(u => u.Name == currentSelection);
             if (toRemove != null)
                 party.units.Remove(toRemove);
@@ -96,8 +112,9 @@ namespace MarvelRPG
 
         private void addButton_Click(object sender, EventArgs e)
         {
-            // Unit u = party.units.Find(x => x.Name == currentSelection);
-            Unit u = Utilities.DeserializeXML<Unit>(currentSelection);
+            string path = savePath +  @"/Units/";
+            Unit u = Utilities.DeserializeXML<Unit>(path + currentSelection);
+            
             if (!party.units.Contains(u))
                 party.units.Add(u);
             updateParty();
@@ -121,12 +138,14 @@ namespace MarvelRPG
 
         private void generateClasses()
         {
+
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            path = path + @"\My Games\" + System.Windows.Forms.Application.ProductName + @"\Units\";
             //generate the classes based on information on application startup
             foreach (String s in validClasses)
-            {
-                Unit u = fetchUnit(s);
-                
-                Utilities.SerializeXML(s, u);
+            {                
+                Unit u = fetchUnit(s);                
+                Utilities.SerializeXML(s, u, path);
             }
         }
 
@@ -178,6 +197,7 @@ namespace MarvelRPG
             return new Unit(nums[0], nums[1], nums[2], nums[3], nums[4], nums[5], name);
 
         }
+
         private void updateDescription(string info)
         {
             webTextBox1.Text = "";
@@ -207,7 +227,8 @@ namespace MarvelRPG
 
 
             ///create a temporary character
-            Unit tmpChar = Utilities.DeserializeXML<Unit>(currentSelection);
+            string path = savePath + @"\Units\";
+            Unit tmpChar = Utilities.DeserializeXML<Unit>(path + currentSelection);
             string s1 = "Durability: " + tmpChar.Durability.ToString() + Environment.NewLine;
             string s2 = "Fighting: " + tmpChar.Fighting.ToString() + Environment.NewLine;
             string s3 = "Energy: " + tmpChar.Energy.ToString() + Environment.NewLine;
