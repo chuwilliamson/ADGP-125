@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Unit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Hulk</Name>
+  <Durability>4</Durability>
+  <Energy>1</Energy>
+  <Fighting>2</Fighting>
+  <Intelligence>1</Intelligence>
+  <Speed>2</Speed>
+  <Strength>5</Strength>
+</Unit>

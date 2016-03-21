@@ -10,23 +10,5 @@
       <Speed>2</Speed>
       <Strength>2</Strength>
     </Unit>
-    <Unit>
-      <Name>Hulk</Name>
-      <Durability>4</Durability>
-      <Energy>1</Energy>
-      <Fighting>2</Fighting>
-      <Intelligence>1</Intelligence>
-      <Speed>2</Speed>
-      <Strength>5</Strength>
-    </Unit>
-    <Unit>
-      <Name>Juggernaut</Name>
-      <Durability>5</Durability>
-      <Energy>1</Energy>
-      <Fighting>2</Fighting>
-      <Intelligence>2</Intelligence>
-      <Speed>3</Speed>
-      <Strength>5</Strength>
-    </Unit>
   </Party>
 </Party>

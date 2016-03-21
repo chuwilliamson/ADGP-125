@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Unit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Wolverine</Name>
+  <Durability>3</Durability>
+  <Energy>1</Energy>
+  <Fighting>3</Fighting>
+  <Intelligence>2</Intelligence>
+  <Speed>2</Speed>
+  <Strength>3</Strength>
+</Unit>

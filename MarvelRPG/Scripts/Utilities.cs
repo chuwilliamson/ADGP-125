@@ -1,7 +1,7 @@
 ﻿using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization.Formatters.Soap;
 using System.Yaml.Serialization;
-
+using System;
 using System.IO;
 using System.Xml.Serialization;
 
@@ -47,7 +47,7 @@ namespace MarvelRPG
             }
             return t; //We then return t
         }
-        
+
         public static void SerializeSoap<T>(string s, T t)
         {
             using (FileStream fs = File.Create(@"..\..\SavedFiles\" + s + ".xml"))
@@ -73,19 +73,32 @@ namespace MarvelRPG
 
         public static void SerializeXML<T>(string s, T t)
         {
-        
-            using (FileStream fs = File.Create(@"..\..\SavedFiles\" + s + ".xml"))
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            path = path + @"\My Games\"+System.Windows.Forms.Application.ProductName;
+            if (Directory.Exists(path))
             {
-                XmlSerializer serializer = new XmlSerializer(typeof(T));
-                serializer.Serialize(fs, t);
-                fs.Close();
+                using (FileStream fs = File.Create(path + s + ".xml"))
+                {
+                    XmlSerializer serializer = new XmlSerializer(typeof(T));
+                    serializer.Serialize(fs, t);
+                    fs.Close();
+                }
             }
+            else
+            {
+                string appName = System.Windows.Forms.Application.ProductName;
+                Directory.CreateDirectory(Path.Combine(path, @"\MarvelRPG\"));
+            }
+
         }
 
         public static T DeserializeXML<T>(string s)
         {
             T t; //We will use the as the return value
-            using (FileStream fs = File.OpenRead(@"..\..\SavedFiles\" + s + ".xml"))
+            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\My Games");
+
+
+            using (FileStream fs = File.OpenRead(path + s + ".xml"))
             {
                 XmlSerializer deserializer = new XmlSerializer(typeof(T));
 
@@ -94,7 +107,6 @@ namespace MarvelRPG
             }
             return t;
         }
-
 
     }
 }

@@ -114,6 +114,8 @@
   <ItemGroup>
     <Content Include="Resources\Marvel_small.ico" />
     <Content Include="Resources\Rogue_small.jpg" />
+    <None Include="Resources\Wolverine_small.jpg" />
+    <None Include="Resources\Thor_small.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

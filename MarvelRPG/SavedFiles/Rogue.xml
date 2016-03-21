@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Unit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Rogue</Name>
+  <Durability>7</Durability>
+  <Energy>4</Energy>
+  <Fighting>6</Fighting>
+  <Intelligence>3</Intelligence>
+  <Speed>2</Speed>
+  <Strength>7</Strength>
+</Unit>

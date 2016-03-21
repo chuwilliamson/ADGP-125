@@ -10,6 +10,7 @@ namespace MarvelRPG
     public class Unit : IAttributes
     {
         private Unit() { }
+       
         public Unit(int d, int s, int f, int spd, int e, int i)
         {
             name = "default";
@@ -19,7 +20,34 @@ namespace MarvelRPG
             speed = spd;
             energy = e;
             intelligence = i;
+            
         }
+
+        public Unit(int d, int s, int f, int spd, int e, int i, string n)
+        {
+            name = n;
+            durability = d;
+            strength = s;
+            fighting = f;
+            speed = spd;
+            energy = e;
+            intelligence = i;
+         
+        }
+
+        public Unit(int d, int s, int f, int spd, int e, int i, string n, string b)
+        {
+            
+            durability = d;
+            strength = s;
+            fighting = f;
+            speed = spd;
+            energy = e;
+            intelligence = i;
+            name = n;
+            bio = b;
+        }
+        private string bio;
         private string name;
         private int durability;
         private int strength;
