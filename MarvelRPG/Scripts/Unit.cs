@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Xml;
+using System.Xml.Schema;
 using System.Xml.Serialization;
 
 namespace MarvelRPG
 {
-
-
     [Serializable]    
     public class Unit : IAttributes
     {
@@ -24,15 +24,15 @@ namespace MarvelRPG
         }
 
         public Unit(int d, int s, int f, int spd, int e, int i, string n)
-        {
-            name = n;
+        {           
             durability = d;
             strength = s;
             fighting = f;
             speed = spd;
             energy = e;
             intelligence = i;
-         
+            name = n;
+
         }
 
         public Unit(int d, int s, int f, int spd, int e, int i, string n, string b)
@@ -55,6 +55,7 @@ namespace MarvelRPG
         private int speed;
         private int energy;
         private int intelligence;
+        
         public string Name { get { return name; } set { name = value; } }
         public int Durability { get { return durability; } set { durability = value; } }
         public int Energy { get { return energy; } set { energy = value; } }
@@ -62,5 +63,6 @@ namespace MarvelRPG
         public int Intelligence { get { return intelligence; } set { intelligence = value; } }
         public int Speed { get { return speed; } set { speed = value; } }
         public int Strength { get { return strength; } set { strength = value; } }
+        
     }
 }

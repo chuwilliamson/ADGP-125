@@ -20,6 +20,7 @@ namespace MarvelRPG
     {
         private Party party = new Party();
         private List<string> validClasses = new List<string>();
+        private Dictionary<string, Unit> CharacterLibrary = new Dictionary<string, Unit>();
         private string currentSelection = "";
         string savePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"/My Games/MarvelRPG";
 
@@ -54,88 +55,6 @@ namespace MarvelRPG
             InitializeComponent();
         }
 
-        private void radioButtonChecked(object sender, EventArgs e)
-        {
-            RadioButton rb = sender as RadioButton;
-            currentSelection = rb.Text;
-            updateDescription(currentSelection);
-        }
-
-        private void saveButton_Click(object sender, EventArgs e)
-        {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            string path = savePath + @"/Parties/";
-            if (Directory.Exists(path))
-            {
-                saveFileDialog.InitialDirectory = path;
-            }
-            if (saveFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                string fileName = Path.GetFileName(saveFileDialog.FileName);               
-                
-                fileName = fileName.Replace(".xml", "");
-                Utilities.SerializeXML(fileName, party, path);
-
-            }
-            
-        }
-
-        private void loadButton_Click(object sender, EventArgs e)
-        {
-            party.units.Clear();
-            string fileName;
-            OpenFileDialog selectFileDialog = new OpenFileDialog();
-            string path = savePath + @"/Parties/";
-            if (Directory.Exists(path))
-            {
-                selectFileDialog.InitialDirectory = path;
-            }
-            if (selectFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                fileName = selectFileDialog.FileName;
-                fileName = fileName.Replace(".xml", "");
-                
-                party = Utilities.DeserializeXML<Party>(fileName);
-            }
-            else return; 
-            updateParty();
-        }
-
-        private void removeButton_Click(object sender, EventArgs e)
-        { 
-            Unit toRemove = party.units.Find(u => u.Name == currentSelection);
-            if (toRemove != null)
-                party.units.Remove(toRemove);
-            updateParty();
-
-        }
-
-        private void addButton_Click(object sender, EventArgs e)
-        {
-            string path = savePath +  @"/Units/";
-            Unit u = Utilities.DeserializeXML<Unit>(path + currentSelection);
-            
-            if (!party.units.Contains(u))
-                party.units.Add(u);
-            updateParty();
-        }
-
-        private void updateParty()
-        {
-            int offset = 25;
-            partyBox.Controls.Clear();
-            foreach (Unit u in party.units)
-            {
-                Label l = new Label();
-                l.Location = new System.Drawing.Point(6, offset);
-                l.Size = new System.Drawing.Size(68, 21);
-                l.AutoSize = true;
-                l.Text = u.Name;
-                offset += 25;
-                partyBox.Controls.Add(l);
-            }
-        }
-
         private void generateClasses()
         {
 
@@ -143,12 +62,13 @@ namespace MarvelRPG
             path = path + @"\My Games\" + System.Windows.Forms.Application.ProductName + @"\Units\";
             //generate the classes based on information on application startup
             foreach (String s in validClasses)
-            {                
-                Unit u = fetchUnit(s);                
+            {
+                Unit u = fetchUnit(s);
+                CharacterLibrary.Add(s, u);
                 Utilities.SerializeXML(s, u, path);
             }
         }
-
+        
         private Unit fetchUnit(string name)
         {
             string marvelData = "http://marvelheroes.wikia.com/wiki/";
@@ -198,6 +118,22 @@ namespace MarvelRPG
 
         }
 
+        private void updateParty()
+        {
+            int offset = 25;
+            partyBox.Controls.Clear();
+            foreach (Unit u in party.units)
+            {
+                Label l = new Label();
+                l.Location = new System.Drawing.Point(6, offset);
+                l.Size = new System.Drawing.Size(68, 21);
+                l.AutoSize = true;
+                l.Text = u.Name;
+                offset += 25;
+                partyBox.Controls.Add(l);
+            }
+        }
+                
         private void updateDescription(string info)
         {
             webTextBox1.Text = "";
@@ -228,7 +164,7 @@ namespace MarvelRPG
 
             ///create a temporary character
             string path = savePath + @"\Units\";
-            Unit tmpChar = Utilities.DeserializeXML<Unit>(path + currentSelection);
+            Unit tmpChar = CharacterLibrary[currentSelection];
             string s1 = "Durability: " + tmpChar.Durability.ToString() + Environment.NewLine;
             string s2 = "Fighting: " + tmpChar.Fighting.ToString() + Environment.NewLine;
             string s3 = "Energy: " + tmpChar.Energy.ToString() + Environment.NewLine;
@@ -237,6 +173,77 @@ namespace MarvelRPG
             webTextBox1.Text = s1 + s2 + s3 + s4 + s5; 
 
         }
+
+        #region events
+
+        private void radioButtonChecked(object sender, EventArgs e)
+        {
+            RadioButton rb = sender as RadioButton;
+            currentSelection = rb.Text;
+            updateDescription(currentSelection);
+        }
+
+        private void saveButton_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            string path = savePath + @"/Parties/";
+            if (Directory.Exists(path))
+            {
+                saveFileDialog.InitialDirectory = path;
+            }
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string fileName = Path.GetFileName(saveFileDialog.FileName);
+
+                fileName = fileName.Replace(".xml", "");
+
+                Utilities.SerializeXML(fileName, party, path);
+
+            }
+
+        }
+
+        private void loadButton_Click(object sender, EventArgs e)
+        {
+            party.units.Clear();
+            string fileName;
+            OpenFileDialog selectFileDialog = new OpenFileDialog();
+            string path = savePath + @"/Parties/";
+            if (Directory.Exists(path))
+            {
+                selectFileDialog.InitialDirectory = path;
+            }
+            if (selectFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                fileName = selectFileDialog.FileName;
+                fileName = fileName.Replace(".xml", "");
+
+                party = Utilities.DeserializeXML<Party>(fileName);
+            }
+            else return;
+            updateParty();
+        }
+
+        private void removeButton_Click(object sender, EventArgs e)
+        {
+            Unit toRemove = party.units.Find(u => u.Name == currentSelection);
+            if (toRemove != null)
+                party.units.Remove(toRemove);
+            updateParty();
+
+        }
+
+        private void addButton_Click(object sender, EventArgs e)
+        {
+            string path = savePath + @"/Units/";
+            Unit u = Utilities.DeserializeXML<Unit>(path + currentSelection);
+
+
+            if (!party.units.Contains(u))
+                party.units.Add(u);
+            updateParty();
+        }
+        #endregion events
 
 
     }
