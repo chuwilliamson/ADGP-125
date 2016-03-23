@@ -25,5 +25,12 @@ namespace MarvelRPG
                 _units = value;
             }
         }
+
+        private Unit _leader;
+        public Unit Leader
+        {
+            get { return _leader;  }
+            set { _leader = value; }
+        }
     }
 }

@@ -26,7 +26,7 @@ namespace MarvelRPG
 
         private void Form1Load(object sender, EventArgs e)
         {
-                        
+
             var values = Enum.GetValues(typeof(Characters));
             int offset = 25;
             foreach (Enum v in values)
@@ -57,18 +57,48 @@ namespace MarvelRPG
 
         private void generateClasses()
         {
-
             string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             path = path + @"\My Games\" + System.Windows.Forms.Application.ProductName + @"\Units\";
             //generate the classes based on information on application startup
             foreach (String s in validClasses)
             {
-                Unit u = fetchUnit(s);
+                 Unit u = fetchUnit(s);
+                //Unit u = fetchUnitMarvelInfo(s);
                 CharacterLibrary.Add(s, u);
                 Utilities.SerializeXML(s, u, path);
             }
         }
-        
+        private Unit fetchUnitMarvelInfo(string name)
+        {
+            string charInfo = "";
+            Unit u;
+            string marvelData = "http://marvelheroes.info/hero/";
+            var webGet = new HtmlWeb();
+
+            var document = webGet.Load(marvelData + name);
+            // var docTable = document.DocumentNode.SelectNodes("//div[@id='tab_items_powers']//td[@class='sorting_1'");
+            foreach (HtmlNode div in document.DocumentNode.SelectNodes("//div[@class='tab_items_powers']"))
+            {
+                charInfo += div.InnerHtml.ToString();
+            }
+
+ 
+            u = new Unit(1, 1, 1, 1, 1, int.Parse(charInfo));
+
+
+            int num = 25;
+            for (int i = 0; i < num; i++)
+            {
+                charInfo += i.ToString();
+            }
+            //*[@id="tab_items_powers_wrapper"]
+            //*[@id="tab_items_powers_wrapper"]
+            //*[@id="tab_items_powers"]
+            //*[@id="tab_items_powers"]
+            charInfo = "hello world";
+
+            return u;
+        }
         private Unit fetchUnit(string name)
         {
             string marvelData = "http://marvelheroes.wikia.com/wiki/";
@@ -133,7 +163,7 @@ namespace MarvelRPG
                 partyBox.Controls.Add(l);
             }
         }
-                
+
         private void updateDescription(string info)
         {
             webTextBox1.Text = "";
@@ -170,7 +200,7 @@ namespace MarvelRPG
             string s3 = "Energy: " + tmpChar.Energy.ToString() + Environment.NewLine;
             string s4 = "Speed: " + tmpChar.Speed.ToString() + Environment.NewLine;
             string s5 = "Intelligence " + tmpChar.Intelligence.ToString() + Environment.NewLine;
-            webTextBox1.Text = s1 + s2 + s3 + s4 + s5; 
+            webTextBox1.Text = s1 + s2 + s3 + s4 + s5;
 
         }
 
@@ -185,6 +215,8 @@ namespace MarvelRPG
 
         private void saveButton_Click(object sender, EventArgs e)
         {
+            Unit ben = new Unit(10, 10, 10, 10, 10, 10, "Broseph");
+            party.Leader = ben;
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             string path = savePath + @"/Parties/";
             if (Directory.Exists(path))
@@ -238,8 +270,8 @@ namespace MarvelRPG
             string path = savePath + @"/Units/";
             Unit u = Utilities.DeserializeXML<Unit>(path + currentSelection);
 
-
-            if (!party.units.Contains(u))
+            Unit tmp = party.units.Find(x => x.Name == u.Name);
+            if (tmp == null)
                 party.units.Add(u);
             updateParty();
         }
