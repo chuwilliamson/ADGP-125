@@ -6,21 +6,20 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
+using System.Xml.Serialization;
 
 using HtmlAgilityPack;
 
 namespace MarvelRPG
 {
-    enum Characters
-    {
-        Psylocke, Hulk, Rogue, Thor, Wolverine
-    }
-
+    
     public partial class Form1 : Form
     {
-        private Party party = new Party();
+        private Party party = new Party();        
         private List<string> validClasses = new List<string>();
         private Dictionary<string, Unit> CharacterLibrary = new Dictionary<string, Unit>();
+        private Dictionary<string, Abilities> AbilityLibrary = new Dictionary<string, Abilities>();
+        private Abilities abilities = new Abilities();
         private string currentSelection = "";
         string savePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"/My Games/MarvelRPG";
 
@@ -46,8 +45,10 @@ namespace MarvelRPG
                 classGroupBox1.Controls.Add(rb);
                 offset += 25;
             }
+             
 
             generateClasses();
+            generateAbilities();
         }
 
         public Form1()
@@ -55,34 +56,136 @@ namespace MarvelRPG
             InitializeComponent();
         }
 
+        private void generateAbilities()
+        {
+            
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            path = path + @"\My Games\" + System.Windows.Forms.Application.ProductName + @"\Abilities\";
+
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+            abilities = Utilities.DeserializeXML<Abilities>(path + "Abilities");
+            if(abilities != null)
+            {
+                foreach(Ability ability in abilities.Members)
+                {
+                    if (AbilityLibrary.ContainsKey(ability.Character))
+                        AbilityLibrary[ability.Character].Add(ability);
+                    else
+                        AbilityLibrary.Add(ability.Character, new Abilities( ability ));                }
+                
+                return;
+            }
+            
+            int MAXPOWERS = 1330;
+            for (int i = 1; i <= MAXPOWERS; ++i)
+            {
+                Ability ability = getAbilities(i.ToString());
+                if (ability != null)
+                {
+                    abilities.Members.Add(ability);
+                    //abs.Add(ability);
+                    if (AbilityLibrary.ContainsKey(ability.Character))
+                        AbilityLibrary[ability.Character].Add(ability);
+                    else
+                        AbilityLibrary.Add(ability.Character, new Abilities(ability));
+                }
+            }
+
+            Utilities.SerializeXML("Abilities", abilities, path);
+
+
+
+        }
         private void generateClasses()
         {
             string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             path = path + @"\My Games\" + System.Windows.Forms.Application.ProductName + @"\Units\";
             //generate the classes based on information on application startup
+            //1330is number of abilities
+           
+
             foreach (String s in validClasses)
             {
-                 Unit u = fetchUnit(s);
-                //Unit u = fetchUnitMarvelInfo(s);
+                // Unit u = fetchUnit(s);
+                Unit u = fetchUnit(s);
                 CharacterLibrary.Add(s, u);
                 Utilities.SerializeXML(s, u, path);
             }
         }
+
+        private Ability getAbilities(string id)
+        {
+            //*[@id="content"]/div[2]/div/h3/span/a[1]
+            //title : //*[@id="content"]/div[2]/div/h3
+            //name : //*[@id="tooltip"]/span[1]
+            //info : //*[@id="tooltip"]/span[3]
+            string character, name, description, xpath;
+            HtmlNodeCollection info;
+            string marvelData = "http://marvelheroes.info/power/";
+
+            var webGet = new HtmlWeb();
+
+
+            var document = webGet.Load(marvelData + id);
+            if (document != null)
+            {
+
+                //name of character            
+                xpath = "//*[@id=\"content\"]/div[2]/div/h3/span/a[2]";
+                info = document.DocumentNode.SelectNodes(xpath);
+                if (info != null)
+                {
+                    character = info[0].InnerText;
+
+                    //name of ability
+                    xpath = "//*[@id=\"tooltip\"]/span[1]";
+                    info = document.DocumentNode.SelectNodes(xpath);
+                    name = info[0].InnerText;
+
+                    //description            
+                    xpath = "//*[@id=\"tooltip\"]/span[4]";
+                    info = document.DocumentNode.SelectNodes(xpath);
+                    description = info[0].InnerText;
+
+
+                    Ability ability = new Ability(character, name, description);
+
+
+                    return ability;
+                }
+
+            }
+            return null;
+            
+        }
         private Unit fetchUnitMarvelInfo(string name)
         {
+
             string charInfo = "";
             Unit u;
             string marvelData = "http://marvelheroes.info/hero/";
             var webGet = new HtmlWeb();
-
+            //*[@id="tab_items_powers_wrapper"]/div
             var document = webGet.Load(marvelData + name);
-            // var docTable = document.DocumentNode.SelectNodes("//div[@id='tab_items_powers']//td[@class='sorting_1'");
-            foreach (HtmlNode div in document.DocumentNode.SelectNodes("//div[@class='tab_items_powers']"))
+            string xpath = "//*[@id=\"tab_items_powers_wrapper\"]";
+            var docTable = document.DocumentNode.SelectNodes(xpath);
+            //*[@id="tab_items_powers_wrapper"]/div
+            try
             {
-                charInfo += div.InnerHtml.ToString();
+                foreach (HtmlNode div in docTable)
+                {
+                    charInfo += div.InnerHtml.ToString();
+                }
+            }
+            catch
+            {
+                throw new FileNotFoundException();
             }
 
- 
+
             u = new Unit(1, 1, 1, 1, 1, int.Parse(charInfo));
 
 
@@ -91,18 +194,17 @@ namespace MarvelRPG
             {
                 charInfo += i.ToString();
             }
-            //*[@id="tab_items_powers_wrapper"]
-            //*[@id="tab_items_powers_wrapper"]
-            //*[@id="tab_items_powers"]
-            //*[@id="tab_items_powers"]
+
             charInfo = "hello world";
 
             return u;
         }
+
         private Unit fetchUnit(string name)
         {
             string marvelData = "http://marvelheroes.wikia.com/wiki/";
             var webGet = new HtmlWeb();
+
             var document = webGet.Load(marvelData + name);
             var docTable = document.DocumentNode.SelectNodes("//table");
             string charInfo = "";
@@ -195,12 +297,20 @@ namespace MarvelRPG
             ///create a temporary character
             string path = savePath + @"\Units\";
             Unit tmpChar = CharacterLibrary[currentSelection];
+            Abilities tmpAbl = AbilityLibrary[currentSelection];
+            string s0 = currentSelection + Environment.NewLine + Environment.NewLine;
             string s1 = "Durability: " + tmpChar.Durability.ToString() + Environment.NewLine;
             string s2 = "Fighting: " + tmpChar.Fighting.ToString() + Environment.NewLine;
             string s3 = "Energy: " + tmpChar.Energy.ToString() + Environment.NewLine;
             string s4 = "Speed: " + tmpChar.Speed.ToString() + Environment.NewLine;
-            string s5 = "Intelligence " + tmpChar.Intelligence.ToString() + Environment.NewLine;
-            webTextBox1.Text = s1 + s2 + s3 + s4 + s5;
+            string s5 = "Intelligence " + tmpChar.Intelligence.ToString() + Environment.NewLine + Environment.NewLine + Environment.NewLine;
+
+            string s6 = "ABILITIES:" + Environment.NewLine;
+            foreach(Ability a in tmpAbl.Members)
+            {
+                s6 += a.Name + Environment.NewLine;
+            }
+            webTextBox1.Text = s0 + s1 + s2 + s3 + s4 + s5 + s6;
 
         }
 
@@ -275,8 +385,9 @@ namespace MarvelRPG
                 party.units.Add(u);
             updateParty();
         }
+
         #endregion events
 
-
+     
     }
 }
