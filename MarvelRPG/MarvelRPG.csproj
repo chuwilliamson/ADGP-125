@@ -82,13 +82,11 @@
       <DependentUpon>Form3.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Scripts\Abilities.cs" />
     <Compile Include="Scripts\Party.cs" />
     <Compile Include="Scripts\FiniteStateMachine.cs" />
     <Compile Include="Scripts\Interfaces.cs" />
     <Compile Include="Scripts\Program.cs" />
     <Compile Include="Scripts\States.cs" />
-    <Compile Include="Scripts\Unit.cs" />
     <Compile Include="Scripts\Utilities.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

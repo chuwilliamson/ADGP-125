@@ -23,27 +23,14 @@ namespace MarvelRPG
         [XmlArray("Team"), XmlArrayItem(typeof(Unit), ElementName = "Unit")]
         public List<Unit> units
         {
-            get
-            {
-                return _units;
-            }
-            set
-            {
-                _units = value;
-            }
-        }
-
-        private Unit _leader;
-        public Unit Leader
-        {
-            get { return _leader; }
-            set { _leader = value; }
+            get { return _units; }
+            set { _units = value; }
         }
     }
 
     [Serializable]
     [XmlRoot("Abilities")]
-    public class Abilities  
+    public class Abilities
     {
         public Abilities() { _members = new List<Ability>(); }
         public Abilities(Ability a)
@@ -56,14 +43,8 @@ namespace MarvelRPG
         [XmlArray("Powers"), XmlArrayItem(typeof(Ability), ElementName = "Ability")]
         public List<Ability> Members
         {
-            get
-            {
-                return _members;
-            }
-            set
-            {
-                _members = value;
-            }
+            get { return _members; }
+            set { _members = value; }
         }
 
         public void Add(Ability a)
@@ -71,7 +52,7 @@ namespace MarvelRPG
             _members.Add(a);
         }
 
-      
+
     }
 
     [Serializable]
@@ -115,6 +96,7 @@ namespace MarvelRPG
             name = n;
             bio = b;
         }
+
         private string bio;
         private string name;
         private int durability;

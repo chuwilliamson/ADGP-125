@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<Party xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Team>
+    <Unit>
+      <Name>Psylocke</Name>
+      <Durability>3</Durability>
+      <Energy>3</Energy>
+      <Fighting>4</Fighting>
+      <Intelligence>3</Intelligence>
+      <Speed>2</Speed>
+      <Strength>2</Strength>
+    </Unit>
+  </Team>
+</Party>

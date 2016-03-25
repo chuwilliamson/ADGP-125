@@ -12,16 +12,16 @@ using HtmlAgilityPack;
 
 namespace MarvelRPG
 {
-    
+
     public partial class Form1 : Form
     {
-        private Party party = new Party();        
+        private Party party = new Party();
         private List<string> validClasses = new List<string>();
         private Dictionary<string, Unit> CharacterLibrary = new Dictionary<string, Unit>();
         private Dictionary<string, Abilities> AbilityLibrary = new Dictionary<string, Abilities>();
         private Abilities abilities = new Abilities();
         private string currentSelection = "";
-        string savePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"/My Games/MarvelRPG";
+        string savePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\My Games\MarvelRPG\";
 
         private void Form1Load(object sender, EventArgs e)
         {
@@ -45,7 +45,7 @@ namespace MarvelRPG
                 classGroupBox1.Controls.Add(rb);
                 offset += 25;
             }
-             
+
 
             generateClasses();
             generateAbilities();
@@ -58,27 +58,27 @@ namespace MarvelRPG
 
         private void generateAbilities()
         {
-            
             string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            path = path + @"\My Games\" + System.Windows.Forms.Application.ProductName + @"\Abilities\";
+            path += @"\My Games\" + System.Windows.Forms.Application.ProductName + @"\Abilities\";
 
             if (!Directory.Exists(path))
-            {
                 Directory.CreateDirectory(path);
-            }
+
             abilities = Utilities.DeserializeXML<Abilities>(path + "Abilities");
-            if(abilities != null)
+
+            if (abilities != null)
             {
-                foreach(Ability ability in abilities.Members)
+                foreach (Ability ability in abilities.Members)
                 {
                     if (AbilityLibrary.ContainsKey(ability.Character))
                         AbilityLibrary[ability.Character].Add(ability);
                     else
-                        AbilityLibrary.Add(ability.Character, new Abilities( ability ));                }
-                
+                        AbilityLibrary.Add(ability.Character, new Abilities(ability));
+                }
+
                 return;
             }
-            
+
             int MAXPOWERS = 1330;
             for (int i = 1; i <= MAXPOWERS; ++i)
             {
@@ -102,10 +102,12 @@ namespace MarvelRPG
         private void generateClasses()
         {
             string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            path = path + @"\My Games\" + System.Windows.Forms.Application.ProductName + @"\Units\";
+            path += @"\My Games\" + System.Windows.Forms.Application.ProductName + @"\Units\";
             //generate the classes based on information on application startup
             //1330is number of abilities
-           
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
+
 
             foreach (String s in validClasses)
             {
@@ -114,6 +116,8 @@ namespace MarvelRPG
                 CharacterLibrary.Add(s, u);
                 Utilities.SerializeXML(s, u, path);
             }
+
+
         }
 
         private Ability getAbilities(string id)
@@ -159,8 +163,9 @@ namespace MarvelRPG
 
             }
             return null;
-            
+
         }
+
         private Unit fetchUnitMarvelInfo(string name)
         {
 
@@ -250,19 +255,22 @@ namespace MarvelRPG
 
         }
 
-        private void updateParty()
+        private void updateParty(bool clear = false)
         {
-            int offset = 25;
             partyBox.Controls.Clear();
-            foreach (Unit u in party.units)
-            {
-                Label l = new Label();
-                l.Location = new System.Drawing.Point(6, offset);
-                l.Size = new System.Drawing.Size(68, 21);
-                l.AutoSize = true;
-                l.Text = u.Name;
-                offset += 25;
-                partyBox.Controls.Add(l);
+            if (!clear)
+            {                
+                int offset = 25;
+                foreach (Unit u in party.units)
+                {
+                    Label l = new Label();
+                    l.Location = new System.Drawing.Point(6, offset);
+                    l.Size = new System.Drawing.Size(68, 21);
+                    l.AutoSize = true;
+                    l.Text = u.Name;
+                    offset += 25;
+                    partyBox.Controls.Add(l);
+                }
             }
         }
 
@@ -304,12 +312,11 @@ namespace MarvelRPG
             string s3 = "Energy: " + tmpChar.Energy.ToString() + Environment.NewLine;
             string s4 = "Speed: " + tmpChar.Speed.ToString() + Environment.NewLine;
             string s5 = "Intelligence " + tmpChar.Intelligence.ToString() + Environment.NewLine + Environment.NewLine + Environment.NewLine;
-
             string s6 = "ABILITIES:" + Environment.NewLine;
-            foreach(Ability a in tmpAbl.Members)
-            {
+
+            foreach (Ability a in tmpAbl.Members)
                 s6 += a.Name + Environment.NewLine;
-            }
+
             webTextBox1.Text = s0 + s1 + s2 + s3 + s4 + s5 + s6;
 
         }
@@ -325,22 +332,19 @@ namespace MarvelRPG
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-            Unit ben = new Unit(10, 10, 10, 10, 10, 10, "Broseph");
-            party.Leader = ben;
+
             SaveFileDialog saveFileDialog = new SaveFileDialog();
-            string path = savePath + @"/Parties/";
+            string path = savePath + @"Parties\";
             if (Directory.Exists(path))
-            {
                 saveFileDialog.InitialDirectory = path;
-            }
+            saveFileDialog.Filter = "XML Files | *.xml";
+            saveFileDialog.DefaultExt = "xml";
+
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 string fileName = Path.GetFileName(saveFileDialog.FileName);
-
                 fileName = fileName.Replace(".xml", "");
-
                 Utilities.SerializeXML(fileName, party, path);
-
             }
 
         }
@@ -350,11 +354,12 @@ namespace MarvelRPG
             party.units.Clear();
             string fileName;
             OpenFileDialog selectFileDialog = new OpenFileDialog();
-            string path = savePath + @"/Parties/";
-            if (Directory.Exists(path))
-            {
-                selectFileDialog.InitialDirectory = path;
-            }
+            string path = savePath + @"Parties\";
+
+            selectFileDialog.InitialDirectory = path;
+            selectFileDialog.Filter = "XML Files | *.xml";
+            selectFileDialog.DefaultExt = "xml";
+
             if (selectFileDialog.ShowDialog() == DialogResult.OK)
             {
                 fileName = selectFileDialog.FileName;
@@ -362,7 +367,10 @@ namespace MarvelRPG
 
                 party = Utilities.DeserializeXML<Party>(fileName);
             }
-            else return;
+            else
+            {
+                return;
+            }
             updateParty();
         }
 
@@ -386,8 +394,16 @@ namespace MarvelRPG
             updateParty();
         }
 
+        private void HoverButton(object sender, EventArgs e)
+        {
+            toolTip1.Active = true;
+        }
+
+
         #endregion events
 
-     
+
+
+
     }
 }

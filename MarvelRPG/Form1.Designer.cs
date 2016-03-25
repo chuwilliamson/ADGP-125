@@ -29,6 +29,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.classGroupBox1 = new System.Windows.Forms.GroupBox();
             this.removeButton = new System.Windows.Forms.Button();
@@ -37,6 +38,7 @@
             this.saveButton = new System.Windows.Forms.Button();
             this.loadButton = new System.Windows.Forms.Button();
             this.webTextBox1 = new System.Windows.Forms.TextBox();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.classGroupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -100,7 +102,7 @@
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(649, 378);
+            this.saveButton.Location = new System.Drawing.Point(788, 315);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(103, 25);
             this.saveButton.TabIndex = 8;
@@ -110,13 +112,15 @@
             // 
             // loadButton
             // 
-            this.loadButton.Location = new System.Drawing.Point(782, 378);
+            this.loadButton.Location = new System.Drawing.Point(788, 346);
             this.loadButton.Name = "loadButton";
             this.loadButton.Size = new System.Drawing.Size(103, 25);
             this.loadButton.TabIndex = 9;
             this.loadButton.Text = "Load";
+            this.toolTip1.SetToolTip(this.loadButton, "Hello govna");
             this.loadButton.UseVisualStyleBackColor = true;
             this.loadButton.Click += new System.EventHandler(this.loadButton_Click);
+            this.loadButton.MouseHover += new System.EventHandler(this.HoverButton);
             // 
             // webTextBox1
             // 
@@ -129,14 +133,18 @@
             this.webTextBox1.Size = new System.Drawing.Size(283, 495);
             this.webTextBox1.TabIndex = 6;
             // 
+            // toolTip1
+            // 
+            this.toolTip1.ToolTipTitle = "hello govna";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(950, 545);
+            this.ClientSize = new System.Drawing.Size(1849, 817);
+            this.Controls.Add(this.saveButton);
             this.Controls.Add(this.webTextBox1);
             this.Controls.Add(this.loadButton);
-            this.Controls.Add(this.saveButton);
             this.Controls.Add(this.partyBox);
             this.Controls.Add(this.classGroupBox1);
             this.Controls.Add(this.pictureBox1);
@@ -161,6 +169,7 @@
         private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.Button loadButton;
         private System.Windows.Forms.TextBox webTextBox1;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
 

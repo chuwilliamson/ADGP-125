@@ -13,10 +13,9 @@ namespace MarvelRPG
             {
                 using (FileStream fs = File.Create(path + s + ".xml"))
                 {
-                    try {
+                    try
+                    {
                         XmlSerializer serializer = new XmlSerializer(typeof(T));
-
-
                         serializer.Serialize(fs, t);
                         fs.Close();
                     }
