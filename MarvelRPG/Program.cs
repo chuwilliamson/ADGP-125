@@ -25,8 +25,9 @@ namespace MarvelRPG
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Form1 intro = new Form1();
-            Form2 combat = new Form2();            
-            Application.Run(combat);
+            Form2 combat = new Form2();
+            Application.Run(intro);
+            //Application.Run(combat);
             
         }
     }

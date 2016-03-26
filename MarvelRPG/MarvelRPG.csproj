@@ -85,7 +85,7 @@
     <Compile Include="Scripts\Party.cs" />
     <Compile Include="Scripts\FiniteStateMachine.cs" />
     <Compile Include="Scripts\Interfaces.cs" />
-    <Compile Include="Scripts\Program.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Scripts\States.cs" />
     <Compile Include="Scripts\Utilities.cs" />
     <EmbeddedResource Include="Form1.resx">

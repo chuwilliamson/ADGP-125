@@ -44,14 +44,13 @@ namespace MarvelRPG
                 rb.TabStop = true;
                 rb.Text = name;
                 rb.UseVisualStyleBackColor = true;
-                rb.CheckedChanged += new System.EventHandler(radioButtonChecked);
+                rb.CheckedChanged += new System.EventHandler(radioButton_Check);
                 classGroupBox1.Controls.Add(rb);
                 offset += 25;
             }
 
-
-            generateClasses();
-            generateAbilities();
+            GenerateClasses();
+            GenerateAbilities();
         }
 
         public Form1()
@@ -59,7 +58,7 @@ namespace MarvelRPG
             InitializeComponent();
         }
 
-        private void generateAbilities()
+        private void GenerateAbilities()
         {
             string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             path += @"\My Games\" + System.Windows.Forms.Application.ProductName + @"\Abilities\";
@@ -100,11 +99,9 @@ namespace MarvelRPG
             }
 
             Utilities.SerializeXML("Abilities", abilities, path);
-
-
-
         }
-        private void generateClasses()
+
+        private void GenerateClasses()
         {
             string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             path += @"\My Games\" + System.Windows.Forms.Application.ProductName + @"\Units\";
@@ -113,23 +110,19 @@ namespace MarvelRPG
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
 
-
             foreach (String s in validClasses)
             {
                 string unitFile = path + s + ".xml";
-                Unit u = (File.Exists(unitFile)) ? Utilities.DeserializeXML<Unit>(s) : fetchUnit(s);
-
+                Unit u = (File.Exists(unitFile)) ? Utilities.DeserializeXML<Unit>(s) : FetchUnit(s);
 
                 CharacterLibrary.Add(s, u);
                 Utilities.SerializeXML(s, u, path);
             }
-
-
         }
 
 
 
-        private Unit fetchUnit(string name)
+        private Unit FetchUnit(string name)
         {
             string marvelData = "http://marvelheroes.wikia.com/wiki/";
             var webGet = new HtmlWeb();
@@ -138,35 +131,33 @@ namespace MarvelRPG
             var docTable = document.DocumentNode.SelectNodes("//table");
             string charInfo = "";
             Regex regex = new Regex("Durability|Strength|Fighting Skills|Speed|Energy Projection|Intelligence");
-            if (docTable != null)
-            {
-                foreach (HtmlNode table in docTable)
-                {
-                    if (table.SelectNodes("tr") != null)
-                        foreach (HtmlNode row in table.SelectNodes("tr"))
-                        {
-                            if (row.SelectNodes("td") != null)
-                                foreach (HtmlNode cell in row.SelectNodes("td"))
-                                {
-                                    if (regex.IsMatch(cell.InnerText))
-                                        charInfo += cell.InnerText;
-
-                                    //format for their wiki is all jacked up
-                                    //Durability: \n &#160; 5 is the format...
-                                    if (cell.InnerText.Contains("&#160; "))
-                                    {
-                                        string strip = cell.InnerText.Replace("&#160; ", "").Replace("\n", "");
-                                        charInfo += strip + Environment.NewLine;
-                                    }
-                                }
-                        }
-                }
-
-            }
-            else
-            {
+            if (docTable == null)
                 return new Unit(1, 1, 1, 1, 1, 1);
+
+            foreach (HtmlNode table in docTable)
+            {
+                if (table.SelectNodes("tr") != null)
+                    foreach (HtmlNode row in table.SelectNodes("tr"))
+                    {
+                        if (row.SelectNodes("td") != null)
+                            foreach (HtmlNode cell in row.SelectNodes("td"))
+                            {
+                                if (regex.IsMatch(cell.InnerText))
+                                    charInfo += cell.InnerText;
+
+                                //format for their wiki is all jacked up
+                                //Durability: \n &#160; 5 is the format...
+                                if (cell.InnerText.Contains("&#160; "))
+                                {
+                                    string strip = cell.InnerText.Replace("&#160; ", "").Replace("\n", "");
+                                    charInfo += strip + Environment.NewLine;
+                                }
+                            }
+                    }
             }
+
+
+
             string test = new String(charInfo.Where(x => Char.IsDigit(x)).ToArray());
             int[] nums = new int[test.Count()];
             for (int i = 0; i < test.Count(); i++)
@@ -179,26 +170,7 @@ namespace MarvelRPG
 
         }
 
-        private void updateParty(bool clear = false)
-        {
-            partyBox.Controls.Clear();
-            if (!clear)
-            {
-                int offset = 25;
-                foreach (Unit u in party.units)
-                {
-                    Label l = new Label();
-                    l.Location = new System.Drawing.Point(6, offset);
-                    l.Size = new System.Drawing.Size(68, 21);
-                    l.AutoSize = true;
-                    l.Text = u.Name;
-                    offset += 25;
-                    partyBox.Controls.Add(l);
-                }
-            }
-        }
-
-        private void updateDescription(string info)
+        private void UpdateDescription(string info)
         {
             webTextBox1.Text = "";
             pictureBox1.Image = null;
@@ -247,11 +219,11 @@ namespace MarvelRPG
 
         #region events
 
-        private void radioButtonChecked(object sender, EventArgs e)
+        private void radioButton_Check(object sender, EventArgs e)
         {
             RadioButton rb = sender as RadioButton;
             currentSelection = rb.Text;
-            updateDescription(currentSelection);
+            UpdateDescription(currentSelection);
         }
 
         private void saveButton_Click(object sender, EventArgs e)
@@ -284,18 +256,15 @@ namespace MarvelRPG
             selectFileDialog.Filter = "XML Files | *.xml";
             selectFileDialog.DefaultExt = "xml";
 
-            if (selectFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                fileName = selectFileDialog.FileName;
-                fileName = fileName.Replace(".xml", "");
-
-                party = Utilities.DeserializeXML<Party>(fileName);
-            }
-            else
-            {
+            if (selectFileDialog.ShowDialog() != DialogResult.OK)
                 return;
-            }
-            updateParty();
+
+            fileName = selectFileDialog.FileName;
+            fileName = fileName.Replace(".xml", "");
+
+            party = Utilities.DeserializeXML<Party>(fileName);
+
+            Utilities.updateTextBox(ref webTextBox1, ref party);
         }
 
         private void removeButton_Click(object sender, EventArgs e)
@@ -303,7 +272,8 @@ namespace MarvelRPG
             Unit toRemove = party.units.Find(u => u.Name == currentSelection);
             if (toRemove != null)
                 party.units.Remove(toRemove);
-            updateParty();
+
+            Utilities.updateTextBox(ref partyBox, ref party);
 
         }
 
@@ -315,14 +285,9 @@ namespace MarvelRPG
             Unit tmp = party.units.Find(x => x.Name == u.Name);
             if (tmp == null)
                 party.units.Add(u);
-            updateParty();
-        }
 
-        private void HoverButton(object sender, EventArgs e)
-        {
-            toolTip1.Active = true;
+            Utilities.updateTextBox(ref partyBox, ref party);
         }
-
 
         #endregion events
 

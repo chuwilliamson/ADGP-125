@@ -2,11 +2,48 @@
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
+using System.Windows.Forms;
 
 namespace MarvelRPG
 {
     public static class Utilities
     {
+        public static void updateTextBox(ref GroupBox box, ref Party p, bool clear = false)
+        {
+            box.Controls.Clear();
+            if (!clear)
+            {
+                int offset = 25;
+                foreach (Unit u in p.units)
+                {
+                    System.Windows.Forms.Label l = new System.Windows.Forms.Label();
+                    l.Location = new System.Drawing.Point(0, offset);
+                    l.Size = new System.Drawing.Size(70, 20);
+                    l.AutoSize = true;
+                    l.Text = u.Name;
+                    offset += 25;
+                    box.Controls.Add(l);
+                }
+            }
+        }
+        public static void updateTextBox(ref TextBox box, ref Party p, bool clear = false)
+        {
+            box.Controls.Clear();
+            if (!clear)
+            {
+                int offset = 25;
+                foreach (Unit u in p.units)
+                {
+                    System.Windows.Forms.Label l = new System.Windows.Forms.Label();
+                    l.Location = new System.Drawing.Point(0, offset);
+                    l.Size = new System.Drawing.Size(70, 20);
+                    l.AutoSize = true;
+                    l.Text = u.Name;
+                    offset += 25;
+                    box.Controls.Add(l);
+                }
+            }
+        }
         public static void SerializeXML<T>(string s, T t, string path)
         {
             if (Directory.Exists(path))

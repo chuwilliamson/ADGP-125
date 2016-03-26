@@ -26,9 +26,9 @@ namespace MarvelRPG
             string n2 = "male";
             string path = Form1.savePath + @"/Parties/";
             p1 = Utilities.DeserializeXML<Party>( path + n1);
-            updateParty(ref textBox1, ref p1);
+            Utilities.updateTextBox(ref textBox1, ref p1);
             p2 = Utilities.DeserializeXML<Party>(path + n2);
-            updateParty(ref textBox2, ref p2);
+            Utilities.updateTextBox(ref textBox2, ref p2);
 
             if (textBox1.HasChildren)
                 MessageBox.Show("has children");
@@ -40,27 +40,15 @@ namespace MarvelRPG
                 for (int j = 0; j < height; ++j)
                 {
                     Point p = new Point(i, j);
+                    if(textBox1.GetChildAtPoint(p) != null)
+                    {
+                        break;
+                    }
+
                 }
             }
         }
 
-        private void updateParty(ref TextBox box, ref Party p, bool clear = false)
-        {
-            box.Controls.Clear();
-            if (!clear)
-            {
-                int offset = 25;
-                foreach (Unit u in p.units)
-                {
-                    Label l = new Label();
-                    l.Location = new System.Drawing.Point(6, offset);
-                    l.Size = new System.Drawing.Size(68, 21);
-                    l.AutoSize = true;
-                    l.Text = u.Name;
-                    offset += 25;
-                    box.Controls.Add(l);
-                }
-            }
-        }
+
     }
 }
