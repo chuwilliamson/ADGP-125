@@ -4,9 +4,11 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace MarvelRPG
-{
+{    
+
     static class Program
     {
+
         //public key
         //4b4e33c373b9d3555368bf2e1ebe0f38
         //static string BingMapsKey = "4b4e33c373b9d3555368bf2e1ebe0f38";
@@ -19,10 +21,12 @@ namespace MarvelRPG
         [STAThread]
         static void Main()
         {
+            
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Form1 intro = new Form1();            
-            Application.Run(intro);
+            Form1 intro = new Form1();
+            Form2 combat = new Form2();            
+            Application.Run(combat);
             
         }
     }

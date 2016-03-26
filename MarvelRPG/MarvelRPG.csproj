@@ -128,7 +128,6 @@
     <None Include="Resources\Psylocke_small.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="powers.html" />
     <Content Include="Resources\Marvel_small.ico" />
     <Content Include="Resources\Rogue_small.jpg" />
     <None Include="Resources\Wolverine_small.jpg" />

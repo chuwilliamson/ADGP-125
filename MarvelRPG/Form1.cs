@@ -15,13 +15,16 @@ namespace MarvelRPG
 
     public partial class Form1 : Form
     {
+
         private Party party = new Party();
         private List<string> validClasses = new List<string>();
         private Dictionary<string, Unit> CharacterLibrary = new Dictionary<string, Unit>();
         private Dictionary<string, Abilities> AbilityLibrary = new Dictionary<string, Abilities>();
         private Abilities abilities = new Abilities();
         private string currentSelection = "";
-        string savePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\My Games\MarvelRPG\";
+
+        public readonly static string savePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\My Games\MarvelRPG\";
+
 
         private void Form1Load(object sender, EventArgs e)
         {
@@ -82,11 +85,13 @@ namespace MarvelRPG
             int MAXPOWERS = 1330;
             for (int i = 1; i <= MAXPOWERS; ++i)
             {
-                Ability ability = getAbilities(i.ToString());
+                //not sure if this works because i'm in the car with no internet
+                //check this later b/c it looks alot cleaner to put the web request in the constructor
+                Ability ability = new Ability(i.ToString());
                 if (ability != null)
                 {
                     abilities.Members.Add(ability);
-                    //abs.Add(ability);
+
                     if (AbilityLibrary.ContainsKey(ability.Character))
                         AbilityLibrary[ability.Character].Add(ability);
                     else
@@ -111,8 +116,10 @@ namespace MarvelRPG
 
             foreach (String s in validClasses)
             {
-                // Unit u = fetchUnit(s);
-                Unit u = fetchUnit(s);
+                string unitFile = path + s + ".xml";
+                Unit u = (File.Exists(unitFile)) ? Utilities.DeserializeXML<Unit>(s) : fetchUnit(s);
+
+
                 CharacterLibrary.Add(s, u);
                 Utilities.SerializeXML(s, u, path);
             }
@@ -120,90 +127,7 @@ namespace MarvelRPG
 
         }
 
-        private Ability getAbilities(string id)
-        {
-            //*[@id="content"]/div[2]/div/h3/span/a[1]
-            //title : //*[@id="content"]/div[2]/div/h3
-            //name : //*[@id="tooltip"]/span[1]
-            //info : //*[@id="tooltip"]/span[3]
-            string character, name, description, xpath;
-            HtmlNodeCollection info;
-            string marvelData = "http://marvelheroes.info/power/";
 
-            var webGet = new HtmlWeb();
-
-
-            var document = webGet.Load(marvelData + id);
-            if (document != null)
-            {
-
-                //name of character            
-                xpath = "//*[@id=\"content\"]/div[2]/div/h3/span/a[2]";
-                info = document.DocumentNode.SelectNodes(xpath);
-                if (info != null)
-                {
-                    character = info[0].InnerText;
-
-                    //name of ability
-                    xpath = "//*[@id=\"tooltip\"]/span[1]";
-                    info = document.DocumentNode.SelectNodes(xpath);
-                    name = info[0].InnerText;
-
-                    //description            
-                    xpath = "//*[@id=\"tooltip\"]/span[4]";
-                    info = document.DocumentNode.SelectNodes(xpath);
-                    description = info[0].InnerText;
-
-
-                    Ability ability = new Ability(character, name, description);
-
-
-                    return ability;
-                }
-
-            }
-            return null;
-
-        }
-
-        private Unit fetchUnitMarvelInfo(string name)
-        {
-
-            string charInfo = "";
-            Unit u;
-            string marvelData = "http://marvelheroes.info/hero/";
-            var webGet = new HtmlWeb();
-            //*[@id="tab_items_powers_wrapper"]/div
-            var document = webGet.Load(marvelData + name);
-            string xpath = "//*[@id=\"tab_items_powers_wrapper\"]";
-            var docTable = document.DocumentNode.SelectNodes(xpath);
-            //*[@id="tab_items_powers_wrapper"]/div
-            try
-            {
-                foreach (HtmlNode div in docTable)
-                {
-                    charInfo += div.InnerHtml.ToString();
-                }
-            }
-            catch
-            {
-                throw new FileNotFoundException();
-            }
-
-
-            u = new Unit(1, 1, 1, 1, 1, int.Parse(charInfo));
-
-
-            int num = 25;
-            for (int i = 0; i < num; i++)
-            {
-                charInfo += i.ToString();
-            }
-
-            charInfo = "hello world";
-
-            return u;
-        }
 
         private Unit fetchUnit(string name)
         {
@@ -259,7 +183,7 @@ namespace MarvelRPG
         {
             partyBox.Controls.Clear();
             if (!clear)
-            {                
+            {
                 int offset = 25;
                 foreach (Unit u in party.units)
                 {
