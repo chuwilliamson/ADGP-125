@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
@@ -25,6 +26,39 @@ namespace MarvelRPG
                     box.Controls.Add(l);
                 }
             }
+        }
+
+        public static void addLabels<T>(List<T> list, ref object to)
+        {
+
+            int offset = 25;
+            foreach (T u in list)
+            {
+                System.Windows.Forms.Label l = new System.Windows.Forms.Label();
+                l.Location = new System.Drawing.Point(0, offset);
+                l.Size = new System.Drawing.Size(70, 20);
+                l.AutoSize = true;
+                Label v = u as Label;
+                l.Text = v.Name;
+                offset += 25;
+                TextBox tb = to as TextBox;
+                GroupBox gb = to as GroupBox;
+                tb.Controls.Add(l);
+                gb.Controls.Add(l);
+            }
+
+        }
+        public static void updateBox(ref object box, ref Party p, bool clear = false)
+        {
+            TextBox tb = box as TextBox;
+            GroupBox gb = box as GroupBox;            
+            
+            if(gb != null)
+                addLabels<Unit>(p.units, ref box);
+            
+
+          
+
         }
         public static void updateTextBox(ref TextBox box, ref Party p, bool clear = false)
         {
@@ -56,12 +90,12 @@ namespace MarvelRPG
                         serializer.Serialize(fs, t);
                         fs.Close();
                     }
-                    catch(XmlException e)
+                    catch (XmlException e)
                     {
                         Console.WriteLine(e.Message);
                         Console.WriteLine("Exception object Line, pos: (" + e.LineNumber + "," + e.LinePosition + ")");
                         throw e;
-                       
+
                     }
                 }
             }
@@ -81,13 +115,14 @@ namespace MarvelRPG
         /// <returns></returns>
         public static T DeserializeXML<T>(string s)
         {
-            
+
             T t; //We will use the as the return value      
-            
-            using (FileStream fs = File.OpenRead(s + ".xml"))
+            if (!s.Contains(".xml"))
+                s += ".xml";
+            using (FileStream fs = File.OpenRead(s))
             {
                 XmlSerializer deserializer = new XmlSerializer(typeof(T));
-                t = (T)deserializer.Deserialize(fs);                
+                t = (T)deserializer.Deserialize(fs);
                 fs.Close();
             }
 

@@ -113,7 +113,7 @@ namespace MarvelRPG
             foreach (String s in validClasses)
             {
                 string unitFile = path + s + ".xml";
-                Unit u = (File.Exists(unitFile)) ? Utilities.DeserializeXML<Unit>(s) : FetchUnit(s);
+                Unit u = (File.Exists(unitFile)) ? Utilities.DeserializeXML<Unit>(unitFile) : FetchUnit(s);
 
                 CharacterLibrary.Add(s, u);
                 Utilities.SerializeXML(s, u, path);
@@ -228,11 +228,17 @@ namespace MarvelRPG
 
         private void saveButton_Click(object sender, EventArgs e)
         {
+            if (party.units.Count <= 0)
+            {
+                MessageBox.Show("Party is Empty.. Please add members.");
+                return;
+            }
 
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             string path = savePath + @"Parties\";
             if (Directory.Exists(path))
                 saveFileDialog.InitialDirectory = path;
+
             saveFileDialog.Filter = "XML Files | *.xml";
             saveFileDialog.DefaultExt = "xml";
 
@@ -264,7 +270,7 @@ namespace MarvelRPG
 
             party = Utilities.DeserializeXML<Party>(fileName);
 
-            Utilities.updateTextBox(ref webTextBox1, ref party);
+            Utilities.updateTextBox(ref partyBox, ref party);
         }
 
         private void removeButton_Click(object sender, EventArgs e)
@@ -289,10 +295,15 @@ namespace MarvelRPG
             Utilities.updateTextBox(ref partyBox, ref party);
         }
 
+
+
+
         #endregion events
 
-
-
-
+        private void clearParty_button_Click(object sender, EventArgs e)
+        {
+            party.units.Clear();
+            Utilities.updateTextBox(ref partyBox, ref party);
+        }
     }
 }
