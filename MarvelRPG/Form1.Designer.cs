@@ -38,6 +38,7 @@
             this.loadButton = new System.Windows.Forms.Button();
             this.webTextBox1 = new System.Windows.Forms.TextBox();
             this.clearParty_button = new System.Windows.Forms.Button();
+            this.start_Button = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.classGroupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -132,7 +133,7 @@
             // 
             // clearParty_button
             // 
-            this.clearParty_button.Location = new System.Drawing.Point(718, 379);
+            this.clearParty_button.Location = new System.Drawing.Point(788, 314);
             this.clearParty_button.Name = "clearParty_button";
             this.clearParty_button.Size = new System.Drawing.Size(103, 25);
             this.clearParty_button.TabIndex = 10;
@@ -140,11 +141,23 @@
             this.clearParty_button.UseVisualStyleBackColor = true;
             this.clearParty_button.Click += new System.EventHandler(this.clearParty_button_Click);
             // 
+            // start_Button
+            // 
+            this.start_Button.BackColor = System.Drawing.SystemColors.Control;
+            this.start_Button.Location = new System.Drawing.Point(788, 482);
+            this.start_Button.Name = "start_Button";
+            this.start_Button.Size = new System.Drawing.Size(103, 25);
+            this.start_Button.TabIndex = 11;
+            this.start_Button.Text = "Start";
+            this.start_Button.UseVisualStyleBackColor = false;
+            this.start_Button.Click += new System.EventHandler(this.start_Button_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(920, 616);
+            this.Controls.Add(this.start_Button);
             this.Controls.Add(this.clearParty_button);
             this.Controls.Add(this.saveButton);
             this.Controls.Add(this.webTextBox1);
@@ -174,6 +187,7 @@
         private System.Windows.Forms.Button loadButton;
         private System.Windows.Forms.TextBox webTextBox1;
         private System.Windows.Forms.Button clearParty_button;
+        private System.Windows.Forms.Button start_Button;
     }
 }
 

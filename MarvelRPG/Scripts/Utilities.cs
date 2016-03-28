@@ -1,32 +1,120 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
+using System.Linq;
+using HtmlAgilityPack;
 
 namespace MarvelRPG
 {
     public static class Utilities
     {
-        public static void updateTextBox(ref GroupBox box, ref Party p, bool clear = false)
+        public readonly static string savePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\My Games\MarvelRPG\";
+
+
+ 
+
+        public static Unit FetchUnit(string name)
         {
-            box.Controls.Clear();
-            if (!clear)
+            string marvelData = "http://marvelheroes.wikia.com/wiki/";
+            var webGet = new HtmlWeb();
+
+            var document = webGet.Load(marvelData + name);
+            var docTable = document.DocumentNode.SelectNodes("//table");
+            string charInfo = "";
+            Regex regex = new Regex("Durability|Strength|Fighting Skills|Speed|Energy Projection|Intelligence");
+            if (docTable == null)
+                return new Unit(1, 1, 1, 1, 1, 1);
+
+            foreach (HtmlNode table in docTable)
             {
-                int offset = 25;
-                foreach (Unit u in p.units)
-                {
-                    System.Windows.Forms.Label l = new System.Windows.Forms.Label();
-                    l.Location = new System.Drawing.Point(0, offset);
-                    l.Size = new System.Drawing.Size(70, 20);
-                    l.AutoSize = true;
-                    l.Text = u.Name;
-                    offset += 25;
-                    box.Controls.Add(l);
-                }
+                if (table.SelectNodes("tr") != null)
+                    foreach (HtmlNode row in table.SelectNodes("tr"))
+                    {
+                        if (row.SelectNodes("td") != null)
+                            foreach (HtmlNode cell in row.SelectNodes("td"))
+                            {
+                                if (regex.IsMatch(cell.InnerText))
+                                    charInfo += cell.InnerText;
+
+                                //format for their wiki is all jacked up
+                                //Durability: \n &#160; 5 is the format...
+                                if (cell.InnerText.Contains("&#160; "))
+                                {
+                                    string strip = cell.InnerText.Replace("&#160; ", "").Replace("\n", "");
+                                    charInfo += strip + Environment.NewLine;
+                                }
+                            }
+                    }
             }
+
+
+
+            string test = new String(charInfo.Where(x => Char.IsDigit(x)).ToArray());
+            int[] nums = new int[test.Count()];
+            for (int i = 0; i < test.Count(); i++)
+            {
+                nums[i] = int.Parse(test[i].ToString());
+            }
+
+            ///create a temporary character
+            return new Unit(nums[0], nums[1], nums[2], nums[3], nums[4], nums[5], name);
+
         }
+
+        public static bool UpdateDescription(string selection, ref TextBox tb, ref PictureBox pb)
+        {
+            tb.Text = "";
+            pb.Image = null;
+            pb.ImageLocation = null;
+            string currentSelection = selection;
+            switch (currentSelection)
+            {
+                case "Hulk":
+                    pb.Image = MarvelRPG.Properties.Resources.Hulk_small;
+                    break;
+                case "Psylocke":
+                    pb.Image = MarvelRPG.Properties.Resources.Psylocke_small;
+                    break;
+                case "Rogue":
+                    pb.Image = MarvelRPG.Properties.Resources.Rogue_small;
+                    break;
+                case "Thor":
+                    pb.Image = MarvelRPG.Properties.Resources.Thor_small;
+                    break;
+                case "Wolverine":
+                    pb.Image = MarvelRPG.Properties.Resources.Wolverine_small;
+                    break;
+                default:
+                    break;
+            }
+
+
+            ///create a temporary character
+            string path = savePath + @"\Units\";
+            Unit tmpChar = GameState.instance.CharacterLibrary[currentSelection];
+            Abilities tmpAbl = GameState.instance.AbilityLibrary[currentSelection];
+            string s0 = currentSelection + Environment.NewLine + Environment.NewLine;
+            string s1 = "Durability: " + tmpChar.Durability.ToString() + Environment.NewLine;
+            string s2 = "Fighting: " + tmpChar.Fighting.ToString() + Environment.NewLine;
+            string s3 = "Energy: " + tmpChar.Energy.ToString() + Environment.NewLine;
+            string s4 = "Speed: " + tmpChar.Speed.ToString() + Environment.NewLine;
+            string s5 = "Intelligence " + tmpChar.Intelligence.ToString() + Environment.NewLine + Environment.NewLine + Environment.NewLine;
+            string s6 = "ABILITIES:" + Environment.NewLine;
+
+            foreach (Ability a in tmpAbl.Members)
+                s6 += a.Name + Environment.NewLine;
+
+            tb.Text = s0 + s1 + s2 + s3 + s4 + s5 + s6;
+
+            return true;
+
+        }
+
 
         public static void addLabels<T>(List<T> list, ref object to)
         {
@@ -51,13 +139,13 @@ namespace MarvelRPG
         public static void updateBox(ref object box, ref Party p, bool clear = false)
         {
             TextBox tb = box as TextBox;
-            GroupBox gb = box as GroupBox;            
-            
-            if(gb != null)
-                addLabels<Unit>(p.units, ref box);
-            
+            GroupBox gb = box as GroupBox;
 
-          
+            if (gb != null)
+                addLabels<Unit>(p.units, ref box);
+
+
+
 
         }
         public static void updateTextBox(ref TextBox box, ref Party p, bool clear = false)
@@ -78,6 +166,32 @@ namespace MarvelRPG
                 }
             }
         }
+        public static void updateTextBox(ref GroupBox box, ref Party p, bool clear = false)
+        {
+            box.Controls.Clear();
+            if (!clear)
+            {
+                int offset = 25;
+                foreach (Unit u in p.units)
+                {
+                    System.Windows.Forms.Label l = new System.Windows.Forms.Label();
+                    l.Location = new System.Drawing.Point(0, offset);
+                    l.Size = new System.Drawing.Size(70, 20);
+                    l.AutoSize = true;
+                    l.Text = u.Name;
+                    offset += 25;
+                    box.Controls.Add(l);
+                }
+            }
+        }
+
+        /// <summary>
+        /// save stream to xml
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="s"></param>
+        /// <param name="t"></param>
+        /// <param name="path"></param>
         public static void SerializeXML<T>(string s, T t, string path)
         {
             if (Directory.Exists(path))

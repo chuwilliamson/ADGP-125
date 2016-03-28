@@ -19,8 +19,18 @@ namespace MarvelRPG
 
         private void Form3_Load
             (object sender, EventArgs e)
+        { 
+        }
+
+        private void backButton_Click(object sender, EventArgs e)
         {
-            webBrowser1.Navigate("http://marvelheroes.info/hero/psylocke/");
+            this.Close();
+        }
+
+        private void quitButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            
         }
     }
 }
