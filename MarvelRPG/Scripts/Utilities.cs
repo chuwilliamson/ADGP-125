@@ -156,6 +156,7 @@ namespace MarvelRPG
                     o.Controls.Add(l);
                 }
             }
+            int a = 0;
         }
 
 
