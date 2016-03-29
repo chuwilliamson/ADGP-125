@@ -27,6 +27,16 @@ namespace MarvelRPG
             get { return _units; }
             set { _units = value; }
         }
+
+        public bool Add(Unit u)
+        {
+            if (u != null)
+            {
+                _units.Add(u);
+                return true;
+            }
+            return false;
+        }
     }
 
 
@@ -89,7 +99,7 @@ namespace MarvelRPG
         public int Intelligence { get { return intelligence; } set { intelligence = value; } }
         public int Speed { get { return speed; } set { speed = value; } }
         public int Strength { get { return strength; } set { strength = value; } }
-        
+
 
     }
 

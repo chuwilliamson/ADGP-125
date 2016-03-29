@@ -144,9 +144,9 @@
             // start_Button
             // 
             this.start_Button.BackColor = System.Drawing.SystemColors.Control;
-            this.start_Button.Location = new System.Drawing.Point(637, 482);
+            this.start_Button.Location = new System.Drawing.Point(637, 345);
             this.start_Button.Name = "start_Button";
-            this.start_Button.Size = new System.Drawing.Size(535, 265);
+            this.start_Button.Size = new System.Drawing.Size(260, 265);
             this.start_Button.TabIndex = 11;
             this.start_Button.Text = "Start";
             this.start_Button.UseVisualStyleBackColor = false;
@@ -156,7 +156,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1184, 862);
+            this.ClientSize = new System.Drawing.Size(916, 862);
             this.Controls.Add(this.start_Button);
             this.Controls.Add(this.clearParty_button);
             this.Controls.Add(this.saveButton);

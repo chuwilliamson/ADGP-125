@@ -16,7 +16,7 @@ namespace MarvelRPG
         public readonly static string savePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\My Games\MarvelRPG\";
 
 
- 
+
 
         public static Unit FetchUnit(string name)
         {
@@ -116,7 +116,7 @@ namespace MarvelRPG
         }
 
 
-        public static void addLabels<T>(List<T> list, ref object to)
+        public static void addLabels<T, V>(List<T> list, ref V to)
         {
 
             int offset = 25;
@@ -129,61 +129,37 @@ namespace MarvelRPG
                 Label v = u as Label;
                 l.Text = v.Name;
                 offset += 25;
-                TextBox tb = to as TextBox;
-                GroupBox gb = to as GroupBox;
-                tb.Controls.Add(l);
-                gb.Controls.Add(l);
+          
             }
 
         }
-        public static void updateBox(ref object box, ref Party p, bool clear = false)
+        public static void updateBox<T>(ref T box, ref Party p, bool clear = false)
         {
-            TextBox tb = box as TextBox;
-            GroupBox gb = box as GroupBox;
+            Type type = typeof(T);
 
-            if (gb != null)
-                addLabels<Unit>(p.units, ref box);
+            var o = new Control();
+            
+            if (type == typeof(TextBox)) o = box as TextBox;
+            if (type == typeof(GroupBox)) o = box as GroupBox;
 
-
-
-
-        }
-        public static void updateTextBox(ref TextBox box, ref Party p, bool clear = false)
-        {
-            box.Controls.Clear();
-            if (!clear)
+            if (o != null)
             {
                 int offset = 25;
                 foreach (Unit u in p.units)
                 {
-                    System.Windows.Forms.Label l = new System.Windows.Forms.Label();
+                    Label l = new Label();
                     l.Location = new System.Drawing.Point(0, offset);
                     l.Size = new System.Drawing.Size(70, 20);
                     l.AutoSize = true;
                     l.Text = u.Name;
                     offset += 25;
-                    box.Controls.Add(l);
+                    o.Controls.Add(l);
                 }
             }
         }
-        public static void updateTextBox(ref GroupBox box, ref Party p, bool clear = false)
-        {
-            box.Controls.Clear();
-            if (!clear)
-            {
-                int offset = 25;
-                foreach (Unit u in p.units)
-                {
-                    System.Windows.Forms.Label l = new System.Windows.Forms.Label();
-                    l.Location = new System.Drawing.Point(0, offset);
-                    l.Size = new System.Drawing.Size(70, 20);
-                    l.AutoSize = true;
-                    l.Text = u.Name;
-                    offset += 25;
-                    box.Controls.Add(l);
-                }
-            }
-        }
+
+
+        
 
         /// <summary>
         /// save stream to xml

@@ -18,25 +18,70 @@ namespace MarvelRPG
             this.Init();
         }
 
+        /// <summary>
+        /// create a combat with some predefined parties
+        /// </summary>
+        /// <param name="p1"></param>
+        /// <param name="p2"></param>
+        public TestCombat(Party p1, Party p2)
+        {
+            m_current = m_player;
+            m_player = p1;
+            m_enemy = p2;
+            this.Init(true);
+        }
+
+
+        int m_turn = 0;
+        public int Turn { get { return m_turn; } }
+
         private Party m_player;
         private Party m_enemy;
+        private Party m_current;
+
         public Party PlayerParty { get { return m_player; } }
         public Party EnemyParty { get { return m_enemy; } }
-
-        private void Init()
+        public Party CurrentParty
         {
+            get
+            {
+                if ((m_turn % 2) == 0)
+                    return m_player;
+                return m_enemy;
 
-            Unit psylocke = gameState.CharacterLibrary["Psylocke"];
-            Abilities psylocke_abilities = gameState.AbilityLibrary["Psylocke"];
-
-            Unit hulk = gameState.CharacterLibrary["Hulk"];
-            Abilities hulk_abilities = gameState.AbilityLibrary["Hulk"];
-            this.Start();
+            }
         }
 
 
 
-        Thread combatThread;
+
+
+        private void Init(bool withParty = false)
+        {
+            //no party given make our own
+            if (!withParty)
+            {
+                Unit psylocke = gameState.CharacterLibrary["Psylocke"];
+                Unit hulk = gameState.CharacterLibrary["Hulk"];
+                m_player.Add(psylocke);
+                m_enemy.Add(hulk);
+                return;
+            }
+
+        }
+
+        void OnAttack(Unit attacker, Unit defender)
+        {
+
+        }
+
+
+        public void Next()
+        {
+            m_turn++;
+        }
+
+
         private void Start()
         {
 
@@ -74,7 +119,7 @@ namespace MarvelRPG
             }
 
         }
-
+        Thread combatThread;
 
     }
 }

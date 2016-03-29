@@ -100,7 +100,7 @@ namespace MarvelRPG
             Party p = Utilities.DeserializeXML<Party>(fileName);
             
 
-            Utilities.updateTextBox(ref partyBox, ref p);
+            Utilities.updateBox(ref partyBox, ref p);
         }
 
         private void removeButton_Click(object sender, EventArgs e)
@@ -111,7 +111,7 @@ namespace MarvelRPG
                 p.units.Remove(toRemove);
 
             
-            Utilities.updateTextBox(ref partyBox, ref p);
+            Utilities.updateBox(ref partyBox, ref p);
 
         }
 
@@ -126,7 +126,7 @@ namespace MarvelRPG
             if (tmp == null)
                 gs.Party.units.Add(u);
             Party p = gs.Party;
-            Utilities.updateTextBox(ref partyBox, ref p);
+            Utilities.updateBox(ref partyBox, ref p);
         }
 
 
@@ -138,7 +138,7 @@ namespace MarvelRPG
         {
             Party p = gs.Party;
             p.units.Clear();
-            Utilities.updateTextBox(ref partyBox, ref p);
+            Utilities.updateBox(ref partyBox, ref p);
         }
 
         private void start_Button_Click(object sender, EventArgs e)
