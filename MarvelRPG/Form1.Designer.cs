@@ -49,7 +49,7 @@
             this.pictureBox1.InitialImage = global::MarvelRPG.Properties.Resources.Hulk_small;
             this.pictureBox1.Location = new System.Drawing.Point(12, 12);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(280, 495);
+            this.pictureBox1.Size = new System.Drawing.Size(270, 420);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
@@ -128,7 +128,7 @@
             this.webTextBox1.Name = "webTextBox1";
             this.webTextBox1.ReadOnly = true;
             this.webTextBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.webTextBox1.Size = new System.Drawing.Size(283, 495);
+            this.webTextBox1.Size = new System.Drawing.Size(283, 592);
             this.webTextBox1.TabIndex = 6;
             // 
             // clearParty_button
@@ -144,9 +144,9 @@
             // start_Button
             // 
             this.start_Button.BackColor = System.Drawing.SystemColors.Control;
-            this.start_Button.Location = new System.Drawing.Point(788, 482);
+            this.start_Button.Location = new System.Drawing.Point(637, 482);
             this.start_Button.Name = "start_Button";
-            this.start_Button.Size = new System.Drawing.Size(103, 25);
+            this.start_Button.Size = new System.Drawing.Size(535, 265);
             this.start_Button.TabIndex = 11;
             this.start_Button.Text = "Start";
             this.start_Button.UseVisualStyleBackColor = false;
@@ -156,7 +156,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(920, 616);
+            this.ClientSize = new System.Drawing.Size(1184, 862);
             this.Controls.Add(this.start_Button);
             this.Controls.Add(this.clearParty_button);
             this.Controls.Add(this.saveButton);
@@ -166,6 +166,7 @@
             this.Controls.Add(this.classGroupBox1);
             this.Controls.Add(this.pictureBox1);
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Character Selection";
             this.Load += new System.EventHandler(this.Form1Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

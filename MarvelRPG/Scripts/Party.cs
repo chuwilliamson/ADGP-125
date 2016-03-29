@@ -60,7 +60,7 @@ namespace MarvelRPG
     public class Unit : IAttributes
     {
         private Unit() { }
-
+     
         public Unit(int d, int s, int f, int spd, int e, int i)
         {
             name = "default";

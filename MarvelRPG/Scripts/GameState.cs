@@ -9,6 +9,17 @@ namespace MarvelRPG
     [Serializable]
     public class GameState
     {
+        private GameState()
+        {
+            _party = new Party();
+            _characterLibrary = new Dictionary<string, Unit>();
+            _abilityLibrary = new Dictionary<string, Abilities>();
+            _abilities = new Abilities();
+            GenerateClasses();
+            GenerateAbilities(apath + "Abilities");
+
+        }
+
         static private GameState _instance;
         static public GameState instance
         {
@@ -20,55 +31,50 @@ namespace MarvelRPG
             }
         }
 
-        private Party _party;
-        private Dictionary<string, Unit> _characterLibrary;
-        private Dictionary<string, Abilities> _abilityLibrary;
-        private Abilities _abilities;
-
+        /// <summary>
+        /// the combat party
+        /// </summary>
         public Party Party
         {
             get { return _party; }
              
         }
+        /// <summary>
+        /// library of characters 
+        /// </summary>
         public Dictionary<string, Unit> CharacterLibrary
         {
             get { return _characterLibrary; }
              
         }
+        /// <summary>
+        /// library of abilities
+        /// </summary>
         public Dictionary<string, Abilities> AbilityLibrary
         {
             get { return _abilityLibrary; }
             
         }
+        /// <summary>
+        /// list of all abilities
+        /// </summary>
         public Abilities Abilities
         {
             get { return _abilities; }
-            
-
         }
 
-        private static string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-        private static string apath = path + @"\My Games\" + System.Windows.Forms.Application.ProductName + @"\Abilities\";
-        private static string upath = path + @"\My Games\" + System.Windows.Forms.Application.ProductName + @"\Units\";
-
-        GameState()
-        {
-            _party = new Party();
-            _characterLibrary = new Dictionary<string, Unit>();
-            _abilityLibrary = new Dictionary<string, Abilities>();
-            _abilities = new Abilities();
-            GenerateClasses();
-            GenerateAbilities();
-             
-        }
-
-        private bool GenerateAbilities()
+        /// <summary>
+        /// generate the abilities for the characters
+        /// either from web or from file
+        /// </summary>
+        /// <returns></returns>
+        private bool GenerateAbilities(string file)
         { 
  
             if (!Directory.Exists(apath))
                 Directory.CreateDirectory(apath);
 
-           _abilities = Utilities.DeserializeXML<Abilities>(apath + "Abilities");
+           _abilities = Utilities.DeserializeXML<Abilities>(file);
 
             if (_abilities != null)
             {
@@ -93,10 +99,6 @@ namespace MarvelRPG
                 {
                     Abilities.Members.Add(ability);
 
-                    //Func<int> f = delegate () { AbilityLibrary[ability.Character].Add(ability); };
-
-
-                    //bool present = (AbilityLibrary.ContainsKey(ability.Character) ? () => { AbilityLibrary[ability.Character].Add(ability); } : 
                     if (AbilityLibrary.ContainsKey(ability.Character))
                     {
                         AbilityLibrary[ability.Character].Add(ability);
@@ -135,6 +137,17 @@ namespace MarvelRPG
 
             return true;
         }
+
+        #region private
+        private Party _party;
+        private Dictionary<string, Unit> _characterLibrary;
+        private Dictionary<string, Abilities> _abilityLibrary;
+        private Abilities _abilities;
+
+        private static string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        private static string apath = path + @"\My Games\" + System.Windows.Forms.Application.ProductName + @"\Abilities\";
+        private static string upath = path + @"\My Games\" + System.Windows.Forms.Application.ProductName + @"\Units\";
+        #endregion 
 
     }
 }

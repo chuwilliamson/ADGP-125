@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
- 
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace MarvelRPG
@@ -8,7 +8,7 @@ namespace MarvelRPG
 
     static class Program
     {
-
+       
         //public key
         //4b4e33c373b9d3555368bf2e1ebe0f38
         //static string BingMapsKey = "4b4e33c373b9d3555368bf2e1ebe0f38";
@@ -26,7 +26,8 @@ namespace MarvelRPG
             Application.SetCompatibleTextRenderingDefault(false);
             Form1 intro = new Form1();
             Form2 combat = new Form2();
-            Application.Run(intro);
+            Console.WriteLine("This is from the main program");
+            Application.Run(combat);
             //Application.Run(combat);
             
         }

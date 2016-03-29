@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="MarvelRPG.GameState" Collapsed="true">
+    <Position X="4.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAEAQAAAAAIABiAAAgSAIAAAABAQAAAAAAAAAAIAAA=</HashCode>
+      <FileName>Scripts\GameState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MarvelRPG.Party" Collapsed="true">
+    <Position X="6.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Scripts\Party.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MarvelRPG.Abilities" Collapsed="true">
+    <Position X="6.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAEAAAAAAA=</HashCode>
+      <FileName>Scripts\Party.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MarvelRPG.Unit" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="8.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAJAAQAAQAEAAQBAABEAQAAUAAAABAAACA=</HashCode>
+      <FileName>Scripts\Party.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MarvelRPG.Ability" Collapsed="true">
+    <Position X="8.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAEAAgAAAAIAAAAAQAAAAEAAAAAAAAAAAACAA=</HashCode>
+      <FileName>Scripts\Party.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MarvelRPG.Utilities">
+    <Position X="10" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAwAAACAACIAAAACAAAAAAAAAAAAIAAAAA=</HashCode>
+      <FileName>Scripts\Utilities.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FiniteStateMachine.State" Collapsed="true">
+    <Position X="2.25" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAIAAAAAAAAAAAAAAAEAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>Scripts\FiniteStateMachine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FiniteStateMachine.Transition" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAABAAAAgA=</HashCode>
+      <FileName>Scripts\FiniteStateMachine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FiniteStateMachine.FiniteStateMachine&lt;T&gt;" Collapsed="true">
+    <Position X="0.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAABAIAAAAAAAAABAAAAEAAAABAAAAAA=</HashCode>
+      <FileName>Scripts\FiniteStateMachine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MarvelRPG.Form1" Collapsed="true">
+    <Position X="0.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACECAAAAggCAAAACSAAYABAAgAEhYABACAA=</HashCode>
+      <FileName>Form1.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MarvelRPG.Form2" Collapsed="true">
+    <Position X="4.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAIAAACAIAAAAAACAAAACAAAIAQAAEAAAAAAAAAA=</HashCode>
+      <FileName>Form2.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MarvelRPG.Form3" Collapsed="true">
+    <Position X="2.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAwACEAAAAAAACAAAACAQAIAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>Form3.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="MarvelRPG.IDamager" Collapsed="true">
+    <Position X="8.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Scripts\Interfaces.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MarvelRPG.IDamageable" Collapsed="true">
+    <Position X="6.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>Scripts\Interfaces.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MarvelRPG.IAttributes" Collapsed="true">
+    <Position X="8.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAQAEAAABAABAAAAAAAAAABAAACA=</HashCode>
+      <FileName>Scripts\Interfaces.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MarvelRPG.IAbility" Collapsed="true">
+    <Position X="6.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAEQAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Scripts\Interfaces.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="MarvelRPG.Characters" Collapsed="true">
+    <Position X="6.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAQAAAAACAAAAAAAAAEAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>Scripts\Party.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="States.Combat" Collapsed="true">
+    <Position X="9.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAAAAAAAAAAgAAgAAACAAAAAAiAAAA=</HashCode>
+      <FileName>Scripts\States.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="States.Player" Collapsed="true">
+    <Position X="9.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAiAAAA=</HashCode>
+      <FileName>Scripts\States.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="States.Game" Collapsed="true">
+    <Position X="11.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAIAAAAAAAAAAAAAAAgAAAAAAAAAAAAAiAAAA=</HashCode>
+      <FileName>Scripts\States.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Delegate Name="Handler" Collapsed="true">
+    <Position X="0.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Scripts\FiniteStateMachine.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Delegate Name="Trigger" Collapsed="true">
+    <Position X="2.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Scripts\FiniteStateMachine.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

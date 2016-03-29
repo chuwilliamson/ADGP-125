@@ -24,10 +24,18 @@ namespace MarvelRPG
 
             p2 = Utilities.DeserializeXML<Party>(path + n2);
             Utilities.updateTextBox(ref textBox2, ref p2);
+            this.KeyPreview = true;
+            this.KeyPress += new KeyPressEventHandler(form2_KeyPress);
+            //string text = (textBox1.HasChildren) ? "has children" : "no children";
+            Console.WriteLine("starting form2");
+        
 
-            string text = (textBox1.HasChildren) ? "has children" : "no children";
+ 
 
-            MessageBox.Show(text);
+        }
+        TestCombat tc = new TestCombat();
+        private void form2_KeyDown(object sender, KeyEventArgs e)
+        {
 
         }
 
@@ -36,6 +44,31 @@ namespace MarvelRPG
             Form3 pause = new Form3();
             pause.ShowDialog();
 
+        }
+
+        private void attackButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void updateCombatLog()
+        {
+
+        }
+
+        private void form2_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // The keypressed method uses the KeyChar property to check 
+            // whether the ENTER key is pressed. 
+
+            // If the ENTER key is pressed, the Handled property is set to true, 
+            // to indicate the event is handled.
+            if (e.KeyChar == (char)Keys.Return)
+            {
+                Console.WriteLine("Restart combat thread");
+                tc.Restart();
+                e.Handled = true;
+            }
         }
     }
 }
