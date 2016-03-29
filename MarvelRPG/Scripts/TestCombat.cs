@@ -10,12 +10,25 @@ namespace MarvelRPG
 {
     public class TestCombat
     {
-        public TestCombat() { this.Init(); }
         GameState gameState = GameState.instance;
+        public TestCombat()
+        {
+            m_player = new Party();
+            m_enemy = new Party();
+            this.Init();
+        }
+
+        private Party m_player;
+        private Party m_enemy;
+        public Party PlayerParty { get { return m_player; } }
+        public Party EnemyParty { get { return m_enemy; } }
+
         private void Init()
         {
+
             Unit psylocke = gameState.CharacterLibrary["Psylocke"];
             Abilities psylocke_abilities = gameState.AbilityLibrary["Psylocke"];
+
             Unit hulk = gameState.CharacterLibrary["Hulk"];
             Abilities hulk_abilities = gameState.AbilityLibrary["Hulk"];
             this.Start();
@@ -29,7 +42,7 @@ namespace MarvelRPG
 
             combatThread = new Thread(new ThreadStart(Logger));
             Console.WriteLine("Starting combat thread...");
-           
+
             combatThread.Start();
         }
 

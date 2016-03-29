@@ -29,38 +29,12 @@ namespace MarvelRPG
         }
     }
 
-    [Serializable]
-    [XmlRoot("Abilities")]
-    public class Abilities
-    {
-        public Abilities() { _members = new List<Ability>(); }
-        public Abilities(Ability a)
-        {
-            _members = new List<Ability>();
-            this.Add(a);
-        }
-        List<Ability> _members;
-
-        [XmlArray("Powers"), XmlArrayItem(typeof(Ability), ElementName = "Ability")]
-        public List<Ability> Members
-        {
-            get { return _members; }
-            set { _members = value; }
-        }
-
-        public void Add(Ability a)
-        {
-            _members.Add(a);
-        }
-
-
-    }
 
     [Serializable]
     public class Unit : IAttributes
     {
         private Unit() { }
-     
+
         public Unit(int d, int s, int f, int spd, int e, int i)
         {
             name = "default";
@@ -106,7 +80,8 @@ namespace MarvelRPG
         private int speed;
         private int energy;
         private int intelligence;
-
+        private Abilities abilities;
+        public Abilities Abilities { get { return abilities; } set { abilities = value; } }
         public string Name { get { return name; } set { name = value; } }
         public int Durability { get { return durability; } set { durability = value; } }
         public int Energy { get { return energy; } set { energy = value; } }
@@ -114,91 +89,8 @@ namespace MarvelRPG
         public int Intelligence { get { return intelligence; } set { intelligence = value; } }
         public int Speed { get { return speed; } set { speed = value; } }
         public int Strength { get { return strength; } set { strength = value; } }
+        
 
     }
 
-
-    [Serializable]
-    public class Ability
-    {
-
-        private Ability getAbilities(string id)
-        {
-            //*[@id="content"]/div[2]/div/h3/span/a[1]
-            //title : //*[@id="content"]/div[2]/div/h3
-            //name : //*[@id="tooltip"]/span[1]
-            //info : //*[@id="tooltip"]/span[3]
-            string character, name, description, xpath;
-            HtmlNodeCollection info;
-            string marvelData = "http://marvelheroes.info/power/";
-
-            var webGet = new HtmlWeb();
-
-
-            var document = webGet.Load(marvelData + id);
-            if (document != null)
-            {
-
-                //name of character            
-                xpath = "//*[@id=\"content\"]/div[2]/div/h3/span/a[2]";
-                info = document.DocumentNode.SelectNodes(xpath);
-                if (info != null)
-                {
-                    character = info[0].InnerText;
-
-                    //name of ability
-                    xpath = "//*[@id=\"tooltip\"]/span[1]";
-                    info = document.DocumentNode.SelectNodes(xpath);
-                    name = info[0].InnerText;
-
-                    //description            
-                    xpath = "//*[@id=\"tooltip\"]/span[4]";
-                    info = document.DocumentNode.SelectNodes(xpath);
-                    description = info[0].InnerText;
-
-
-                    Ability ability = new Ability(character, name, description);
-
-
-                    return ability;
-                }
-
-            }
-            return null;
-
-        }
-        private Ability() { }
-        public Ability(string id)
-        {
-            Ability a = new Ability();
-            a = getAbilities(id);
-            this.name = a.Name;
-            this.character = a.Character;
-            this.description = a.Description;
-
-        }
-
-        public Ability(string character, string name, string description)
-        {
-            Character = character;
-            Name = name;
-            Description = description;
-        }
-        string character, name, description;
-        public string Character
-        {
-            get { return character; }
-            set { character = value; }
-        }
-        public string Name
-        {
-            get { return name; }
-            set { name = value; }
-        }
-        public string Description
-        {
-            get { return description; }
-            set { description = value; }
-        }
-    }
 }

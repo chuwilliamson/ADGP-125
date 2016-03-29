@@ -97,7 +97,7 @@ namespace MarvelRPG
             ///create a temporary character
             string path = savePath + @"\Units\";
             Unit tmpChar = GameState.instance.CharacterLibrary[currentSelection];
-            Abilities tmpAbl = GameState.instance.AbilityLibrary[currentSelection];
+            Abilities tmpAbl = tmpChar.Abilities;
             string s0 = currentSelection + Environment.NewLine + Environment.NewLine;
             string s1 = "Durability: " + tmpChar.Durability.ToString() + Environment.NewLine;
             string s2 = "Fighting: " + tmpChar.Fighting.ToString() + Environment.NewLine;
