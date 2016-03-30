@@ -21,19 +21,37 @@ namespace MarvelRPG
             p2 = tc.EnemyParty;
 
             this.Text = "Combat";
-            left = new Card("Psylocke", pictureBox1, leftCardBack);
-            right = new Card("Hulk", pictureBox2, rightCardBack);
-            playerActions = new ActionGroup(ref panel1);
-            enemyActions = new ActionGroup(ref panel2);
+            this.left = new Card("Psylocke", pictureBox1, leftCardBack);
+            this.right = new Card("Hulk", pictureBox2, rightCardBack);
+            this.playerActions = new ActionGroup(ref panel1);
+            this.enemyActions = new ActionGroup(ref panel2);
+            //add the onclick events for the actions
+            foreach (Button b in playerActions.Buttons)
+                b.Click += onClick;
+            foreach (Button b in enemyActions.Buttons)
+                b.Click += onClick;
 
-
+            //update the cards... will need to do this after every turn is finished
             Utilities.updateBox(ref partyBox1, ref p1);
             Utilities.updateBox(ref partyBox2, ref p2);
-
-            UpdateForm(tc.CurrentParty);
+            //set players turn to first always for now
+            
+            UpdateForm(true);
 
         }
 
+        private void onClick(object o, EventArgs e)
+        {
+            Button b = (Button)o;
+            string name = b.Text;
+
+            Console.Write("text of button: " + name + "\n");
+            if (name == "End Turn")
+                UpdateForm(tc.Next());
+
+
+
+        }
         private void pauseButton_Click(object sender, EventArgs e)
         {
             Form3 pause = new Form3();
@@ -41,17 +59,19 @@ namespace MarvelRPG
 
         }
 
-        private void UpdateForm(string current)
+        private void UpdateForm(bool state)
         {
-            turnBox.Text = tc.Turn.ToString();
-            textBox3.Text = current;
+            turnBox.Text = tc.CombatTurn.ToString();
+            textBox3.Text = tc.CurrentParty;
             combatLog.Text = tc.ResolutionText;
+            playerActions.SetActive(state);
+            enemyActions.SetActive(!state);
 
         }
 
         internal class ActionGroup
         {
-
+            
             public ActionGroup(ref Panel p)
             {
                 _buttons = new Dictionary<string, Button>();
@@ -62,6 +82,10 @@ namespace MarvelRPG
                 }
             }
             private Dictionary<string, Button> _buttons;
+            public List<Button> Buttons
+            {
+                get { return _buttons.Values.ToList<Button>(); }
+            }
             public string[] ButtonNames { get { return _buttons.Keys.ToArray<string>(); } }
 
             public void SetActive(bool state)
@@ -69,6 +93,7 @@ namespace MarvelRPG
                 foreach (KeyValuePair<string, Button> b in _buttons)
                     b.Value.Enabled = state;
             }
+            
         }
 
         internal class Card

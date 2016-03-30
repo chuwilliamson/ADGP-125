@@ -5,18 +5,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
-using System.Windows.Forms;
 namespace MarvelRPG
 {
     public class TestCombat
-    {        
+    {
+        /// <summary>
+        /// create a test instance of combat with hulk and psylocke
+        /// </summary>
         public TestCombat()
         {
             m_player = new Party();
             m_enemy = new Party();
             this.Init();
         }
-
         /// <summary>
         /// create a combat with predefined parties
         /// </summary>
@@ -28,24 +29,23 @@ namespace MarvelRPG
             m_player = p1;
             m_enemy = p2;
             m_turn = 0;
-            this.Init(true);
+            this.Init();
         }
         /// <summary>
         /// 
         /// </summary>
         /// <param name="withParty"></param>
-        private void Init(bool withParty = false)
+        private void Init()
         {
-            //no party given make our own
-            if (!withParty)
-            {
-                Unit psylocke = gameState.CharacterLibrary["Psylocke"];
-                Unit hulk = gameState.CharacterLibrary["Hulk"];
-                m_player.Add(psylocke);
-                m_enemy.Add(hulk);
-                return;
-            }
-
+            Unit psylocke = gameState.CharacterLibrary["Psylocke"];
+            Unit hulk = gameState.CharacterLibrary["Hulk"];
+            Unit wolverine = gameState.CharacterLibrary["Wolverine"];
+            Unit rogue = gameState.CharacterLibrary["Rogue"];
+            m_player.Add(psylocke);
+            m_player.Add(rogue);
+            m_enemy.Add(hulk);
+            m_enemy.Add(wolverine);
+            m_current = m_player;
         }
         /// <summary>
         /// 
@@ -56,15 +56,7 @@ namespace MarvelRPG
             combatThread = new Thread(new ThreadStart(Logger));
             Console.WriteLine("Starting combat thread...");
             combatThread.Start();
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        public void Next()
-        {
-            //
-            m_turn++;
-        }
+        }        
         /// <summary>
         /// 
         /// </summary>
@@ -93,8 +85,15 @@ namespace MarvelRPG
             }
 
         }
-
-        #region variables
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool Next()
+        {
+            m_turn++;
+            return isPlayerParty;
+        }
+        #region fields
         #region public
         public Party PlayerParty { get { return m_player; } }
         public Party EnemyParty { get { return m_enemy; } }
@@ -106,7 +105,10 @@ namespace MarvelRPG
         {
             get { return "no resolution"; }
         }
-        public string Turn { get { return m_turn.ToString(); } }
+        public string CombatTurn { get { return m_turn.ToString(); } }
+        
+
+        
         public string CurrentParty
         {
             get
@@ -114,7 +116,6 @@ namespace MarvelRPG
                 if ((m_turn % 2) == 0)
                     return "Player";
                 return "Enemy";
-
             }
         }
         #endregion public
@@ -125,9 +126,19 @@ namespace MarvelRPG
         private Party m_player;
         private Party m_enemy;
         private Party m_current;
+        private int m_partyTurn;
         private int m_turn;
+        private bool isPlayerParty
+        {
+            get
+            {
+                if ((m_turn % 2) == 0)
+                    return true;
+                return false;
+            }
+        }
         #endregion private
-        #endregion variables
+        #endregion fields
 
     }
 }
