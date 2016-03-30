@@ -115,33 +115,17 @@ namespace MarvelRPG
 
         }
 
-
-        public static void addLabels<T, V>(List<T> list, ref V to)
-        {
-
-            int offset = 25;
-            foreach (T u in list)
-            {
-                System.Windows.Forms.Label l = new System.Windows.Forms.Label();
-                l.Location = new System.Drawing.Point(0, offset);
-                l.Size = new System.Drawing.Size(70, 20);
-                l.AutoSize = true;
-                Label v = u as Label;
-                l.Text = v.Name;
-                offset += 25;
-          
-            }
-
-        }
+ 
         public static void updateBox<T>(ref T box, ref Party p, bool clear = false)
         {
             Type type = typeof(T);
 
             var o = new Control();
-            
+            //hashtag begin janky
             if (type == typeof(TextBox)) o = box as TextBox;
             if (type == typeof(GroupBox)) o = box as GroupBox;
 
+            //add the labels
             if (o != null)
             {
                 int offset = 25;

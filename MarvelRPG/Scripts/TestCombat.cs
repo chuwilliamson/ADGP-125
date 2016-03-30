@@ -78,6 +78,7 @@ namespace MarvelRPG
 
         public void Next()
         {
+            //
             m_turn++;
         }
 

@@ -41,13 +41,20 @@
             this.leftFlipButton = new System.Windows.Forms.Button();
             this.rightFlipButton = new System.Windows.Forms.Button();
             this.turnBox = new System.Windows.Forms.TextBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(12, 434);
+            this.button1.Location = new System.Drawing.Point(13, 445);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(115, 33);
             this.button1.TabIndex = 0;
@@ -57,27 +64,33 @@
             // 
             // partyBox1
             // 
-            this.partyBox1.Location = new System.Drawing.Point(12, 487);
+            this.partyBox1.Enabled = false;
+            this.partyBox1.Location = new System.Drawing.Point(13, 482);
             this.partyBox1.Margin = new System.Windows.Forms.Padding(1);
             this.partyBox1.Multiline = true;
             this.partyBox1.Name = "partyBox1";
+            this.partyBox1.ReadOnly = true;
             this.partyBox1.Size = new System.Drawing.Size(270, 233);
             this.partyBox1.TabIndex = 1;
+            this.partyBox1.Text = "Party Info";
             // 
             // partyBox2
             // 
-            this.partyBox2.Location = new System.Drawing.Point(560, 487);
+            this.partyBox2.Enabled = false;
+            this.partyBox2.Location = new System.Drawing.Point(6, 479);
             this.partyBox2.Margin = new System.Windows.Forms.Padding(1);
             this.partyBox2.Multiline = true;
             this.partyBox2.Name = "partyBox2";
+            this.partyBox2.ReadOnly = true;
             this.partyBox2.Size = new System.Drawing.Size(270, 233);
             this.partyBox2.TabIndex = 2;
+            this.partyBox2.Text = "Party Info";
             // 
             // pauseButton
             // 
-            this.pauseButton.Location = new System.Drawing.Point(1057, 725);
+            this.pauseButton.Location = new System.Drawing.Point(307, 775);
             this.pauseButton.Name = "pauseButton";
-            this.pauseButton.Size = new System.Drawing.Size(115, 33);
+            this.pauseButton.Size = new System.Drawing.Size(266, 65);
             this.pauseButton.TabIndex = 5;
             this.pauseButton.Text = "Pause";
             this.pauseButton.UseVisualStyleBackColor = true;
@@ -85,7 +98,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(560, 434);
+            this.button2.Location = new System.Drawing.Point(6, 442);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(115, 33);
             this.button2.TabIndex = 6;
@@ -97,7 +110,7 @@
             // 
             this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox1.InitialImage = global::MarvelRPG.Properties.Resources.Hulk_small;
-            this.pictureBox1.Location = new System.Drawing.Point(12, 8);
+            this.pictureBox1.Location = new System.Drawing.Point(11, 19);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(270, 420);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -108,7 +121,7 @@
             // 
             this.pictureBox2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox2.InitialImage = global::MarvelRPG.Properties.Resources.Hulk_small;
-            this.pictureBox2.Location = new System.Drawing.Point(560, 10);
+            this.pictureBox2.Location = new System.Drawing.Point(6, 19);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(270, 420);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -117,17 +130,20 @@
             // 
             // combatLog
             // 
-            this.combatLog.Location = new System.Drawing.Point(286, 10);
+            this.combatLog.Enabled = false;
+            this.combatLog.Font = new System.Drawing.Font("Modern No. 20", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.combatLog.Location = new System.Drawing.Point(305, 114);
             this.combatLog.Margin = new System.Windows.Forms.Padding(1);
             this.combatLog.Multiline = true;
             this.combatLog.Name = "combatLog";
-            this.combatLog.Size = new System.Drawing.Size(270, 420);
+            this.combatLog.ReadOnly = true;
+            this.combatLog.Size = new System.Drawing.Size(270, 606);
             this.combatLog.TabIndex = 9;
             this.combatLog.Text = "combat log";
             // 
             // leftCardBack
             // 
-            this.leftCardBack.Location = new System.Drawing.Point(12, 10);
+            this.leftCardBack.Location = new System.Drawing.Point(13, 19);
             this.leftCardBack.Margin = new System.Windows.Forms.Padding(1);
             this.leftCardBack.Multiline = true;
             this.leftCardBack.Name = "leftCardBack";
@@ -136,7 +152,7 @@
             // 
             // rightCardBack
             // 
-            this.rightCardBack.Location = new System.Drawing.Point(560, 10);
+            this.rightCardBack.Location = new System.Drawing.Point(6, 19);
             this.rightCardBack.Margin = new System.Windows.Forms.Padding(1);
             this.rightCardBack.Multiline = true;
             this.rightCardBack.Name = "rightCardBack";
@@ -145,7 +161,7 @@
             // 
             // leftFlipButton
             // 
-            this.leftFlipButton.Location = new System.Drawing.Point(167, 434);
+            this.leftFlipButton.Location = new System.Drawing.Point(166, 445);
             this.leftFlipButton.Name = "leftFlipButton";
             this.leftFlipButton.Size = new System.Drawing.Size(115, 33);
             this.leftFlipButton.TabIndex = 12;
@@ -155,7 +171,7 @@
             // 
             // rightFlipButton
             // 
-            this.rightFlipButton.Location = new System.Drawing.Point(715, 436);
+            this.rightFlipButton.Location = new System.Drawing.Point(161, 442);
             this.rightFlipButton.Name = "rightFlipButton";
             this.rightFlipButton.Size = new System.Drawing.Size(115, 33);
             this.rightFlipButton.TabIndex = 13;
@@ -165,40 +181,108 @@
             // 
             // turnBox
             // 
+            this.turnBox.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.turnBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.turnBox.Enabled = false;
             this.turnBox.Font = new System.Drawing.Font("Modern No. 20", 71.99999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.turnBox.Location = new System.Drawing.Point(328, 548);
+            this.turnBox.Location = new System.Drawing.Point(305, 8);
             this.turnBox.Margin = new System.Windows.Forms.Padding(1);
             this.turnBox.Multiline = true;
             this.turnBox.Name = "turnBox";
-            this.turnBox.Size = new System.Drawing.Size(175, 101);
+            this.turnBox.ReadOnly = true;
+            this.turnBox.Size = new System.Drawing.Size(270, 104);
             this.turnBox.TabIndex = 14;
-            this.turnBox.Text = "1";
+            this.turnBox.Text = "2";
             this.turnBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.turnBox.TextChanged += new System.EventHandler(this.turnBox_TextChanged);
+            // 
+            // textBox1
+            // 
+            this.textBox1.Enabled = false;
+            this.textBox1.Location = new System.Drawing.Point(13, 724);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(1);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
+            this.textBox1.Size = new System.Drawing.Size(270, 39);
+            this.textBox1.TabIndex = 15;
+            this.textBox1.Text = "Current State: textBox1";
+            // 
+            // textBox2
+            // 
+            this.textBox2.Enabled = false;
+            this.textBox2.Location = new System.Drawing.Point(6, 724);
+            this.textBox2.Margin = new System.Windows.Forms.Padding(1);
+            this.textBox2.Multiline = true;
+            this.textBox2.Name = "textBox2";
+            this.textBox2.ReadOnly = true;
+            this.textBox2.Size = new System.Drawing.Size(270, 39);
+            this.textBox2.TabIndex = 16;
+            this.textBox2.Text = "Current State: textBox2";
+            // 
+            // textBox3
+            // 
+            this.textBox3.Enabled = false;
+            this.textBox3.Location = new System.Drawing.Point(305, 732);
+            this.textBox3.Margin = new System.Windows.Forms.Padding(1);
+            this.textBox3.Multiline = true;
+            this.textBox3.Name = "textBox3";
+            this.textBox3.ReadOnly = true;
+            this.textBox3.Size = new System.Drawing.Size(270, 39);
+            this.textBox3.TabIndex = 17;
+            this.textBox3.Text = "Active Party: textBox3";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.textBox1);
+            this.groupBox1.Controls.Add(this.partyBox1);
+            this.groupBox1.Controls.Add(this.leftFlipButton);
+            this.groupBox1.Controls.Add(this.button1);
+            this.groupBox1.Controls.Add(this.pictureBox1);
+            this.groupBox1.Controls.Add(this.leftCardBack);
+            this.groupBox1.Location = new System.Drawing.Point(1, 8);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(300, 800);
+            this.groupBox1.TabIndex = 18;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "groupBox1";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.partyBox2);
+            this.groupBox2.Controls.Add(this.textBox2);
+            this.groupBox2.Controls.Add(this.button2);
+            this.groupBox2.Controls.Add(this.pictureBox2);
+            this.groupBox2.Controls.Add(this.rightCardBack);
+            this.groupBox2.Controls.Add(this.rightFlipButton);
+            this.groupBox2.Location = new System.Drawing.Point(579, 8);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(300, 800);
+            this.groupBox2.TabIndex = 19;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "groupBox2";
             // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1184, 862);
+            this.ClientSize = new System.Drawing.Size(909, 862);
+            this.Controls.Add(this.textBox3);
             this.Controls.Add(this.turnBox);
-            this.Controls.Add(this.rightFlipButton);
-            this.Controls.Add(this.leftFlipButton);
             this.Controls.Add(this.combatLog);
-            this.Controls.Add(this.pictureBox2);
-            this.Controls.Add(this.button2);
             this.Controls.Add(this.pauseButton);
-            this.Controls.Add(this.partyBox2);
-            this.Controls.Add(this.partyBox1);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.rightCardBack);
-            this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.leftCardBack);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.groupBox2);
             this.Name = "Form2";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form2";
             this.Load += new System.EventHandler(this.Form2_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -219,5 +303,10 @@
         private System.Windows.Forms.Button leftFlipButton;
         private System.Windows.Forms.Button rightFlipButton;
         private System.Windows.Forms.TextBox turnBox;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBox2;
     }
 }
