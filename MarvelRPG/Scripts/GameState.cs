@@ -17,8 +17,6 @@ namespace MarvelRPG
             _abilities = new Abilities();
             GenerateAbilities(apath + "Abilities");
             GenerateClasses();
-            
-
         }
 
 

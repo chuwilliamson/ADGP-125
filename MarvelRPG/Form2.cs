@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace MarvelRPG
@@ -11,21 +13,25 @@ namespace MarvelRPG
         }
 
         private void Form2_Load(object sender, EventArgs e)
-        { 
+        {
             Party p1 = new Party();
             Party p2 = new Party();
             tc = new TestCombat();
             p1 = tc.PlayerParty;
             p2 = tc.EnemyParty;
-            
+
             this.Text = "Combat";
             left = new Card("Psylocke", pictureBox1, leftCardBack);
             right = new Card("Hulk", pictureBox2, rightCardBack);
- 
+            playerActions = new ActionGroup(ref panel1);
+            enemyActions = new ActionGroup(ref panel2);
+
 
             Utilities.updateBox(ref partyBox1, ref p1);
             Utilities.updateBox(ref partyBox2, ref p2);
-            turnBox.Text = tc.Turn.ToString(); 
+
+            UpdateForm(tc.CurrentParty);
+
         }
 
         private void pauseButton_Click(object sender, EventArgs e)
@@ -35,33 +41,36 @@ namespace MarvelRPG
 
         }
 
-        private void leftFlipButton_Click(object sender, EventArgs e)
-        {
-            left.Flipped = (left.Flipped ? false : true);
-        }
-
-        private void rightFlipButton_Click(object sender, EventArgs e)
-        {
-            right.Flipped = (right.Flipped ? false : true);
-
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            //unit has attacked
-            //resolve and move to the next unit
-            turnBox.Text = tc.Turn.ToString();
-            tc.Next();
-        }
-
-        private void button2_Click(object sender, EventArgs e)
+        private void UpdateForm(string current)
         {
             turnBox.Text = tc.Turn.ToString();
-            tc.Next();
+            textBox3.Text = current;
+            combatLog.Text = tc.ResolutionText;
+
         }
- 
-        
-            
+
+        internal class ActionGroup
+        {
+
+            public ActionGroup(ref Panel p)
+            {
+                _buttons = new Dictionary<string, Button>();
+                foreach (Control c in p.Controls)
+                {
+                    string key = c.Text.Replace(" ", "").ToLower();
+                    _buttons.Add(c.Text, (Button)c);
+                }
+            }
+            private Dictionary<string, Button> _buttons;
+            public string[] ButtonNames { get { return _buttons.Keys.ToArray<string>(); } }
+
+            public void SetActive(bool state)
+            {
+                foreach (KeyValuePair<string, Button> b in _buttons)
+                    b.Value.Enabled = state;
+            }
+        }
+
         internal class Card
         {
             public Card(string name, PictureBox f, TextBox b)
@@ -90,11 +99,10 @@ namespace MarvelRPG
         }
         private TestCombat tc;
         private Card left, right;
+        private ActionGroup playerActions;
+        private ActionGroup enemyActions;
 
-        private void turnBox_TextChanged(object sender, EventArgs e)
-        {
 
-        }
 
 
     }

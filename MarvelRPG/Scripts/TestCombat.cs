@@ -9,8 +9,7 @@ using System.Windows.Forms;
 namespace MarvelRPG
 {
     public class TestCombat
-    {
-        GameState gameState = GameState.instance;
+    {        
         public TestCombat()
         {
             m_player = new Party();
@@ -19,7 +18,7 @@ namespace MarvelRPG
         }
 
         /// <summary>
-        /// create a combat with some predefined parties
+        /// create a combat with predefined parties
         /// </summary>
         /// <param name="p1"></param>
         /// <param name="p2"></param>
@@ -28,34 +27,13 @@ namespace MarvelRPG
             m_current = m_player;
             m_player = p1;
             m_enemy = p2;
+            m_turn = 0;
             this.Init(true);
         }
-
-
-        int m_turn = 0;
-        public int Turn { get { return m_turn; } }
-
-        private Party m_player;
-        private Party m_enemy;
-        private Party m_current;
-
-        public Party PlayerParty { get { return m_player; } }
-        public Party EnemyParty { get { return m_enemy; } }
-        public Party CurrentParty
-        {
-            get
-            {
-                if ((m_turn % 2) == 0)
-                    return m_player;
-                return m_enemy;
-
-            }
-        }
-
-
-
-
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="withParty"></param>
         private void Init(bool withParty = false)
         {
             //no party given make our own
@@ -69,47 +47,42 @@ namespace MarvelRPG
             }
 
         }
-
-        void OnAttack(Unit attacker, Unit defender)
-        {
-
-        }
-
-
-        public void Next()
-        {
-            //
-            m_turn++;
-        }
-
-
+        /// <summary>
+        /// 
+        /// </summary>
         private void Start()
         {
 
             combatThread = new Thread(new ThreadStart(Logger));
             Console.WriteLine("Starting combat thread...");
-
             combatThread.Start();
         }
-
-        private void Update()
+        /// <summary>
+        /// 
+        /// </summary>
+        public void Next()
         {
-
+            //
+            m_turn++;
         }
-
-
-
+        /// <summary>
+        /// 
+        /// </summary>
         private void Exit()
         {
 
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public void Restart()
         {
             combatThread.Abort();
             Start();
         }
-        //1ms = .001 seconds
+        /// <summary>
+        /// 
+        /// </summary>
         private void Logger()
         {
             int time = 0;
@@ -120,7 +93,41 @@ namespace MarvelRPG
             }
 
         }
-        Thread combatThread;
+
+        #region variables
+        #region public
+        public Party PlayerParty { get { return m_player; } }
+        public Party EnemyParty { get { return m_enemy; } }
+        public string PartyName
+        {
+            get { return "no party name"; }
+        }
+        public string ResolutionText
+        {
+            get { return "no resolution"; }
+        }
+        public string Turn { get { return m_turn.ToString(); } }
+        public string CurrentParty
+        {
+            get
+            {
+                if ((m_turn % 2) == 0)
+                    return "Player";
+                return "Enemy";
+
+            }
+        }
+        #endregion public
+
+        #region private
+        GameState gameState = GameState.instance;
+        private Thread combatThread;
+        private Party m_player;
+        private Party m_enemy;
+        private Party m_current;
+        private int m_turn;
+        #endregion private
+        #endregion variables
 
     }
 }
