@@ -18,7 +18,11 @@ namespace MarvelRPG
         /// damage mitigation
         void TakeDamage(int amount);
     }
-
+    public interface IBaseStat
+    {
+        int Health { get; set; }
+        int Resource { get; set; }
+    }
     public interface IAttributes
     {
  

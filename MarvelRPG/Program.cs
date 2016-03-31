@@ -28,7 +28,7 @@ namespace MarvelRPG
             Form2 combat = new Form2();
             Console.WriteLine("This is from the main program");
             //Application.Run(combat);
-            Application.Run(combat);
+            Application.Run(intro);
             
         }
     }
