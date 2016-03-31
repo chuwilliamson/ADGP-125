@@ -40,6 +40,9 @@ namespace MarvelRPG
             
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public Form1()
         {
             InitializeComponent();
