@@ -47,7 +47,7 @@ namespace MarvelRPG
             m_enemy.Add(wolverine);
             m_currentParty = m_player;
             m_partyTurn = 0;
-            m_resolutionText = "no resolution";
+            m_resolutionText = "\r\nno resolution";
         }
         /// <summary>
         /// 
@@ -79,7 +79,7 @@ namespace MarvelRPG
 
             }
             m_currentParty = (isPlayerParty) ? m_player : m_enemy;
-            m_resolutionText += CurrentUnit.Name + " Ended Turn ";
+            
             return isPlayerParty;
         }
 
@@ -93,18 +93,23 @@ namespace MarvelRPG
             switch (token)
             {
                 case "Attack":
-                    return attackHandler();
-
+                    m_resolutionText = 
+                        CurrentUnit.Name + " attacked for " + CurrentUnit.Strength;
+                    attackHandler();
+                    break;
                 case "End Turn":
+                    m_resolutionText = CurrentUnit.Name + " Ended Turn ";
                     return Next();
 
                 case "Skill":
-                    return skillHandler();
-
+                    m_resolutionText =
+               CurrentUnit.Name + " performed skill " + CurrentUnit.Abilities[0].Name;
+                    skillHandler();
+                    break;
 
             }
 
-            
+            //move to the next state
             return Next();
 
         }
@@ -115,16 +120,16 @@ namespace MarvelRPG
         {
             if (CurrentUnit == null)
                 return false;
-            m_resolutionText = CurrentUnit.Name + " attacked for " + CurrentUnit.Strength;
-            return Next();
+       
+            return true;
         }
 
         public bool skillHandler()
         {
             if (CurrentUnit == null)
                 return false;
-            m_resolutionText = CurrentUnit.Name + " performed skill " + CurrentUnit.Abilities[0].Name;
-            return Next();
+           
+            return true; 
         }
         /// <summary>
         /// 

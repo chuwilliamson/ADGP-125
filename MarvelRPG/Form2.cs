@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace MarvelRPG
 {
@@ -9,7 +10,7 @@ namespace MarvelRPG
     {
         public Form2()
         {
-            InitializeComponent();
+            InitializeComponent(); 
         }
 
         private void Form2_Load(object sender, EventArgs e)
@@ -38,12 +39,17 @@ namespace MarvelRPG
             //set players turn to first always for now
             
             UpdateForm(true);
+          
 
         }
 
         private void onClick(object o, EventArgs e)
         {
             Button b = (Button)o;
+            GroupBox enemies = MakeBox();
+            enemies.BringToFront();
+            enemies.CausesValidation = true;
+
             string name = b.Text;
             Console.Write("Button.Text: " + name + "\n");
             
@@ -53,6 +59,16 @@ namespace MarvelRPG
             {
                 current.Flipped = !current.Flipped;
                 return;
+            }
+
+            if (name == "Attack")
+            {
+                Form4 target = new Form4();
+                target.Controls.Add(MakeBox());
+                target.ShowDialog();
+                
+                
+ 
             }
             
             UpdateForm(tc.Update(name));
@@ -64,10 +80,85 @@ namespace MarvelRPG
 
         }
 
-        private void UpdateCard(bool state)
+        private Button MakeButton(string name, Point p)
+        {
+
+            Button b = new Button();
+            b.Location = p;
+            b.Name = name + "_Button";
+            b.Size = new Size(125, 35);
+            b.TabIndex = 12;
+            b.Text = name;
+            b.UseVisualStyleBackColor = true;
+            b.Anchor = AnchorStyles.Top;
+            
+            return b;
+
+
+        }
+        private GroupBox MakeBox()
+        {
+            GroupBox gb = new GroupBox();
+            gb.Font = new Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            gb.Location = new Point(5, 5);
+            gb.Name = "classGroupBox1";
+            gb.Size = new Size(250, 200);
+            gb.TabIndex = 1;
+            gb.TabStop = false;
+            gb.Text = "Enemies";
+            int offset = 0;
+            if (tc != null)
+            {
+                foreach (Unit u in tc.EnemyParty.units)
+                {
+                    //validClasses.Add(v.ToString());
+                    string name = u.Name.ToString();
+                    RadioButton rb = new RadioButton();
+                    rb.AutoSize = true;
+                    rb.Location = new Point(6, offset + 25);
+                    rb.Name = "radioButton_" + name;
+                    rb.Size = new Size(68, 21);
+                    rb.TabIndex = 2;
+                    rb.TabStop = true;
+                    rb.Text = name;
+                    rb.UseVisualStyleBackColor = true;
+                    rb.CheckedChanged += new System.EventHandler(radioButton_Check);
+                    gb.Controls.Add(rb);              
+                    offset += 25;
+                }
+
+                Button ok = MakeButton("ok", new Point(gb.Size.Width - 125, gb.Size.Height - 35));
+                Button cancel = MakeButton("cancel", new Point(0, gb.Size.Height - 35));
+                ok.Click += targetSelected;
+                cancel.Click += targetSelected;
+
+                gb.Controls.Add(ok);
+                gb.Controls.Add(cancel);
+
+                ok.BringToFront();
+                cancel.BringToFront();
+            }
+
+            Console.WriteLine(gb.Name);
+            Console.WriteLine(gb.Location);
+
+
+
+            return gb;
+        }
+
+        private void targetSelected(object o, EventArgs e)
+        {
+            Console.WriteLine("target selected");
+            Button b = o as Button;
+            Form f = b.FindForm();
+            f.Close();
+        }
+        private void radioButton_Check(object o, EventArgs e)
         {
 
         }
+
         /// <summary>
         /// state is either a player or an enemy
         /// </summary>
@@ -81,12 +172,14 @@ namespace MarvelRPG
                 
                 groupBox1.Text = tc.CurrentUnit.Name;
                 left = new Card(tc.CurrentUnit.Name, pictureBox1, leftCardBack);
+                textBox1.Text = tc.CurrentUnit.Abilities[0].Description;
             }
             if (!state)
             {
                 current = right;
                 groupBox2.Text = tc.CurrentUnit.Name;
                 right = new Card(tc.CurrentUnit.Name, pictureBox2, rightCardBack);
+                textBox2.Text = tc.CurrentUnit.Abilities[0].Description;
             }
             turnBox.Text = tc.CombatTurn.ToString();            
             textBox3.Text = 

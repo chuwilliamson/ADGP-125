@@ -86,9 +86,9 @@
             // 
             // pauseButton
             // 
-            this.pauseButton.Location = new System.Drawing.Point(307, 793);
+            this.pauseButton.Location = new System.Drawing.Point(307, 775);
             this.pauseButton.Name = "pauseButton";
-            this.pauseButton.Size = new System.Drawing.Size(266, 47);
+            this.pauseButton.Size = new System.Drawing.Size(266, 65);
             this.pauseButton.TabIndex = 5;
             this.pauseButton.Text = "Pause";
             this.pauseButton.UseVisualStyleBackColor = true;
@@ -125,6 +125,7 @@
             this.combatLog.Multiline = true;
             this.combatLog.Name = "combatLog";
             this.combatLog.ReadOnly = true;
+            this.combatLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.combatLog.Size = new System.Drawing.Size(270, 606);
             this.combatLog.TabIndex = 9;
             this.combatLog.Text = "combat log";
@@ -195,7 +196,7 @@
             this.textBox3.Multiline = true;
             this.textBox3.Name = "textBox3";
             this.textBox3.ReadOnly = true;
-            this.textBox3.Size = new System.Drawing.Size(270, 57);
+            this.textBox3.Size = new System.Drawing.Size(270, 39);
             this.textBox3.TabIndex = 17;
             this.textBox3.Text = "Active Party: textBox3";
             // 
@@ -203,9 +204,9 @@
             // 
             this.groupBox1.Controls.Add(this.textBox1);
             this.groupBox1.Controls.Add(this.partyBox1);
-            this.groupBox1.Controls.Add(this.panel1);
             this.groupBox1.Controls.Add(this.pictureBox1);
             this.groupBox1.Controls.Add(this.leftCardBack);
+            this.groupBox1.Controls.Add(this.panel1);
             this.groupBox1.Location = new System.Drawing.Point(1, 8);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(300, 800);
