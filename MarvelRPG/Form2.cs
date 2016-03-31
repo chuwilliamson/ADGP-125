@@ -23,6 +23,7 @@ namespace MarvelRPG
             this.Text = "Combat";
             this.left = new Card("Psylocke", pictureBox1, leftCardBack);
             this.right = new Card("Hulk", pictureBox2, rightCardBack);
+            this.current = left;
             this.playerActions = new ActionGroup(ref panel1);
             this.enemyActions = new ActionGroup(ref panel2);
             //add the onclick events for the actions
@@ -44,13 +45,17 @@ namespace MarvelRPG
         {
             Button b = (Button)o;
             string name = b.Text;
+            Console.Write("Button.Text: " + name + "\n");
+            
 
-            Console.Write("text of button: " + name + "\n");
-            if (name == "End Turn")
-                UpdateForm(tc.Next());
-
-
-
+            //buttons that do not feed fsm
+            if (name == "Flip")
+            {
+                current.Flipped = !current.Flipped;
+                return;
+            }
+            
+            UpdateForm(tc.Update(name));
         }
         private void pauseButton_Click(object sender, EventArgs e)
         {
@@ -59,14 +64,37 @@ namespace MarvelRPG
 
         }
 
+        private void UpdateCard(bool state)
+        {
+
+        }
+        /// <summary>
+        /// state is either a player or an enemy
+        /// </summary>
+        /// <param name="state"></param>
         private void UpdateForm(bool state)
         {
-            turnBox.Text = tc.CombatTurn.ToString();
-            textBox3.Text = tc.CurrentParty;
-            combatLog.Text = tc.ResolutionText;
+            if (current.Flipped) current.Flipped = false;
+            if (state)
+            {
+                current = left;
+                
+                groupBox1.Text = tc.CurrentUnit.Name;
+                left = new Card(tc.CurrentUnit.Name, pictureBox1, leftCardBack);
+            }
+            if (!state)
+            {
+                current = right;
+                groupBox2.Text = tc.CurrentUnit.Name;
+                right = new Card(tc.CurrentUnit.Name, pictureBox2, rightCardBack);
+            }
+            turnBox.Text = tc.CombatTurn.ToString();            
+            textBox3.Text = 
+                "Current Party: " + tc.CurrentParty + 
+                Environment.NewLine + "Current Unit: " + tc.CurrentUnit.Name;
+            combatLog.Text += tc.ResolutionText + Environment.NewLine ;
             playerActions.SetActive(state);
             enemyActions.SetActive(!state);
-
         }
 
         internal class ActionGroup
@@ -102,12 +130,14 @@ namespace MarvelRPG
             {
                 front = f;
                 back = b;
+                back.ReadOnly = true;
                 Utilities.UpdateDescription(name, ref back, ref front);
             }
             public Card(PictureBox f, TextBox b)
             {
                 front = f;
                 back = b;
+                back.ReadOnly = true;
             }
             private PictureBox front;
             private TextBox back;
@@ -123,7 +153,7 @@ namespace MarvelRPG
             }
         }
         private TestCombat tc;
-        private Card left, right;
+        private Card left, right, current;
         private ActionGroup playerActions;
         private ActionGroup enemyActions;
 

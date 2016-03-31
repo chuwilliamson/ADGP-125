@@ -30,6 +30,11 @@ namespace MarvelRPG
             _members.Add(a);
         }
 
+        public Ability this[int key]
+        {
+            get { return _members[key]; }
+        }
+
 
     }
 

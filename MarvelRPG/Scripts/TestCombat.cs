@@ -25,10 +25,10 @@ namespace MarvelRPG
         /// <param name="p2"></param>
         public TestCombat(Party p1, Party p2)
         {
-            m_current = m_player;
+            m_currentParty = m_player;
             m_player = p1;
             m_enemy = p2;
-            m_turn = 0;
+            m_combatTurn = 0;
             this.Init();
         }
         /// <summary>
@@ -45,7 +45,9 @@ namespace MarvelRPG
             m_player.Add(rogue);
             m_enemy.Add(hulk);
             m_enemy.Add(wolverine);
-            m_current = m_player;
+            m_currentParty = m_player;
+            m_partyTurn = 0;
+            m_resolutionText = "no resolution";
         }
         /// <summary>
         /// 
@@ -56,13 +58,73 @@ namespace MarvelRPG
             combatThread = new Thread(new ThreadStart(Logger));
             Console.WriteLine("Starting combat thread...");
             combatThread.Start();
-        }        
+        }
         /// <summary>
         /// 
         /// </summary>
         private void Exit()
         {
 
+        }
+
+        private bool Next()
+        {
+
+            m_partyTurn++;
+
+            if (m_partyTurn >= m_currentParty.Count)
+            {
+                m_partyTurn = 0;
+                m_combatTurn++;
+
+            }
+            m_currentParty = (isPlayerParty) ? m_player : m_enemy;
+            m_resolutionText += CurrentUnit.Name + " Ended Turn ";
+            return isPlayerParty;
+        }
+
+        /// <summary>
+        /// update the fsm with an input
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        public bool Update(string token)
+        {
+            switch (token)
+            {
+                case "Attack":
+                    return attackHandler();
+
+                case "End Turn":
+                    return Next();
+
+                case "Skill":
+                    return skillHandler();
+
+
+            }
+
+            
+            return Next();
+
+        }
+
+
+
+        public bool attackHandler()
+        {
+            if (CurrentUnit == null)
+                return false;
+            m_resolutionText = CurrentUnit.Name + " attacked for " + CurrentUnit.Strength;
+            return Next();
+        }
+
+        public bool skillHandler()
+        {
+            if (CurrentUnit == null)
+                return false;
+            m_resolutionText = CurrentUnit.Name + " performed skill " + CurrentUnit.Abilities[0].Name;
+            return Next();
         }
         /// <summary>
         /// 
@@ -85,14 +147,10 @@ namespace MarvelRPG
             }
 
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        public bool Next()
-        {
-            m_turn++;
-            return isPlayerParty;
-        }
+
+
+
+        public Unit CurrentUnit { get { return m_currentParty[m_partyTurn]; } }
         #region fields
         #region public
         public Party PlayerParty { get { return m_player; } }
@@ -103,17 +161,18 @@ namespace MarvelRPG
         }
         public string ResolutionText
         {
-            get { return "no resolution"; }
+            get { return m_resolutionText; }
+            set { m_resolutionText = value; }
         }
-        public string CombatTurn { get { return m_turn.ToString(); } }
-        
+        public string CombatTurn { get { return m_combatTurn.ToString(); } }
 
-        
+
+
         public string CurrentParty
         {
             get
             {
-                if ((m_turn % 2) == 0)
+                if ((m_combatTurn % 2) == 0)
                     return "Player";
                 return "Enemy";
             }
@@ -121,18 +180,19 @@ namespace MarvelRPG
         #endregion public
 
         #region private
-        GameState gameState = GameState.instance;
+        private GameState gameState = GameState.instance;
         private Thread combatThread;
         private Party m_player;
         private Party m_enemy;
-        private Party m_current;
+        private Party m_currentParty;
+        private string m_resolutionText;
         private int m_partyTurn;
-        private int m_turn;
-        private bool isPlayerParty
+        private int m_combatTurn;
+        public bool isPlayerParty
         {
             get
             {
-                if ((m_turn % 2) == 0)
+                if ((m_combatTurn % m_currentParty.Count) == 0)
                     return true;
                 return false;
             }

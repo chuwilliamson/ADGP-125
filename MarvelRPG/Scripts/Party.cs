@@ -16,10 +16,10 @@ namespace MarvelRPG
     [XmlRoot("Party")]
     public class Party
     {
-
-        public Party() { _units = new List<Unit>(); }
-
-        private List<Unit> _units;
+        public Party()
+        {
+            _units = new List<Unit>();
+        }
 
         [XmlArray("Team"), XmlArrayItem(typeof(Unit), ElementName = "Unit")]
         public List<Unit> units
@@ -36,6 +36,14 @@ namespace MarvelRPG
                 return true;
             }
             return false;
+        }
+
+        public int Count { get { return _units.Count; } }
+        private List<Unit> _units;
+
+        public Unit this[int key]
+        {
+            get { return _units[key]; }
         }
     }
 
@@ -100,6 +108,7 @@ namespace MarvelRPG
         public int Speed { get { return speed; } set { speed = value; } }
         public int Strength { get { return strength; } set { strength = value; } }
 
+    
 
     }
 

@@ -86,9 +86,9 @@
             // 
             // pauseButton
             // 
-            this.pauseButton.Location = new System.Drawing.Point(307, 775);
+            this.pauseButton.Location = new System.Drawing.Point(307, 793);
             this.pauseButton.Name = "pauseButton";
-            this.pauseButton.Size = new System.Drawing.Size(266, 65);
+            this.pauseButton.Size = new System.Drawing.Size(266, 47);
             this.pauseButton.TabIndex = 5;
             this.pauseButton.Text = "Pause";
             this.pauseButton.UseVisualStyleBackColor = true;
@@ -161,7 +161,7 @@
             this.turnBox.Size = new System.Drawing.Size(270, 104);
             this.turnBox.TabIndex = 14;
             this.turnBox.Text = "2";
-            this.turnBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center; 
+            this.turnBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // textBox1
             // 
@@ -195,7 +195,7 @@
             this.textBox3.Multiline = true;
             this.textBox3.Name = "textBox3";
             this.textBox3.ReadOnly = true;
-            this.textBox3.Size = new System.Drawing.Size(270, 39);
+            this.textBox3.Size = new System.Drawing.Size(270, 57);
             this.textBox3.TabIndex = 17;
             this.textBox3.Text = "Active Party: textBox3";
             // 
@@ -203,9 +203,9 @@
             // 
             this.groupBox1.Controls.Add(this.textBox1);
             this.groupBox1.Controls.Add(this.partyBox1);
+            this.groupBox1.Controls.Add(this.panel1);
             this.groupBox1.Controls.Add(this.pictureBox1);
             this.groupBox1.Controls.Add(this.leftCardBack);
-            this.groupBox1.Controls.Add(this.panel1);
             this.groupBox1.Location = new System.Drawing.Point(1, 8);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(300, 800);
@@ -231,7 +231,7 @@
             this.button4.Size = new System.Drawing.Size(126, 33);
             this.button4.TabIndex = 17;
             this.button4.Text = "End Turn";
-            this.button4.UseVisualStyleBackColor = true; 
+            this.button4.UseVisualStyleBackColor = true;
             // 
             // button1
             // 
@@ -240,7 +240,7 @@
             this.button1.Size = new System.Drawing.Size(130, 33);
             this.button1.TabIndex = 0;
             this.button1.Text = "Attack";
-            this.button1.UseVisualStyleBackColor = true; 
+            this.button1.UseVisualStyleBackColor = true;
             // 
             // defendButton1
             // 
@@ -249,7 +249,7 @@
             this.defendButton1.Size = new System.Drawing.Size(130, 33);
             this.defendButton1.TabIndex = 16;
             this.defendButton1.Text = "Skill";
-            this.defendButton1.UseVisualStyleBackColor = true; 
+            this.defendButton1.UseVisualStyleBackColor = true;
             // 
             // leftFlipButton
             // 
@@ -258,7 +258,7 @@
             this.leftFlipButton.Size = new System.Drawing.Size(126, 33);
             this.leftFlipButton.TabIndex = 12;
             this.leftFlipButton.Text = "Flip";
-            this.leftFlipButton.UseVisualStyleBackColor = true; 
+            this.leftFlipButton.UseVisualStyleBackColor = true;
             // 
             // groupBox2
             // 
@@ -292,7 +292,7 @@
             this.button2.Size = new System.Drawing.Size(126, 33);
             this.button2.TabIndex = 17;
             this.button2.Text = "End Turn";
-            this.button2.UseVisualStyleBackColor = true; 
+            this.button2.UseVisualStyleBackColor = true;
             // 
             // button3
             // 
@@ -301,7 +301,7 @@
             this.button3.Size = new System.Drawing.Size(130, 33);
             this.button3.TabIndex = 0;
             this.button3.Text = "Attack";
-            this.button3.UseVisualStyleBackColor = true; 
+            this.button3.UseVisualStyleBackColor = true;
             // 
             // button5
             // 
@@ -310,7 +310,7 @@
             this.button5.Size = new System.Drawing.Size(130, 33);
             this.button5.TabIndex = 16;
             this.button5.Text = "Skill";
-            this.button5.UseVisualStyleBackColor = true; 
+            this.button5.UseVisualStyleBackColor = true;
             // 
             // button6
             // 
@@ -319,7 +319,7 @@
             this.button6.Size = new System.Drawing.Size(126, 33);
             this.button6.TabIndex = 12;
             this.button6.Text = "Flip";
-            this.button6.UseVisualStyleBackColor = true; 
+            this.button6.UseVisualStyleBackColor = true;
             // 
             // Form2
             // 
