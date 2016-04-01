@@ -37,11 +37,11 @@ namespace MarvelRPG
                 offset += 25;
             }
 
-            
+
         }
 
         /// <summary>
-        /// 
+        /// Default form initialization
         /// </summary>
         public Form1()
         {
@@ -68,7 +68,7 @@ namespace MarvelRPG
             }
 
             SaveFileDialog saveFileDialog = new SaveFileDialog();
-            string path = Utilities.savePath + @"Parties\";
+            string path = Utilities.path + @"Parties\";
             if (Directory.Exists(path))
                 saveFileDialog.InitialDirectory = path;
 
@@ -89,7 +89,7 @@ namespace MarvelRPG
             gs.Party.units.Clear();
             string fileName;
             OpenFileDialog selectFileDialog = new OpenFileDialog();
-            string path = Utilities.savePath + @"Parties\";
+            string path = Utilities.path + @"Parties\";
 
             selectFileDialog.InitialDirectory = path;
             selectFileDialog.Filter = "XML Files | *.xml";
@@ -101,7 +101,7 @@ namespace MarvelRPG
             fileName = selectFileDialog.FileName;
             fileName = fileName.Replace(".xml", "");
             Party p = Utilities.DeserializeXML<Party>(fileName);
-            
+
 
             Utilities.updateBox(ref partyBox, ref p);
         }
@@ -113,43 +113,55 @@ namespace MarvelRPG
             if (toRemove != null)
                 p.units.Remove(toRemove);
 
-            
+
             Utilities.updateBox(ref partyBox, ref p);
 
         }
 
         private void addButton_Click(object sender, EventArgs e)
         {
-            string path = Utilities.savePath + @"/Units/";
 
-            Unit u = Utilities.DeserializeXML<Unit>(path + currentSelection);
-            
+
+            Unit u = Utilities.DeserializeXML<Unit>(Utilities.upath + currentSelection);
+
             Unit tmp = gs.Party.units.Find(x => x.Name == u.Name);
 
             if (tmp == null)
                 gs.Party.units.Add(u);
+
             Party p = gs.Party;
             Utilities.updateBox(ref partyBox, ref p);
         }
 
-
-
-
-        #endregion events
-
-        private void clearParty_button_Click(object sender, EventArgs e)
+        private void clearPartyButton_Click(object sender, EventArgs e)
         {
+            gs.Party.units.Clear();
             Party p = gs.Party;
-            p.units.Clear();
-            Utilities.updateBox(ref partyBox, ref p);
+            Utilities.updateBox(ref partyBox, ref p, true);
         }
 
-        private void start_Button_Click(object sender, EventArgs e)
+        private void startButton_Click(object sender, EventArgs e)
         {
             this.Hide();
-            Form2 combat = new Form2();
+            //create a combat context
+            TestCombat tc = new TestCombat();
+            //give it to form2 to process
+            Form2 combat = new Form2(ref tc);
+
+            if (partyBox.Controls.Count <= 0)
+                MessageBox.Show("No party selected... loading default parties.");
+
+
+            string partyText = Environment.NewLine;
+            foreach (Unit u in tc.PlayerParty.units)
+                partyText += u.Name + Environment.NewLine;
+
+
+            MessageBox.Show("Combat Party " + partyText);
             combat.ShowDialog();
             this.Close();
         }
+        #endregion events
+
     }
 }

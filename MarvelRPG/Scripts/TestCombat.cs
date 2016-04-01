@@ -1,45 +1,55 @@
 ﻿using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Threading;
 namespace MarvelRPG
 {
     public class TestCombat
     {
+
         /// <summary>
         /// create a test instance of combat with hulk and psylocke
         /// </summary>
         public TestCombat()
         {
-            m_player = new Party();
+
             m_enemy = new Party();
-            this.Init();
+            m_player = new Party();
+
+            //if the gamestate has a party use that one
+
+            if (gameState.Party.Count > 0)
+            {
+                Init(gameState.Party);
+            }
+            else
+            {
+                Init();
+            }
+            
+         
         }
-        /// <summary>
-        /// create a combat with predefined parties
-        /// </summary>
-        /// <param name="p1"></param>
-        /// <param name="p2"></param>
-        public TestCombat(Party p1, Party p2)
+
+        private void Init(Party p)
         {
+            
+            Unit hulk = gameState.CharacterLibrary["Hulk"];
+            Unit wolverine = gameState.CharacterLibrary["Thor"];
+            m_enemy.Add(hulk);
+            m_enemy.Add(wolverine);
+
+            m_player = p;
             m_currentParty = m_player;
-            m_player = p1;
-            m_enemy = p2;
-            m_combatTurn = 0;
-            this.Init();
+            m_partyTurn = 0;
+            m_resolutionText = "\r\nno resolution";
         }
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="withParty"></param>
+        /// <param name="withoutParty"></param>
         private void Init()
         {
             Unit psylocke = gameState.CharacterLibrary["Psylocke"];
             Unit hulk = gameState.CharacterLibrary["Hulk"];
-            Unit wolverine = gameState.CharacterLibrary["Wolverine"];
+            Unit wolverine = gameState.CharacterLibrary["Thor"];
             Unit rogue = gameState.CharacterLibrary["Rogue"];
             m_player.Add(psylocke);
             m_player.Add(rogue);
@@ -177,7 +187,7 @@ namespace MarvelRPG
         {
             get
             {
-                if ((m_combatTurn % 2) == 0)
+                if ((m_combatTurn % m_currentParty.Count) == 0)
                     return "Player";
                 return "Enemy";
             }
@@ -197,7 +207,7 @@ namespace MarvelRPG
         {
             get
             {
-                if ((m_combatTurn % m_currentParty.Count) == 0)
+                if ((m_combatTurn % m_currentParty.Count) == 0 )
                     return true;
                 return false;
             }

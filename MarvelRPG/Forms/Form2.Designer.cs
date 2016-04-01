@@ -37,8 +37,8 @@
             this.leftCardBack = new System.Windows.Forms.TextBox();
             this.rightCardBack = new System.Windows.Forms.TextBox();
             this.turnBox = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.abilityBox1 = new System.Windows.Forms.TextBox();
+            this.abilityBox2 = new System.Windows.Forms.TextBox();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -52,6 +52,8 @@
             this.button3 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
+            this.unitBox1 = new System.Windows.Forms.TextBox();
+            this.unitBox2 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -68,7 +70,7 @@
             this.partyBox1.Multiline = true;
             this.partyBox1.Name = "partyBox1";
             this.partyBox1.ReadOnly = true;
-            this.partyBox1.Size = new System.Drawing.Size(270, 176);
+            this.partyBox1.Size = new System.Drawing.Size(270, 80);
             this.partyBox1.TabIndex = 1;
             this.partyBox1.Text = "Party Info";
             // 
@@ -80,7 +82,7 @@
             this.partyBox2.Multiline = true;
             this.partyBox2.Name = "partyBox2";
             this.partyBox2.ReadOnly = true;
-            this.partyBox2.Size = new System.Drawing.Size(270, 173);
+            this.partyBox2.Size = new System.Drawing.Size(270, 80);
             this.partyBox2.TabIndex = 2;
             this.partyBox2.Text = "Party Info";
             // 
@@ -128,7 +130,7 @@
             this.combatLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.combatLog.Size = new System.Drawing.Size(270, 606);
             this.combatLog.TabIndex = 9;
-            this.combatLog.Text = "combat log";
+            this.combatLog.Text = "Combat Log";
             // 
             // leftCardBack
             // 
@@ -164,29 +166,29 @@
             this.turnBox.Text = "2";
             this.turnBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // textBox1
+            // abilityBox1
             // 
-            this.textBox1.Enabled = false;
-            this.textBox1.Location = new System.Drawing.Point(13, 724);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(1);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(270, 39);
-            this.textBox1.TabIndex = 15;
-            this.textBox1.Text = "Current State: textBox1";
+            this.abilityBox1.Enabled = false;
+            this.abilityBox1.Location = new System.Drawing.Point(13, 724);
+            this.abilityBox1.Margin = new System.Windows.Forms.Padding(1);
+            this.abilityBox1.Multiline = true;
+            this.abilityBox1.Name = "abilityBox1";
+            this.abilityBox1.ReadOnly = true;
+            this.abilityBox1.Size = new System.Drawing.Size(270, 72);
+            this.abilityBox1.TabIndex = 15;
+            this.abilityBox1.Text = "Current State: textBox1";
             // 
-            // textBox2
+            // abilityBox2
             // 
-            this.textBox2.Enabled = false;
-            this.textBox2.Location = new System.Drawing.Point(6, 724);
-            this.textBox2.Margin = new System.Windows.Forms.Padding(1);
-            this.textBox2.Multiline = true;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.ReadOnly = true;
-            this.textBox2.Size = new System.Drawing.Size(270, 39);
-            this.textBox2.TabIndex = 16;
-            this.textBox2.Text = "Current State: textBox2";
+            this.abilityBox2.Enabled = false;
+            this.abilityBox2.Location = new System.Drawing.Point(6, 724);
+            this.abilityBox2.Margin = new System.Windows.Forms.Padding(1);
+            this.abilityBox2.Multiline = true;
+            this.abilityBox2.Name = "abilityBox2";
+            this.abilityBox2.ReadOnly = true;
+            this.abilityBox2.Size = new System.Drawing.Size(270, 72);
+            this.abilityBox2.TabIndex = 16;
+            this.abilityBox2.Text = "Current State: textBox2";
             // 
             // textBox3
             // 
@@ -202,7 +204,8 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.textBox1);
+            this.groupBox1.Controls.Add(this.unitBox1);
+            this.groupBox1.Controls.Add(this.abilityBox1);
             this.groupBox1.Controls.Add(this.partyBox1);
             this.groupBox1.Controls.Add(this.pictureBox1);
             this.groupBox1.Controls.Add(this.leftCardBack);
@@ -263,9 +266,10 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.unitBox2);
             this.groupBox2.Controls.Add(this.panel2);
             this.groupBox2.Controls.Add(this.partyBox2);
-            this.groupBox2.Controls.Add(this.textBox2);
+            this.groupBox2.Controls.Add(this.abilityBox2);
             this.groupBox2.Controls.Add(this.pictureBox2);
             this.groupBox2.Controls.Add(this.rightCardBack);
             this.groupBox2.Location = new System.Drawing.Point(579, 8);
@@ -322,6 +326,30 @@
             this.button6.Text = "Flip";
             this.button6.UseVisualStyleBackColor = true;
             // 
+            // unitBox1
+            // 
+            this.unitBox1.Enabled = false;
+            this.unitBox1.Location = new System.Drawing.Point(13, 632);
+            this.unitBox1.Margin = new System.Windows.Forms.Padding(1);
+            this.unitBox1.Multiline = true;
+            this.unitBox1.Name = "unitBox1";
+            this.unitBox1.ReadOnly = true;
+            this.unitBox1.Size = new System.Drawing.Size(270, 80);
+            this.unitBox1.TabIndex = 21;
+            this.unitBox1.Text = "Unit Info";
+            // 
+            // unitBox2
+            // 
+            this.unitBox2.Enabled = false;
+            this.unitBox2.Location = new System.Drawing.Point(6, 632);
+            this.unitBox2.Margin = new System.Windows.Forms.Padding(1);
+            this.unitBox2.Multiline = true;
+            this.unitBox2.Name = "unitBox2";
+            this.unitBox2.ReadOnly = true;
+            this.unitBox2.Size = new System.Drawing.Size(270, 80);
+            this.unitBox2.TabIndex = 22;
+            this.unitBox2.Text = "Unit Info";
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -360,8 +388,8 @@
         private System.Windows.Forms.TextBox leftCardBack;
         private System.Windows.Forms.TextBox rightCardBack;
         private System.Windows.Forms.TextBox turnBox;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox abilityBox1;
+        private System.Windows.Forms.TextBox abilityBox2;
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
@@ -375,5 +403,7 @@
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.TextBox unitBox1;
+        private System.Windows.Forms.TextBox unitBox2;
     }
 }

@@ -82,6 +82,7 @@
             this.Controls.Add(this.loadButton);
             this.Controls.Add(this.saveButton);
             this.Name = "Form3";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Pause Menu";
             this.Load += new System.EventHandler(this.Form3_Load);
             this.ResumeLayout(false);

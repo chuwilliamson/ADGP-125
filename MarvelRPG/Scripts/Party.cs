@@ -49,23 +49,12 @@ namespace MarvelRPG
 
 
     [Serializable]
-    public class Unit : IAttributes
+    public class Unit : IAttributes, IBaseStats
     {
-        private Unit() { }
+        private Unit() {  }
 
-        public Unit(int d, int s, int f, int spd, int e, int i)
-        {
-            name = "default";
-            durability = d;
-            strength = s;
-            fighting = f;
-            speed = spd;
-            energy = e;
-            intelligence = i;
-
-        }
-
-        public Unit(int d, int s, int f, int spd, int e, int i, string n)
+        
+        public Unit(string n, int d, int s, int f, int spd, int e, int i)
         {
             durability = d;
             strength = s;
@@ -74,12 +63,12 @@ namespace MarvelRPG
             energy = e;
             intelligence = i;
             name = n;
-
+            b_health = 650;
+            b_resource = 1000;
         }
 
-        public Unit(int d, int s, int f, int spd, int e, int i, string n, string b)
+        public Unit(string n, int d, int s, int f, int spd, int e, int i, int h, int r)
         {
-
             durability = d;
             strength = s;
             fighting = f;
@@ -87,9 +76,14 @@ namespace MarvelRPG
             energy = e;
             intelligence = i;
             name = n;
-            bio = b;
+            b_health = h;
+            b_resource = r;
         }
 
+
+
+
+        #region private
         private string bio;
         private string name;
         private int durability;
@@ -99,6 +93,14 @@ namespace MarvelRPG
         private int energy;
         private int intelligence;
         private Abilities abilities;
+        private int b_health;
+        private int b_resource;
+
+
+
+        #endregion private
+
+        #region public
         public Abilities Abilities { get { return abilities; } set { abilities = value; } }
         public string Name { get { return name; } set { name = value; } }
         public int Durability { get { return durability; } set { durability = value; } }
@@ -107,9 +109,11 @@ namespace MarvelRPG
         public int Intelligence { get { return intelligence; } set { intelligence = value; } }
         public int Speed { get { return speed; } set { speed = value; } }
         public int Strength { get { return strength; } set { strength = value; } }
-
-    
-
+        #region Base Stats
+        public int Health { get { return b_health; } set { b_health = value; } }
+        public int Resource { get { return b_resource; } set { b_resource = value; } }
+        #endregion Base Stats
+        #endregion public
     }
 
 }

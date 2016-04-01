@@ -139,7 +139,7 @@
             this.clearParty_button.TabIndex = 10;
             this.clearParty_button.Text = "Clear Party";
             this.clearParty_button.UseVisualStyleBackColor = true;
-            this.clearParty_button.Click += new System.EventHandler(this.clearParty_button_Click);
+            this.clearParty_button.Click += new System.EventHandler(this.clearPartyButton_Click);
             // 
             // start_Button
             // 
@@ -150,7 +150,7 @@
             this.start_Button.TabIndex = 11;
             this.start_Button.Text = "Start";
             this.start_Button.UseVisualStyleBackColor = false;
-            this.start_Button.Click += new System.EventHandler(this.start_Button_Click);
+            this.start_Button.Click += new System.EventHandler(this.startButton_Click);
             // 
             // Form1
             // 

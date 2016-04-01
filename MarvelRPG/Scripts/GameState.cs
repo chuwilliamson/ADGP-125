@@ -15,7 +15,7 @@ namespace MarvelRPG
             _characterLibrary = new Dictionary<string, Unit>();
             _abilityLibrary = new Dictionary<string, Abilities>();
             _abilities = new Abilities();
-            GenerateAbilities(apath + "Abilities");
+            GenerateAbilities(Utilities.apath + "Abilities");
             GenerateClasses();
         }
 
@@ -26,12 +26,12 @@ namespace MarvelRPG
         /// </summary>
         /// <returns></returns>
         private bool GenerateAbilities(string file)
-        { 
- 
-            if (!Directory.Exists(apath))
-                Directory.CreateDirectory(apath);
+        {
 
-           _abilities = Utilities.DeserializeXML<Abilities>(file);
+            if (!Directory.Exists(Utilities.apath))
+                Directory.CreateDirectory(Utilities.apath);
+
+            _abilities = Utilities.DeserializeXML<Abilities>(file);
 
             if (_abilities != null)
             {
@@ -67,7 +67,7 @@ namespace MarvelRPG
                 }
             }
 
-            Utilities.SerializeXML("Abilities", _abilities, apath);
+            Utilities.SerializeXML("Abilities", _abilities, Utilities.apath);
 
             return true;
         }
@@ -78,19 +78,30 @@ namespace MarvelRPG
             var v = Enum.GetValues(typeof(Characters));
             //generate the classes based on information on application startup
             //1330is number of abilities
-            if (!Directory.Exists(upath))
-                Directory.CreateDirectory(upath);
+            if (!Directory.Exists(Utilities.upath))
+                Directory.CreateDirectory(Utilities.upath);
 
             foreach (var s in v)
             {
                 string name = s.ToString();
-                string unitFile = path + name + ".xml";
+                string unitFile = Utilities.upath + name + ".xml";
+
+                //does the file exist already?
+
 
                 Unit u = (File.Exists(unitFile)) ? Utilities.DeserializeXML<Unit>(unitFile) : Utilities.FetchUnit(name);
+
+                //if not go get it from the wiki
+ 
+                //attach abilities to it
                 u.Abilities = AbilityLibrary[name];
-                Utilities.SerializeXML(name, u, upath);
+                //save it
+
+
+                //put it in library
                 _characterLibrary.Add(name, u);
-                
+                Utilities.SerializeXML(name, u, Utilities.upath);
+
             }
 
             return true;
@@ -102,9 +113,7 @@ namespace MarvelRPG
         private Dictionary<string, Abilities> _abilityLibrary;
         private Abilities _abilities;
 
-        private static string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-        private static string apath = path + @"\My Games\" + System.Windows.Forms.Application.ProductName + @"\Abilities\";
-        private static string upath = path + @"\My Games\" + System.Windows.Forms.Application.ProductName + @"\Units\";
+
         #endregion
 
         #region public
@@ -119,6 +128,12 @@ namespace MarvelRPG
             }
         }
 
+
+
+        public int PartySize
+        {
+            get { return _party.Count; }
+        }
         /// <summary>
         /// the combat party
         /// </summary>

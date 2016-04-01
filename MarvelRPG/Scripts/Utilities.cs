@@ -13,8 +13,9 @@ namespace MarvelRPG
 {
     public static class Utilities
     {
-        public readonly static string savePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\My Games\MarvelRPG\";
-
+        public readonly static string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\My Games\MarvelRPG\";        
+        public readonly static string apath = path + @"\Abilities\";
+        public readonly static string upath = path + @"\Units\";
 
 
 
@@ -28,7 +29,7 @@ namespace MarvelRPG
             string charInfo = "";
             Regex regex = new Regex("Durability|Strength|Fighting Skills|Speed|Energy Projection|Intelligence");
             if (docTable == null)
-                return new Unit(1, 1, 1, 1, 1, 1);
+                return new Unit(n: "null", d: 1, s: 1, f: 1, spd: 1, e: 1, i: 1);
 
             foreach (HtmlNode table in docTable)
             {
@@ -62,7 +63,7 @@ namespace MarvelRPG
             }
 
             ///create a temporary character
-            return new Unit(nums[0], nums[1], nums[2], nums[3], nums[4], nums[5], name);
+            return new Unit(name, nums[0], nums[1], nums[2], nums[3], nums[4], nums[5]);
 
         }
 
@@ -95,7 +96,7 @@ namespace MarvelRPG
 
 
             ///create a temporary character
-            string path = savePath + @"\Units\";
+            string path = Utilities.path + @"\Units\";
             Unit tmpChar = GameState.instance.CharacterLibrary[currentSelection];
             Abilities tmpAbl = tmpChar.Abilities;
             string s0 = currentSelection + Environment.NewLine + Environment.NewLine;
@@ -104,12 +105,14 @@ namespace MarvelRPG
             string s3 = "Energy: " + tmpChar.Energy.ToString() + Environment.NewLine;
             string s4 = "Speed: " + tmpChar.Speed.ToString() + Environment.NewLine;
             string s5 = "Intelligence " + tmpChar.Intelligence.ToString() + Environment.NewLine + Environment.NewLine + Environment.NewLine;
-            string s6 = "ABILITIES:" + Environment.NewLine;
+            string s6 = "HP: " + tmpChar.Health.ToString() + Environment.NewLine;
+            string s7 = "ABILITIES:" + Environment.NewLine;
+            
 
             foreach (Ability a in tmpAbl.Members)
                 s6 += a.Name + Environment.NewLine;
 
-            tb.Text = s0 + s1 + s2 + s3 + s4 + s5 + s6;
+            tb.Text = s0 + s1 + s2 + s3 + s4 + s5 + s6 + s7;
 
             return true;
 
@@ -124,9 +127,11 @@ namespace MarvelRPG
             //hashtag begin janky
             if (type == typeof(TextBox)) o = box as TextBox;
             if (type == typeof(GroupBox)) o = box as GroupBox;
-
+            
+            o.Controls.Clear();
+           
             //add the labels
-            if (o != null)
+            if (o != null )
             {
                 int offset = 25;
                 foreach (Unit u in p.units)
@@ -139,8 +144,7 @@ namespace MarvelRPG
                     offset += 25;
                     o.Controls.Add(l);
                 }
-            }
-            int a = 0;
+            } 
         }
 
 
