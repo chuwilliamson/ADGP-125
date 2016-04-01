@@ -13,52 +13,34 @@ namespace MarvelRPG
 
             m_enemy = new Party();
             m_player = new Party();
+            Unit hulk = gameState.CharacterLibrary["Hulk"];
+            Unit wolverine = gameState.CharacterLibrary["Thor"]; 
+            m_enemy.Add(hulk);
+            m_enemy.Add(wolverine);
+           
 
+            Func<Party> noParty = () => {
+                Party p = new Party();
+                Unit psylocke = gameState.CharacterLibrary["Psylocke"];
+                Unit rogue = gameState.CharacterLibrary["Rogue"];
+                p.Add(psylocke);
+                p.Add(rogue);
+                return p;
+            };
             //if the gamestate has a party use that one
+            Func<Party> hasParty = () =>
+            {
+                return gameState.Party;
+            };
 
-            if (gameState.Party.Count > 0)
-            {
-                Init(gameState.Party);
-            }
-            else
-            {
-                Init();
-            }
-            
+            m_player = (gameState.Party.Count > 0 ? hasParty : noParty)();
+            m_partyTurn = 0;
+            m_resolutionText = "\r\nno resolution";
+
+
+
+        }
          
-        }
-
-        private void Init(Party p)
-        {
-            
-            Unit hulk = gameState.CharacterLibrary["Hulk"];
-            Unit wolverine = gameState.CharacterLibrary["Thor"];
-            m_enemy.Add(hulk);
-            m_enemy.Add(wolverine);
-
-            m_player = p;
-            m_currentParty = m_player;
-            m_partyTurn = 0;
-            m_resolutionText = "\r\nno resolution";
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="withoutParty"></param>
-        private void Init()
-        {
-            Unit psylocke = gameState.CharacterLibrary["Psylocke"];
-            Unit hulk = gameState.CharacterLibrary["Hulk"];
-            Unit wolverine = gameState.CharacterLibrary["Thor"];
-            Unit rogue = gameState.CharacterLibrary["Rogue"];
-            m_player.Add(psylocke);
-            m_player.Add(rogue);
-            m_enemy.Add(hulk);
-            m_enemy.Add(wolverine);
-            m_currentParty = m_player;
-            m_partyTurn = 0;
-            m_resolutionText = "\r\nno resolution";
-        }
         /// <summary>
         /// 
         /// </summary>
@@ -109,7 +91,7 @@ namespace MarvelRPG
                     break;
                 case "End Turn":
                     m_resolutionText = CurrentUnit.Name + " Ended Turn ";
-                    return Next();
+                    break;
 
                 case "Skill":
                     m_resolutionText =
