@@ -1,25 +1,40 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 namespace MarvelRPG
 {
     public class TestCombat
     {
+         
 
         /// <summary>
         /// create a test instance of combat with hulk and psylocke
         /// </summary>
         public TestCombat()
         {
+            combatMachine = new Thread(() => CombatFSM("*"));
+            playerMachine = new Thread(() => PlayerFSM("*"));
+            enemyMachine = new Thread(() => EnemyFSM("*"));
+            combatMachine.Start();
 
-            m_enemy = new Party();
-            m_player = new Party();
+            m_combatTurn = 1;
+
+
+            m_enemyParty = new Party();
+            m_playerParty = new Party();
+            m_currentParty = new Party();
+
+            m_units = new List<Unit>();
+
+
             Unit hulk = gameState.CharacterLibrary["Hulk"];
-            Unit wolverine = gameState.CharacterLibrary["Thor"]; 
-            m_enemy.Add(hulk);
-            m_enemy.Add(wolverine);
-           
+            Unit wolverine = gameState.CharacterLibrary["Thor"];
+            m_enemyParty.Add(hulk);
+            m_enemyParty.Add(wolverine);
 
-            Func<Party> noParty = () => {
+            //if we do not have a party to start with make one
+            Func<Party> noParty = () =>
+            {
                 Party p = new Party();
                 Unit psylocke = gameState.CharacterLibrary["Psylocke"];
                 Unit rogue = gameState.CharacterLibrary["Rogue"];
@@ -33,139 +48,180 @@ namespace MarvelRPG
                 return gameState.Party;
             };
 
-            m_player = (gameState.Party.Count > 0 ? hasParty : noParty)();
-            m_partyTurn = 0;
-            m_resolutionText = "\r\nno resolution";
+            m_playerParty = (gameState.Party.Count > 0 ? hasParty : noParty)();
+            //starting party is the player party
+            m_currentParty = m_playerParty;
 
+            m_resolutionText = "";
 
-
-        }
-         
-        /// <summary>
-        /// 
-        /// </summary>
-        private void Start()
-        {
-
-            combatThread = new Thread(new ThreadStart(Logger));
-            Console.WriteLine("Starting combat thread...");
-            combatThread.Start();
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        private void Exit()
-        {
-
-        }
-
-        private bool Next()
-        {
-
-            m_partyTurn++;
-
-            if (m_partyTurn >= m_currentParty.Count)
-            {
-                m_partyTurn = 0;
-                m_combatTurn++;
-
-            }
-            m_currentParty = (isPlayerParty) ? m_player : m_enemy;
+            m_combatState = CombatState.PLAYER;
             
-            return isPlayerParty;
+            
         }
 
+
+        private string PlayerFSM(string input)
+        {
+            switch (input)
+            {
+                case "*":
+                    Console.Write("\r Player init");
+                    break;
+                case "ok":
+                    break;
+                case "cancel":
+                    break;
+                case "skill":
+                    break;
+                case "endturn":
+                    break;
+                case "attack":
+                    break;
+            }
+
+            return input;
+        }
+
+        private void EnemyFSM(string input)
+        {
+            switch (input)
+            {
+                case "*":
+                    break;
+                case "ok":
+                    break;
+                case "cancel":
+                    break;
+                case "skill":
+                    break;
+                case "endturn":
+                    break;
+                case "attack":
+                    break;
+            }
+        }
+
+        private static void CombatFSM(string input)
+        {
+            int time = 0;
+            CombatState currentState = m_combatState;
+            while (true)
+            {
+                time += 1; 
+                Console.Write("\rCombat State: {0} {1}", m_combatState.ToString(), time);
+
+                if (input == "*")
+                    m_combatState = CombatState.INIT;
+                else if (input == "done")
+                    m_combatState = (currentState == CombatState.PLAYER) ? CombatState.ENEMY : CombatState.PLAYER;
+
+
+                switch (currentState)
+                {
+                    case CombatState.PLAYER:
+                        if (enemyMachine.ThreadState == ThreadState.Running)
+                        {
+                            Console.WriteLine("die enemy state");
+                            enemyMachine.Abort();
+                        }
+                        if(playerMachine.ThreadState == ThreadState.Unstarted)
+                            playerMachine.Start();
+                        
+                        //PlayerFSM(input);
+                        break;
+                    case CombatState.ENEMY:
+                        if (playerMachine.ThreadState == ThreadState.Running)
+                        {
+                            Console.WriteLine("die player state");
+                            playerMachine.Abort();
+                        }
+                        enemyMachine.Start();
+                        //EnemyFSM(input);
+                        break;
+                }
+            } 
+        }
+
+
+ 
         /// <summary>
         /// update the fsm with an input
         /// </summary>
         /// <param name="token"></param>
         /// <returns></returns>
-        public bool Update(string token)
+
+        public void Update(string token)
         {
             switch (token)
             {
                 case "Attack":
-                    m_resolutionText = 
-                        CurrentUnit.Name + " attacked for " + CurrentUnit.Strength;
-                    attackHandler();
+                    CombatFSM("Attack");
                     break;
                 case "End Turn":
-                    m_resolutionText = CurrentUnit.Name + " Ended Turn ";
+                    CombatFSM("done");
                     break;
-
                 case "Skill":
-                    m_resolutionText =
-               CurrentUnit.Name + " performed skill " + CurrentUnit.Abilities[0].Name;
-                    skillHandler();
+                    CombatFSM("Skill");
                     break;
-
             }
 
             //move to the next state
-            return Next();
 
+
+        }
+
+        private Unit NextUnit()
+        {
+            m_unitTurn++;
+            return m_currentParty[m_unitTurn - 1];
+        }
+
+        private void Next()
+        {
+            Unit u = NextUnit();
+            if (u == null)
+                m_currentParty = NextParty();
+        }
+
+        private Party NextParty()
+        {
+            Party p = new Party();
+            if (m_unitTurn > m_currentParty.Count)
+            {
+                m_unitTurn = 1;
+                m_combatTurn++;
+                p = (m_currentParty.GetHashCode() == m_currentParty.GetHashCode()) ? m_enemyParty : m_playerParty;
+            }
+            return p;
         }
 
 
 
-        public bool attackHandler()
+        public string attackHandler(Unit attacker, Unit Defender)
         {
-            if (CurrentUnit == null)
-                return false;
-       
-            return true;
+            string resolution = attacker.Name + " attacked for " + attacker.Strength;
+
+
+            return resolution;
         }
 
         public bool skillHandler()
         {
             if (CurrentUnit == null)
                 return false;
-           
-            return true; 
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        public void Restart()
-        {
-            combatThread.Abort();
-            Start();
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        private void Logger()
-        {
-            int time = 0;
-            while (true)
-            {
-                time += 1;
-                Console.Write("\rRunning combat thread... {0}ms: ", time.ToString());
-            }
 
+            return true;
         }
 
 
 
-        public Unit CurrentUnit { get { return m_currentParty[m_partyTurn]; } }
-        #region fields
-        #region public
-        public Party PlayerParty { get { return m_player; } }
-        public Party EnemyParty { get { return m_enemy; } }
-        public string PartyName
-        {
-            get { return "no party name"; }
-        }
         public string ResolutionText
         {
             get { return m_resolutionText; }
             set { m_resolutionText = value; }
         }
-        public string CombatTurn { get { return m_combatTurn.ToString(); } }
 
-
-
-        public string CurrentParty
+        public string CurrentPartyName
         {
             get
             {
@@ -174,28 +230,52 @@ namespace MarvelRPG
                 return "Enemy";
             }
         }
-        #endregion public
 
-        #region private
         private GameState gameState = GameState.instance;
-        private Thread combatThread;
-        private Party m_player;
-        private Party m_enemy;
+        private List<Unit> m_units;
+        private Party m_playerParty;
+        private Party m_enemyParty;
         private Party m_currentParty;
         private string m_resolutionText;
-        private int m_partyTurn;
+        private Unit m_currentUnit;
+        private int m_unitTurn;
         private int m_combatTurn;
-        public bool isPlayerParty
+        private int m_Turn;
+
+        public Party PlayerParty
         {
-            get
-            {
-                if ((m_combatTurn % m_currentParty.Count) == 0 )
-                    return true;
-                return false;
-            }
+            get { return m_playerParty; }
         }
-        #endregion private
-        #endregion fields
+
+        public Party EnemyParty
+        {
+            get { return m_enemyParty; }
+        }
+        public Unit CurrentUnit
+        {
+            get { return m_currentUnit; }
+        }
+        public int Turn
+        {
+            get { return m_Turn; }
+        }
+        enum CombatState
+        {
+            INIT = 0,
+            PLAYER = 1,
+            ENEMY = 2,
+        }
+        enum UnitState
+        {
+            INIT = 0,
+            TARGETING = 1,
+            END = 2,
+        }
+
+        private static CombatState m_combatState = CombatState.INIT;
+        private static Thread combatMachine;
+        private static Thread playerMachine;
+        private static Thread enemyMachine;
 
     }
 }

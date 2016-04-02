@@ -27,6 +27,7 @@ namespace MarvelRPG
             get { return _units; }
             set { _units = value; }
         }
+ 
 
         public bool Add(Unit u)
         {
@@ -40,10 +41,15 @@ namespace MarvelRPG
 
         public int Count { get { return _units.Count; } }
         private List<Unit> _units;
-
+ 
         public Unit this[int key]
         {
-            get { return _units[key]; }
+            get
+            {
+                if(key <  Count)
+                    return _units[key];
+                return null;
+            }
         }
     }
 
