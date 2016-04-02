@@ -11,8 +11,8 @@ namespace MarvelRPG
         public TestCombat()
         {
 
-            m_enemy = new Party();
-            m_player = new Party();
+            m_enemyParty = new Party();
+            m_playerParty = new Party();
 
             //if the gamestate has a party use that one
 
@@ -24,21 +24,21 @@ namespace MarvelRPG
             {
                 Init();
             }
-            
-         
+
+
         }
 
         private void Init(Party p)
         {
-            
+
             Unit hulk = gameState.CharacterLibrary["Hulk"];
             Unit wolverine = gameState.CharacterLibrary["Thor"];
-            m_enemy.Add(hulk);
-            m_enemy.Add(wolverine);
+            m_enemyParty.Add(hulk);
+            m_enemyParty.Add(wolverine);
 
-            m_player = p;
-            m_currentParty = m_player;
-            m_partyTurn = 0;
+            m_playerParty = p;
+            m_currentParty = m_playerParty;
+            m_partyIndex = 0;
             m_resolutionText = "\r\nno resolution";
         }
         /// <summary>
@@ -51,24 +51,15 @@ namespace MarvelRPG
             Unit hulk = gameState.CharacterLibrary["Hulk"];
             Unit wolverine = gameState.CharacterLibrary["Thor"];
             Unit rogue = gameState.CharacterLibrary["Rogue"];
-            m_player.Add(psylocke);
-            m_player.Add(rogue);
-            m_enemy.Add(hulk);
-            m_enemy.Add(wolverine);
-            m_currentParty = m_player;
-            m_partyTurn = 0;
+            m_playerParty.Add(psylocke);
+            m_playerParty.Add(rogue);
+            m_enemyParty.Add(hulk);
+            m_enemyParty.Add(wolverine);
+            m_currentParty = m_playerParty;
+            m_partyIndex = 0;
             m_resolutionText = "\r\nno resolution";
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        private void Start()
-        {
 
-            combatThread = new Thread(new ThreadStart(Logger));
-            Console.WriteLine("Starting combat thread...");
-            combatThread.Start();
-        }
         /// <summary>
         /// 
         /// </summary>
@@ -80,16 +71,20 @@ namespace MarvelRPG
         private bool Next()
         {
 
-            m_partyTurn++;
+            m_partyIndex++;
+            //if we have 1 member...
+            //just flip the party on a new turn
+            //i want a custom iterator that just lets this happen
+            //m_currentParty.moveNext();
 
-            if (m_partyTurn >= m_currentParty.Count)
+            if (m_partyIndex >= m_currentParty.Count || m_currentParty.Count == 1)
             {
-                m_partyTurn = 0;
-                m_combatTurn++;
-
+                m_partyIndex = 0;
+                m_Turn++;
+                m_currentParty = (isPlayerParty) ? m_enemyParty : m_playerParty;
             }
-            m_currentParty = (isPlayerParty) ? m_player : m_enemy;
-            
+
+
             return isPlayerParty;
         }
 
@@ -103,18 +98,17 @@ namespace MarvelRPG
             switch (token)
             {
                 case "Attack":
-                    m_resolutionText = 
-                        CurrentUnit.Name + " attacked for " + CurrentUnit.Strength;
-                    attackHandler();
+                    m_resolutionText = "Attacking..";
+                    AttackHandler();
                     break;
                 case "End Turn":
-                    m_resolutionText = CurrentUnit.Name + " Ended Turn ";
-                    return Next();
+                    m_resolutionText = "Ending Turn..";
+                    EndTurnHandler();
+                    break;
 
                 case "Skill":
-                    m_resolutionText =
-               CurrentUnit.Name + " performed skill " + CurrentUnit.Abilities[0].Name;
-                    skillHandler();
+                    m_resolutionText = "Skill..";
+                    SkillHandler();
                     break;
 
             }
@@ -124,96 +118,87 @@ namespace MarvelRPG
 
         }
 
-
-
-        public bool attackHandler()
+        #region StateHandlers
+        public bool AttackHandler()
         {
-            if (CurrentUnit == null)
-                return false;
-       
+            string s1 = CurrentUnit.Name;
+            string s2 = "attacked for ";
+            string s3 = CurrentUnit.Strength.ToString();
+            m_resolutionText += s1 + s2 + s3 + nl;
+
             return true;
         }
 
-        public bool skillHandler()
+        public bool SkillHandler()
         {
-            if (CurrentUnit == null)
-                return false;
-           
-            return true; 
+            string s1 = CurrentUnit.Name;
+            string s2 = "do skill ";
+            string s3 = CurrentUnit.Abilities.Members[0].Name;
+            m_resolutionText += s1 + s2 + s3 + nl;
+
+            return true;
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        public void Restart()
+        string nl = Environment.NewLine;
+        public bool EndTurnHandler()
         {
-            combatThread.Abort();
-            Start();
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        private void Logger()
-        {
-            int time = 0;
-            while (true)
-            {
-                time += 1;
-                Console.Write("\rRunning combat thread... {0}ms: ", time.ToString());
-            }
+
+            string s1 = CurrentUnit.Name;
+            string s2 = "ended turn ";
+            string s3 = "";
+
+            m_resolutionText += s1 + s2 + s3 + nl;
+            return true;
 
         }
+        #endregion
 
 
 
-        public Unit CurrentUnit { get { return m_currentParty[m_partyTurn]; } }
-        #region fields
-        #region public
-        public Party PlayerParty { get { return m_player; } }
-        public Party EnemyParty { get { return m_enemy; } }
-        public string PartyName
-        {
-            get { return "no party name"; }
-        }
+
+
+        public Unit CurrentUnit { get { return m_currentParty[m_partyIndex]; } }
+        public Party PlayerParty { get { return m_playerParty; } }
+        public Party EnemyParty { get { return m_enemyParty; } }
+
         public string ResolutionText
         {
             get { return m_resolutionText; }
             set { m_resolutionText = value; }
         }
-        public string CombatTurn { get { return m_combatTurn.ToString(); } }
-
+        public string Turn { get { return m_Turn.ToString(); } }
+        public bool isPlayerParty
+        {
+            get
+            {
+                //since we only have 2 parties then we can flip flop
+                if (m_currentParty == m_playerParty)
+                    return true;
+                return false;
+            }
+        }
 
 
         public string CurrentParty
         {
             get
             {
-                if ((m_combatTurn % m_currentParty.Count) == 0)
+                if ((m_Turn % m_currentParty.Count) == 0)
                     return "Player";
                 return "Enemy";
             }
         }
-        #endregion public
 
-        #region private
+
         private GameState gameState = GameState.instance;
         private Thread combatThread;
-        private Party m_player;
-        private Party m_enemy;
+        private Party m_playerParty;
+        private Party m_enemyParty;
         private Party m_currentParty;
         private string m_resolutionText;
-        private int m_partyTurn;
-        private int m_combatTurn;
-        public bool isPlayerParty
-        {
-            get
-            {
-                if ((m_combatTurn % m_currentParty.Count) == 0 )
-                    return true;
-                return false;
-            }
-        }
-        #endregion private
-        #endregion fields
+        private int m_partyIndex;
+        private int m_Turn;
+
+
 
     }
 }

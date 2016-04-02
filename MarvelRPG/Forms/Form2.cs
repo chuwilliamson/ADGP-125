@@ -140,7 +140,7 @@ namespace MarvelRPG
 
             (player == true ? (Action)UpdatePlayer : UpdateEnemy)();
 
-            turnBox.Text = combat.CombatTurn.ToString();
+            turnBox.Text = combat.Turn.ToString();
             textBox3.Text = "Current Party: " + combat.CurrentParty + Environment.NewLine
                           + "Current Unit: " + combat.CurrentUnit.Name;
             combatLog.Text += combat.ResolutionText + Environment.NewLine;
