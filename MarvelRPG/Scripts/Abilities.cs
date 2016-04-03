@@ -27,6 +27,8 @@ namespace MarvelRPG
 
         public void Add(Ability a)
         {
+            if (_members == null)
+                _members = new List<Ability>();
             _members.Add(a);
         }
 

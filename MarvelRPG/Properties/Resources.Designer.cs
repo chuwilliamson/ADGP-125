@@ -63,9 +63,99 @@ namespace MarvelRPG.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Hulk_small {
+        internal static System.Drawing.Bitmap Black_Cat {
             get {
-                object obj = ResourceManager.GetObject("Hulk_small", resourceCulture);
+                object obj = ResourceManager.GetObject("Black_Cat", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Black_Panther {
+            get {
+                object obj = ResourceManager.GetObject("Black_Panther", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Cable {
+            get {
+                object obj = ResourceManager.GetObject("Cable", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Captain_Marvel {
+            get {
+                object obj = ResourceManager.GetObject("Captain_Marvel", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Card_Background {
+            get {
+                object obj = ResourceManager.GetObject("Card_Background", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Deadpool {
+            get {
+                object obj = ResourceManager.GetObject("Deadpool", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Emma_Frost {
+            get {
+                object obj = ResourceManager.GetObject("Emma_Frost", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Gambit {
+            get {
+                object obj = ResourceManager.GetObject("Gambit", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Hulk {
+            get {
+                object obj = ResourceManager.GetObject("Hulk", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Magneto {
+            get {
+                object obj = ResourceManager.GetObject("Magneto", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -83,9 +173,9 @@ namespace MarvelRPG.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Psylocke_small {
+        internal static System.Drawing.Bitmap noimage {
             get {
-                object obj = ResourceManager.GetObject("Psylocke_small", resourceCulture);
+                object obj = ResourceManager.GetObject("noimage", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -93,9 +183,9 @@ namespace MarvelRPG.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Rogue_small {
+        internal static System.Drawing.Bitmap Psylocke {
             get {
-                object obj = ResourceManager.GetObject("Rogue_small", resourceCulture);
+                object obj = ResourceManager.GetObject("Psylocke", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -103,9 +193,9 @@ namespace MarvelRPG.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Thor_small {
+        internal static System.Drawing.Bitmap Rogue {
             get {
-                object obj = ResourceManager.GetObject("Thor_small", resourceCulture);
+                object obj = ResourceManager.GetObject("Rogue", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -113,9 +203,19 @@ namespace MarvelRPG.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Wolverine_small {
+        internal static System.Drawing.Bitmap Thor {
             get {
-                object obj = ResourceManager.GetObject("Wolverine_small", resourceCulture);
+                object obj = ResourceManager.GetObject("Thor", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Wolverine {
+            get {
+                object obj = ResourceManager.GetObject("Wolverine", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

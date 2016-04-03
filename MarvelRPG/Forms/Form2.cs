@@ -18,19 +18,21 @@ namespace MarvelRPG
             combat = tc;
             
         }
-
+        List<Card> Cards;
         private void Form2_Load(object sender, EventArgs e)
         {
             Party p1 = new Party();
             Party p2 = new Party();
-  
+            Cards = new List<Card>();
             p1 = combat.PlayerParty;
             p2 = combat.EnemyParty;
-
+            
             this.Text = "Combat";
-            this.left = new Card(p1[0].Name, pictureBox1, leftCardBack);
-            this.right = new Card(p2[0].Name, pictureBox2, rightCardBack);
-            this.current = left;
+            int xoffset = 0;
+       
+            //this.left = new Card(p1[0].Name, pictureBox1, leftCardBack);
+            //this.right = new Card(p2[0].Name, pictureBox2, rightCardBack);
+           // this.current = left;
             this.playerActions = new ActionGroup(ref panel1);
             this.enemyActions = new ActionGroup(ref panel2);
             //add the onclick events for the actions
@@ -105,29 +107,7 @@ namespace MarvelRPG
             pause.ShowDialog();
 
         }
-        /// <summary>
-        /// update controls related to the player which is the left hand side
-        /// </summary>
-        private void UpdatePlayer()
-        {
-            left = new Card(combat.CurrentUnit.Name, pictureBox1, leftCardBack);
-            current = left;
-            groupBox1.Text = combat.CurrentUnit.Name;
-            abilityBox1.Text = combat.CurrentUnit.Abilities[0].Description;
-            unitBox1.Text ="Health: " +  combat.CurrentUnit.Health.ToString();
-        }
 
-        /// <summary>
-        /// update controls related to the enemy which is the right hand side
-        /// </summary>
-        private void UpdateEnemy()
-        {
-            right = new Card(combat.CurrentUnit.Name, pictureBox2, rightCardBack);
-            current = right;
-            groupBox2.Text = combat.CurrentUnit.Name;
-            abilityBox2.Text = combat.CurrentUnit.Abilities[0].Description;
-            unitBox2.Text = "Health: " + combat.CurrentUnit.Health.ToString();
-        }
         /// <summary>
         /// state is either a player or an enemy
         /// </summary>
@@ -135,10 +115,10 @@ namespace MarvelRPG
         private void UpdateForm(bool player)
         {
             //if the card is flipped over then turn it back to the picture
-            
-            current.Flipped = (current.Flipped) ? false : false;
+            if(current != null)
+                current.Flipped = (current.Flipped) ? false : false;
 
-            (player == true ? (Action)UpdatePlayer : UpdateEnemy)();
+          
 
             turnBox.Text = combat.Turn.ToString();
             textBox3.Text = "Current Party: " + combat.CurrentParty + Environment.NewLine
@@ -181,38 +161,7 @@ namespace MarvelRPG
 
         }
 
-        /// <summary>
-        /// card object to represent a card in the game
-        /// </summary>
-        internal class Card
-        {
-            /// <summary>
-            /// the card
-            /// </summary>
-            /// <param name="name">name of card</param>
-            /// <param name="f">the picture</param>
-            /// <param name="b">the information</param>
-            public Card(string name, PictureBox f, TextBox b)
-            {
-                front = f;
-                back = b;
-                back.ReadOnly = true;
-                Utilities.UpdateDescription(name, ref back, ref front);
-            }
-
-            private PictureBox front;
-            private TextBox back;
-            private bool flipped = false;
-            public bool Flipped
-            {
-                get { return flipped; }
-                set
-                {
-                    flipped = value;
-                    (flipped == true ? (Action)back.BringToFront : front.BringToFront)();
-                }
-            }
-        }
+       
 
 
         /// <summary>

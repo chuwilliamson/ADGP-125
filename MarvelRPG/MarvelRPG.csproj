@@ -55,7 +55,8 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Resources\Marvel_small.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>MarvelRPG.Program</StartupObject>
@@ -151,7 +152,13 @@
       <DependentUpon>Form4.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Scripts\Abilities.cs" />
+    <Compile Include="Scripts\Card.cs" />
     <Compile Include="Scripts\GameState.cs" />
     <Compile Include="Scripts\Party.cs" />
     <Compile Include="Scripts\FiniteStateMachine.cs" />
@@ -174,15 +181,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <None Include="Resources\ClassDiagram1.cd" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -193,21 +194,15 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Resources\Black_Panther.jpg" />
+    <None Include="Resources\Cable.jpg" />
+    <None Include="Resources\Deadpool.jpeg" />
+    <None Include="Resources\Gambit.jpg" />
+    <None Include="Resources\Magneto.jpg" />
+    <None Include="Resources\noimage.jpg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Hulk_small.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Psylocke_small.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Resources\Marvel_small.ico" />
-    <Content Include="Resources\Rogue_small.jpg" />
-    <None Include="Resources\Wolverine_small.jpg" />
-    <None Include="Resources\Thor_small.jpg" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
@@ -221,7 +216,36 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\Black_Cat.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Captain_Marvel.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Psylocke.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Rogue.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Thor.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Wolverine.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Hulk.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Emma_Frost.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Emma_Frost.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Card_Background.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

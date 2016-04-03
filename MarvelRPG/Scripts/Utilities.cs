@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
@@ -8,6 +7,8 @@ using System.Windows.Forms;
 using System.Text.RegularExpressions;
 using System.Linq;
 using HtmlAgilityPack;
+using System.Resources;
+using System.Drawing;
 
 namespace MarvelRPG
 {
@@ -67,39 +68,21 @@ namespace MarvelRPG
 
         }
 
-        public static bool UpdateDescription(string selection, ref TextBox tb, ref PictureBox pb)
+
+        public static bool UpdateDescription<T>(string name, ref PictureBox pb, ref T tb)
         {
-            tb.Text = "";
-            pb.Image = null;
-            pb.ImageLocation = null;
-            string currentSelection = selection;
-            switch (currentSelection)
-            {
-                case "Hulk":
-                    pb.Image = MarvelRPG.Properties.Resources.Hulk_small;
-                    break;
-                case "Psylocke":
-                    pb.Image = MarvelRPG.Properties.Resources.Psylocke_small;
-                    break;
-                case "Rogue":
-                    pb.Image = MarvelRPG.Properties.Resources.Rogue_small;
-                    break;
-                case "Thor":
-                    pb.Image = MarvelRPG.Properties.Resources.Thor_small;
-                    break;
-                case "Wolverine":
-                    pb.Image = MarvelRPG.Properties.Resources.Wolverine_small;
-                    break;
-                default:
-                    break;
-            }
+            pb.Image = (Bitmap)Properties.Resources.ResourceManager.GetObject(name);
+            if (pb.Image == null)
+                pb.Image = MarvelRPG.Properties.Resources.noimage;
+          
+           
 
-
+            name = name.Replace("_", " ");
             ///create a temporary character
             string path = Utilities.path + @"\Units\";
-            Unit tmpChar = GameState.instance.CharacterLibrary[currentSelection];
+            Unit tmpChar = GameState.instance.CharacterLibrary[name];
             Abilities tmpAbl = tmpChar.Abilities;
-            string s0 = currentSelection + Environment.NewLine + Environment.NewLine;
+            string s0 = name + Environment.NewLine + Environment.NewLine;
             string s1 = "Durability: " + tmpChar.Durability.ToString() + Environment.NewLine;
             string s2 = "Fighting: " + tmpChar.Fighting.ToString() + Environment.NewLine;
             string s3 = "Energy: " + tmpChar.Energy.ToString() + Environment.NewLine;
@@ -110,9 +93,16 @@ namespace MarvelRPG
             
 
             foreach (Ability a in tmpAbl.Members)
-                s6 += a.Name + Environment.NewLine;
+                s7 += a.Name + Environment.NewLine;
 
-            tb.Text = s0 + s1 + s2 + s3 + s4 + s5 + s6 + s7;
+            Type type = typeof(T);
+                      
+            var box = new Control();
+            //hashtag begin janky
+            if (type == typeof(TextBox)) box = tb as TextBox;
+            if (type == typeof(RichTextBox)) box = tb as RichTextBox;
+
+            box.Text = s0 + s6+ s1 + s2 + s3 + s4 + s5  + s7;
 
             return true;
 

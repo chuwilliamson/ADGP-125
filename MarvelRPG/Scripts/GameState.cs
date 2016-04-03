@@ -92,9 +92,10 @@ namespace MarvelRPG
                 Unit u = (File.Exists(unitFile)) ? Utilities.DeserializeXML<Unit>(unitFile) : Utilities.FetchUnit(name);
 
                 //if not go get it from the wiki
- 
+                name = name.Replace("_", " ");
+                Abilities a = new Abilities( AbilityLibrary[name][0]);
                 //attach abilities to it
-                u.Abilities = AbilityLibrary[name];
+                u.Abilities = a;
                 //save it
 
 
