@@ -65,8 +65,8 @@ namespace MarvelRPG
             partyBox1.DragDrop += partyBox1_DragDrop;
             partyBox1.DragEnter += partyBox1_DragEnter;
             partyBox2.AllowDrop = true;
-            partyBox2.DragDrop += partyBox1_DragDrop;
-            partyBox2.DragEnter += partyBox1_DragEnter;
+            partyBox2.DragDrop += partyBox2_DragDrop;
+            partyBox2.DragEnter += partyBox2_DragEnter;
 
         }
 
@@ -209,6 +209,8 @@ namespace MarvelRPG
                 gs.Party.units.Add(u);
                 partyBox1.Controls.Add(l);
             }
+            
+      
         }
 
         private void partyBox2_DragDrop(object sender, DragEventArgs e)
@@ -236,6 +238,9 @@ namespace MarvelRPG
                 partyBox2.Controls.Add(l);
 
             }
+
+            PictureBox p = sender as PictureBox;
+            p.Enabled = false;
         }
     }
 }

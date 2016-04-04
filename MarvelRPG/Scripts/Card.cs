@@ -25,8 +25,8 @@ namespace MarvelRPG
                     m_front.MaximumSize = new Size(540, 960);
                     m_front.MinimumSize = new Size(540 / 4, 960 / 4);
                     //m_front.SizeChanged += onSizeChange;
-                    m_front.MouseLeave += onLeave;
-                    m_front.MouseHover += onMouseHover;
+                    m_front.MouseLeave += onMouseExit;
+                    m_front.MouseEnter += onMouseEnter;
                     m_front.MouseMove += onMouseMove;
                     m_front.MouseDown += onMouseDown;
                     m_front.MouseUp += onMouseUp;
@@ -87,9 +87,12 @@ namespace MarvelRPG
                 case DragAction.Cancel:
                     break;
                 case DragAction.Drop:
+                    m_front.Enabled = false;
                     Console.WriteLine("juhrop");
                     break;
                 case DragAction.Continue:
+                    PictureBox p = o as PictureBox;
+                    p.Location = new Point(xPos, yPos);
                     break;
             }
         }
@@ -110,6 +113,7 @@ namespace MarvelRPG
             {
                 case MouseButtons.Left:
                     m_front.DoDragDrop(m_front.Name, DragDropEffects.Copy | DragDropEffects.Move);
+                    m_front.Enabled = false;
                     break;
                 case MouseButtons.Right:
                     Flipped = !Flipped;
@@ -117,8 +121,7 @@ namespace MarvelRPG
                 default:
                     //    drag = true;
 
-                    //    xPos = e.X;
-                    //    yPos = e.Y;       
+                  
                     break;
             }
         }
@@ -146,57 +149,65 @@ namespace MarvelRPG
                 Front.BringToFront();
             }
         }
+        int xPos, yPos;
         public void onMouseMove(object o, MouseEventArgs e)
         {
-            //PictureBox p = o as PictureBox;
-            //scale = 1;
-            //Console.Write("\r{0},{1}", e.X, e.Y);
-            //Rectangle r = new Rectangle(p.Location, p.Size);
-            //Point mouse = new Point(e.X, e.Y);
-            //focus = false;
+            current = o as PictureBox;
+            
+            focus = true;
+            xPos = e.X;
+            yPos = e.Y;
+            Point pos = new Point(xPos, yPos);
+            Console.Write("\rPos: {0}, {1}",pos,current.Name);
+            
+                  
         }
         private int scale = 1;
         private bool focus = false;
         private PictureBox m_display;
-        
 
-        private void onMouseHover(object o, EventArgs e)
-        {
-            //PictureBox p = o as PictureBox;
-            //if (o == m_display)
-            //{
-            //    p.SendToBack();
-            //    return;
-            //}
-            //scale = 1;
-            //Form f = Form.ActiveForm;
-            //Size s = new Size(Size.Width * scale, Size.Height * scale);
-            //Point center = new Point((f.Width / 2), (f.Height / 2));
+        private PictureBox current;
+        private void onMouseEnter(object o, EventArgs e)
+        {        Console.WriteLine("Enter: " + this.Name);
+                current = o as PictureBox;
             
+          
+                //scale = 3;
+                //Form f = Form.ActiveForm;
+                //Size s = new Size(Size.Width * scale, Size.Height * scale);
+                //Point center = new Point((f.Width / 2), (f.Height / 2));
 
-            //m_display = new PictureBox();
-            //m_display.Image = Front.Image;
-            //m_display.Size = s;
-            //int left = center.X - (m_display.Size.Width / 2);
-            //int top = center.Y - (m_display.Size.Height / 2);
 
-            //m_display.Left = left;
-            //m_display.Top = top;            
-            //m_display.SizeMode = PictureBoxSizeMode.StretchImage;
+                //m_display = new PictureBox();
+                //m_display.Image = Front.Image;
+                //m_display.Name = "display";
+                //m_display.Size = f.Size;
+                
+                ////int left = center.X - (m_display.Size.Width / 2);
+                ////int top = center.Y - (m_display.Size.Height / 2);
 
-            //Form.ActiveForm.Controls.Add(m_display);
-            //Console.WriteLine("Enter: " + m_display.Name.ToString());
-            //m_display.BringToFront();
-
-            //m_display.BackgroundImage = (Bitmap)Properties.Resources.ResourceManager.GetObject("Background_Image");
-            //m_display.BorderStyle = BorderStyle.Fixed3D;
-
+                ////m_display.Left = left;
+                ////m_display.Top = top;
+                //m_display.SizeMode = PictureBoxSizeMode.AutoSize;
+                m_front.BorderStyle = BorderStyle.Fixed3D;
+                //m_display.BorderStyle = BorderStyle.Fixed3D;
+                //Form.ActiveForm.Controls.Add(m_display);
+              
+                //m_front.SendToBack();
+                //m_back.SendToBack();
+            
+            
         }
-        private void onLeave(object o, EventArgs e)
+        private void onMouseExit(object o, EventArgs e)
         {
-            Console.WriteLine("leaving" + Size.ToString());
-            //if(m_display != null)
-            //    m_display.Hide();
+            
+            
+            Form.ActiveForm.Controls.Remove(m_display);
+            m_front.BorderStyle = BorderStyle.FixedSingle;
+            m_front.BringToFront();
+            Console.WriteLine(Form.ActiveForm.Controls.Count);
+            Console.WriteLine("Exit: " + this.Name);
+           
  
 
         }
