@@ -73,26 +73,6 @@ namespace MarvelRPG.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Black_Panther {
-            get {
-                object obj = ResourceManager.GetObject("Black_Panther", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Cable {
-            get {
-                object obj = ResourceManager.GetObject("Cable", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap Captain_Marvel {
             get {
                 object obj = ResourceManager.GetObject("Captain_Marvel", resourceCulture);
@@ -113,9 +93,9 @@ namespace MarvelRPG.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Deadpool {
+        internal static System.Drawing.Bitmap Elektra {
             get {
-                object obj = ResourceManager.GetObject("Deadpool", resourceCulture);
+                object obj = ResourceManager.GetObject("Elektra", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -133,16 +113,6 @@ namespace MarvelRPG.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Gambit {
-            get {
-                object obj = ResourceManager.GetObject("Gambit", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap Hulk {
             get {
                 object obj = ResourceManager.GetObject("Hulk", resourceCulture);
@@ -153,9 +123,19 @@ namespace MarvelRPG.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Magneto {
+        internal static System.Drawing.Bitmap Iron_Man {
             get {
-                object obj = ResourceManager.GetObject("Magneto", resourceCulture);
+                object obj = ResourceManager.GetObject("Iron_Man", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Kitty_Pryde {
+            get {
+                object obj = ResourceManager.GetObject("Kitty_Pryde", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -167,6 +147,16 @@ namespace MarvelRPG.Properties {
             get {
                 object obj = ResourceManager.GetObject("Marvel_small", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Mystique {
+            get {
+                object obj = ResourceManager.GetObject("Mystique", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -203,9 +193,9 @@ namespace MarvelRPG.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Thor {
+        internal static System.Drawing.Bitmap Scarlet_Witch {
             get {
-                object obj = ResourceManager.GetObject("Thor", resourceCulture);
+                object obj = ResourceManager.GetObject("Scarlet_Witch", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -213,9 +203,19 @@ namespace MarvelRPG.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Wolverine {
+        internal static System.Drawing.Bitmap Storm {
             get {
-                object obj = ResourceManager.GetObject("Wolverine", resourceCulture);
+                object obj = ResourceManager.GetObject("Storm", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Thor {
+            get {
+                object obj = ResourceManager.GetObject("Thor", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

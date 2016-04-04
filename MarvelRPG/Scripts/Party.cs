@@ -7,14 +7,7 @@ using HtmlAgilityPack;
 
 namespace MarvelRPG
 {
-    enum Characters
-    {
-        Psylocke, Hulk, Rogue, Thor,
-        Wolverine, Captain_Marvel, Magneto,
-        Deadpool, Cable, Emma_Frost, Black_Cat,
-        Black_Panther,
-            
-    }
+
 
     [Serializable]
     [XmlRoot("Party")]

@@ -57,7 +57,10 @@ namespace MarvelRPG
 
 
             string test = new String(charInfo.Where(x => Char.IsDigit(x)).ToArray());
+            if (test == "")//if the website died and doesn't have the character b/c they are the worst... srs
+                return new Unit(name, 1, 1, 1, 1, 1, 1);
             int[] nums = new int[test.Count()];
+            
             for (int i = 0; i < test.Count(); i++)
             {
                 nums[i] = int.Parse(test[i].ToString());

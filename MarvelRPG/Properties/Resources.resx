@@ -124,26 +124,29 @@
   <data name="Black_Cat" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Black_Cat.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Black_Panther" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Black_Panther.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Cable" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Cable.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="Captain_Marvel" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Captain_Marvel.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Deadpool" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Deadpool.jpeg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Card_Background" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Card_Background.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Gambit" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Gambit.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Elektra" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Elektra.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Emma_Frost" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Emma_Frost.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Hulk" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Hulk.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Magneto" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Magneto.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Iron_Man" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Iron_Man.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Kitty_Pryde" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Kitty_Pryde.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Mystique" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Mystique.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="noimage" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\noimage.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -154,16 +157,13 @@
   <data name="Rogue" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Rogue.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Scarlet_Witch" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Scarlet_Witch.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Storm" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Storm.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Thor" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Thor.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Wolverine" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Wolverine.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Emma_Frost" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Emma_Frost.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Card_Background" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Card_Background.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

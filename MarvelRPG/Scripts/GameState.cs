@@ -6,6 +6,22 @@ using System.Collections.Generic;
 
 namespace MarvelRPG
 {
+    enum Characters
+    {
+        Psylocke,
+        Storm,
+        Rogue,
+        Captain_Marvel,
+        Scarlet_Witch,
+        Iron_Man,
+        Kitty_Pryde,
+        Hulk,
+        Thor,
+        Emma_Frost,
+        Black_Cat,
+        Black_Panther,
+
+    }
     [Serializable]
     public class GameState
     {
@@ -93,9 +109,16 @@ namespace MarvelRPG
 
                 //if not go get it from the wiki
                 name = name.Replace("_", " ");
-                Abilities a = new Abilities( AbilityLibrary[name][0]);
+                //Abilities a;
+                //AbilityLibrary.TryGetValue(name, out a);
+                Abilities a = new Abilities(AbilityLibrary[name][0]);
                 //attach abilities to it
+
+                //Ability def = new Ability("yeaaaa");
+                //if (a == null) { a = new Abilities(); a.Add(def); }
                 u.Abilities = a;
+
+
                 //save it
 
 

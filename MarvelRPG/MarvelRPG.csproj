@@ -194,11 +194,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Resources\Black_Panther.jpg" />
-    <None Include="Resources\Cable.jpg" />
-    <None Include="Resources\Deadpool.jpeg" />
-    <None Include="Resources\Gambit.jpg" />
-    <None Include="Resources\Magneto.jpg" />
     <None Include="Resources\noimage.jpg" />
   </ItemGroup>
   <ItemGroup>
@@ -232,19 +227,31 @@
     <None Include="Resources\Thor.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Wolverine.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\Hulk.jpg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Emma_Frost.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Emma_Frost.png" />
+    <None Include="Resources\Card_Background.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Card_Background.png" />
+    <None Include="Resources\Elektra.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Iron_Man.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Mystique.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Scarlet_Witch.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Storm.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Kitty_Pryde.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

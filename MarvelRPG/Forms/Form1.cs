@@ -25,38 +25,48 @@ namespace MarvelRPG
         List<Card> Cards = new List<Card>();
         private void Form1Load(object sender, EventArgs e)
         {
-           
+
             var values = Enum.GetValues(typeof(Characters));
             
-            int xoffset = 5;
-            int yoffset = 0;
             int num = 0;
+            int scale = 1;
+            ///236 x 459
+            int width = 240 / scale;
+            int height = 460 / scale;
+
+            int xPadding = 5;
+            int yPadding = 5;
+            int xoffset = 0;
+            int yoffset = 0;
+            //partyBox1.Size = new Size(width, height);
+            //partyBox2.Size = new Size(width, height);
             foreach (Enum v in values)
             {
-                num++; 
-                string name = v.ToString(); 
-                int scale = 4;
-                int width = 540/scale;
-                int height = 960/scale;
-               
-                
-                int reheight = height;
-                Card c = new Card(name, new Size(width, height), new Point(xoffset, yoffset));
+
+                num++;
+                string name = v.ToString();
+                Point pos = new Point(xoffset + xPadding, yoffset + yPadding);
+                Card c = new Card(name, new Size(width, height), pos);
+
                 Cards.Add(c);
-                xoffset += width + 50;
-                if (num % 4 == 0)
+
+                if (num % 4 == 0 )
                 {
                     xoffset = 0;
-                    yoffset += height;
+                    yoffset += height + yPadding;
                 }
+                else
+                    xoffset += width + xPadding ;
                 Controls.AddRange(c.Controls);
 
             }
 
             partyBox1.AllowDrop = true;
+            partyBox1.DragDrop += partyBox1_DragDrop;
+            partyBox1.DragEnter += partyBox1_DragEnter;
             partyBox2.AllowDrop = true;
-
-
+            partyBox2.DragDrop += partyBox1_DragDrop;
+            partyBox2.DragEnter += partyBox1_DragEnter;
 
         }
 
@@ -64,7 +74,7 @@ namespace MarvelRPG
 
 
         #region events
- 
+
         private void saveButton_Click(object sender, EventArgs e)
         {
             Party p = gs.Party;
@@ -126,7 +136,7 @@ namespace MarvelRPG
         }
 
         private void addButton_Click(object sender, EventArgs e)
-        { 
+        {
             Unit u = Utilities.DeserializeXML<Unit>(Utilities.upath + currentSelection);
 
             Unit tmp = gs.Party.units.Find(x => x.Name == u.Name);
@@ -189,7 +199,7 @@ namespace MarvelRPG
             l.AutoSize = true;
             l.Text = e.Data.GetData(DataFormats.Text).ToString();
             l.Text = l.Text.Replace("_", " ");
-            
+
 
             Unit u = Utilities.DeserializeXML<Unit>(Utilities.upath + l.Text);
             Unit tmp = gs.Party.units.Find(x => x.Name == u.Name);
@@ -204,20 +214,20 @@ namespace MarvelRPG
         private void partyBox2_DragDrop(object sender, DragEventArgs e)
         {
             int numControls = partyBox2.Controls.Count;
-            
-                
+
+
             Label l = new Label();
             l.Size = new Size(1, 1);
             l.Location = new Point(5, offset * numControls + offset);
             l.AutoSize = true;
             l.Text = e.Data.GetData(DataFormats.Text).ToString();
             l.Text = l.Text.Replace("_", " ");
-           
-             
-             
-            
+
+
+
+
             Unit u = Utilities.DeserializeXML<Unit>(Utilities.upath + l.Text);
-            
+
             Unit tmp = gs.Party.units.Find(x => x.Name == u.Name);
 
             if (tmp == null)
