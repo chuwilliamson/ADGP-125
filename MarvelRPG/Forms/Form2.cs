@@ -60,10 +60,10 @@ namespace MarvelRPG
             groupBox1.Controls.Add(UI.CardLibrary[combat.CurrentPlayer.Name]);
            
             //right
-            groupBox2.Text = combat.CurrentEnemy.Name;
+            groupBox3.Text = combat.CurrentEnemy.Name;
             abilityBox2.Text = combat.CurrentEnemy.Abilities[0].Description;
             unitBox2.Text = "Health: " + combat.CurrentPlayer.Health.ToString();
-            groupBox2.Controls.Add(UI.CardLibrary[combat.CurrentEnemy.Name]);
+            groupBox3.Controls.Add(UI.CardLibrary[combat.CurrentEnemy.Name]);
         }
         private static void onAttackClick(object o, EventArgs e)
         {
@@ -145,10 +145,10 @@ namespace MarvelRPG
             unitBox1.Text = "Health: " + combat.CurrentPlayer.Health.ToString();
             groupBox1.Controls.Add(UI.CardLibrary[combat.CurrentPlayer.Name]);
             //right
-            groupBox2.Text = combat.CurrentEnemy.Name;
+            groupBox3.Text = combat.CurrentEnemy.Name;
             abilityBox2.Text = combat.CurrentEnemy.Abilities[0].Description;
             unitBox2.Text = "Health: " + combat.CurrentEnemy.Health.ToString();
-            groupBox2.Controls.Add(UI.CardLibrary[combat.CurrentEnemy.Name]);
+            groupBox3.Controls.Add(UI.CardLibrary[combat.CurrentEnemy.Name]);
 
             turnBox.Text = combat.Turn.ToString();
             textBox3.Text = "Current Party: " + combat.CurrentParty + Environment.NewLine
