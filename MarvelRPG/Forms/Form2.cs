@@ -28,7 +28,6 @@ namespace MarvelRPG
             p2 = combat.EnemyParty;
             
             this.Text = "Combat";
-            int xoffset = 0;
        
             //this.left = new Card(p1[0].Name, pictureBox1, leftCardBack);
             //this.right = new Card(p2[0].Name, pictureBox2, rightCardBack);
@@ -47,19 +46,41 @@ namespace MarvelRPG
             //set players turn to first always for now
             InitForm();
             UpdateForm(true);
+            
 
 
         }
         private void InitForm()
         {
             //left
-            groupBox1.Text = combat.CurrentUnit.Name;
-            abilityBox1.Text = combat.CurrentUnit.Abilities[0].Description;
-            unitBox1.Text = "Health: " + combat.CurrentUnit.Health.ToString();
+            
+            groupBox1.Text = combat.CurrentPlayer.Name;
+            abilityBox1.Text = combat.CurrentPlayer.Abilities[0].Description;
+            unitBox1.Text = "Health: " + combat.CurrentPlayer.Health.ToString();
+            groupBox1.Controls.Add(UI.CardLibrary[combat.CurrentPlayer.Name]);
+           
             //right
-            groupBox2.Text = combat.CurrentUnit.Name;
-            abilityBox2.Text = combat.CurrentUnit.Abilities[0].Description;
-            unitBox2.Text = "Health: " + combat.CurrentUnit.Health.ToString();
+            groupBox2.Text = combat.CurrentEnemy.Name;
+            abilityBox2.Text = combat.CurrentEnemy.Abilities[0].Description;
+            unitBox2.Text = "Health: " + combat.CurrentPlayer.Health.ToString();
+            groupBox2.Controls.Add(UI.CardLibrary[combat.CurrentEnemy.Name]);
+        }
+        private static void onAttackClick(object o, EventArgs e)
+        {
+        }
+        private static void onSkillClick(object o, EventArgs e)
+        {
+
+        }
+        private void onEndTurnClick(object o, EventArgs e)
+        {
+            Button b = o as Button;
+            UpdateForm(combat.Update(b.Name));
+        }
+        private static void onFlipClick(object o, EventArgs e)
+        {
+            Console.WriteLine("flip");
+            current.Flipped = !current.Flipped;
         }
 
         /// <summary>
@@ -69,6 +90,7 @@ namespace MarvelRPG
         /// <param name="e"></param>
         private void onClick(object o, EventArgs e)
         {
+            
             Button b = (Button)o;
             if (b == null)
                 return;
@@ -79,8 +101,7 @@ namespace MarvelRPG
 
             //buttons that do not feed fsm
             if (name == "Flip")
-            {
-                current.Flipped = !current.Flipped;
+            { 
                 return;
             }
 
@@ -92,20 +113,21 @@ namespace MarvelRPG
                 target.ShowDialog();
             }
 
-            //send the button name to fsm
-            //if it's a valid input it will be handled their
-            //tc.Update(name) will return the party who is active            
-            UpdateForm(combat.Update(name));
-            //relevant information for the UI is
-            //combat info string
-            //party info Party
-            //unit info Unit
+            
+                //send the button name to fsm
+                //if it's a valid input it will be handled their
+                //tc.Update(name) will return the party who is active            
+                UpdateForm(combat.Update(name));
+                //relevant information for the UI is
+                //combat info string
+                //party info Party
+                //unit info Unit
+            
         }
         private void pauseButton_Click(object sender, EventArgs e)
         {
             Form3 pause = new Form3();
             pause.ShowDialog();
-
         }
 
         /// <summary>
@@ -117,8 +139,16 @@ namespace MarvelRPG
             //if the card is flipped over then turn it back to the picture
             if(current != null)
                 current.Flipped = (current.Flipped) ? false : false;
-
-          
+            //left
+            groupBox1.Text = combat.CurrentPlayer.Name;
+            abilityBox1.Text = combat.CurrentPlayer.Abilities[0].Description;
+            unitBox1.Text = "Health: " + combat.CurrentPlayer.Health.ToString();
+            groupBox1.Controls.Add(UI.CardLibrary[combat.CurrentPlayer.Name]);
+            //right
+            groupBox2.Text = combat.CurrentEnemy.Name;
+            abilityBox2.Text = combat.CurrentEnemy.Abilities[0].Description;
+            unitBox2.Text = "Health: " + combat.CurrentEnemy.Health.ToString();
+            groupBox2.Controls.Add(UI.CardLibrary[combat.CurrentEnemy.Name]);
 
             turnBox.Text = combat.Turn.ToString();
             textBox3.Text = "Current Party: " + combat.CurrentParty + Environment.NewLine
@@ -140,16 +170,18 @@ namespace MarvelRPG
             public ActionGroup(ref Panel p)
             {
                 _buttons = new Dictionary<string, Button>();
+                
                 foreach (Control c in p.Controls)
                 {
                     string key = c.Text.Replace(" ", "").ToLower();
-                    _buttons.Add(c.Text, (Button)c);
+                    _buttons.Add(key, (Button)c);
                 }
             }
+
             private Dictionary<string, Button> _buttons;
             public List<Button> Buttons
             {
-                get { return _buttons.Values.ToList<Button>(); }
+                get { return _buttons.Values.ToList(); }
             }
             public string[] ButtonNames { get { return _buttons.Keys.ToArray<string>(); } }
 
@@ -249,7 +281,8 @@ namespace MarvelRPG
         }
 
         private TestCombat combat;
-        private Card left, right, current;
+        private Card left, right;
+        private static Card current;
         private ActionGroup playerActions;
         private ActionGroup enemyActions;
 

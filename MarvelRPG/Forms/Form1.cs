@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -10,11 +11,13 @@ using System.Windows.Forms;
 namespace MarvelRPG
 {
 
+   
     public partial class Form1 : Form
     {
 
+        
         private string currentSelection = "";
-        GameState gs = GameState.instance;
+        private GameState gs = GameState.instance;
         /// <summary>
         /// Default form initialization
         /// </summary>
@@ -22,10 +25,10 @@ namespace MarvelRPG
         {
             InitializeComponent();
         }
-        List<Card> Cards = new List<Card>();
+        
         private void Form1Load(object sender, EventArgs e)
         {
-
+           
             var values = Enum.GetValues(typeof(Characters));
             
             int num = 0;
@@ -34,21 +37,21 @@ namespace MarvelRPG
             int width = 240 / scale;
             int height = 460 / scale;
 
-            int xPadding = 5;
-            int yPadding = 5;
+            int xPadding = 0;
+            int yPadding = 0;
             int xoffset = 0;
             int yoffset = 0;
             //partyBox1.Size = new Size(width, height);
             //partyBox2.Size = new Size(width, height);
             foreach (Enum v in values)
             {
-
+                
                 num++;
                 string name = v.ToString();
                 Point pos = new Point(xoffset + xPadding, yoffset + yPadding);
                 Card c = new Card(name, new Size(width, height), pos);
-
-                Cards.Add(c);
+                UI.Instance.AddCard(c);
+                 
 
                 if (num % 4 == 0 )
                 {
@@ -57,7 +60,10 @@ namespace MarvelRPG
                 }
                 else
                     xoffset += width + xPadding ;
-                Controls.AddRange(c.Controls);
+
+                panel1.Controls.Add(c);
+                
+                
 
             }
 
@@ -67,6 +73,7 @@ namespace MarvelRPG
             partyBox2.AllowDrop = true;
             partyBox2.DragDrop += partyBox2_DragDrop;
             partyBox2.DragEnter += partyBox2_DragEnter;
+         
 
         }
 
@@ -77,7 +84,7 @@ namespace MarvelRPG
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-            Party p = gs.Party;
+            Party p = gs.CombatParty;
             if (p.units.Count <= 0)
             {
                 MessageBox.Show("Party is Empty.. Please add members.");
@@ -103,7 +110,7 @@ namespace MarvelRPG
 
         private void loadButton_Click(object sender, EventArgs e)
         {
-            gs.Party.units.Clear();
+            gs.CombatParty.units.Clear();
             string fileName;
             OpenFileDialog selectFileDialog = new OpenFileDialog();
             string path = Utilities.path + @"Parties\";
@@ -125,7 +132,7 @@ namespace MarvelRPG
 
         private void removeButton_Click(object sender, EventArgs e)
         {
-            Party p = gs.Party;
+            Party p = gs.CombatParty;
             Unit toRemove = p.units.Find(u => u.Name == currentSelection);
             if (toRemove != null)
                 p.units.Remove(toRemove);
@@ -135,23 +142,23 @@ namespace MarvelRPG
 
         }
 
-        private void addButton_Click(object sender, EventArgs e)
-        {
-            Unit u = Utilities.DeserializeXML<Unit>(Utilities.upath + currentSelection);
+        //private void addButton_Click(object sender, EventArgs e)
+        //{
+        //    Unit u = Utilities.DeserializeXML<Unit>(Utilities.upath + currentSelection);
 
-            Unit tmp = gs.Party.units.Find(x => x.Name == u.Name);
+        //    Unit tmp = gs.Party.units.Find(x => x.Name == u.Name);
 
-            if (tmp == null)
-                gs.Party.units.Add(u);
+        //    if (tmp == null)
+        //        gs.Party.units.Add(u);
 
-            Party p = gs.Party;
-            Utilities.updateBox(ref partyBox1, ref p);
-        }
+        //    Party p = gs.Party;
+        //    Utilities.updateBox(ref partyBox1, ref p);
+        //}
 
         private void clearPartyButton_Click(object sender, EventArgs e)
         {
-            gs.Party.units.Clear();
-            Party p = gs.Party;
+            gs.CombatParty.units.Clear();
+            Party p = gs.CombatParty;
             Utilities.updateBox(ref partyBox1, ref p, true);
         }
 
@@ -159,7 +166,10 @@ namespace MarvelRPG
         {
             this.Hide();
             //create a combat context
-            TestCombat tc = new TestCombat();
+            Party player = gs.PlayerParty;
+            Party enemy = gs.EnemyParty;
+            TestCombat tc = new TestCombat(player,enemy);
+            
             //give it to form2 to process
             Form2 combat = new Form2(ref tc);
 
@@ -176,7 +186,7 @@ namespace MarvelRPG
             combat.ShowDialog();
             this.Close();
         }
-        #endregion events
+       
 
         private void partyBox1_DragEnter(object sender, DragEventArgs e)
         {
@@ -188,6 +198,7 @@ namespace MarvelRPG
         {
             e.Effect = DragDropEffects.Copy;
         }
+
         int offset = 25;
         private void partyBox1_DragDrop(object sender, DragEventArgs e)
         {
@@ -202,11 +213,11 @@ namespace MarvelRPG
 
 
             Unit u = Utilities.DeserializeXML<Unit>(Utilities.upath + l.Text);
-            Unit tmp = gs.Party.units.Find(x => x.Name == u.Name);
+            Unit tmp = gs.CombatParty.units.Find(x => x.Name == u.Name);
 
             if (tmp == null)
             {
-                gs.Party.units.Add(u);
+                gs.PlayerParty.units.Add(u);
                 partyBox1.Controls.Add(l);
             }
             
@@ -223,24 +234,19 @@ namespace MarvelRPG
             l.Location = new Point(5, offset * numControls + offset);
             l.AutoSize = true;
             l.Text = e.Data.GetData(DataFormats.Text).ToString();
-            l.Text = l.Text.Replace("_", " ");
-
-
-
-
+            l.Text = l.Text.Replace("_", " "); 
             Unit u = Utilities.DeserializeXML<Unit>(Utilities.upath + l.Text);
 
-            Unit tmp = gs.Party.units.Find(x => x.Name == u.Name);
+            Unit tmp = gs.CombatParty.units.Find(x => x.Name == u.Name);
 
             if (tmp == null)
             {
-                gs.Party.units.Add(u);
+                gs.EnemyParty.units.Add(u);
                 partyBox2.Controls.Add(l);
 
             }
-
-            PictureBox p = sender as PictureBox;
-            p.Enabled = false;
+ 
         }
+        #endregion events
     }
 }

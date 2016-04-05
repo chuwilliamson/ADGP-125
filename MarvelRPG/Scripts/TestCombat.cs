@@ -4,6 +4,23 @@ namespace MarvelRPG
 {
     public class TestCombat
     {
+        public TestCombat(Party player, Party enemy)
+        {
+            m_playerParty = player;
+            m_enemyParty = enemy;
+            m_currentParty = m_playerParty;
+            m_partyIndex = 0;
+            m_resolutionText = "\r\nno resolution";
+            Init(m_playerParty, m_enemyParty);
+        }
+        private void Init(Party p, Party e)
+        {
+            m_currentParty = m_playerParty;
+            m_partyIndex = 0;
+            m_playerIndex = 0;
+            m_enemyIndex = 0;
+            m_resolutionText = "\r\nno resolution";
+        }
 
         /// <summary>
         /// create a test instance of combat with hulk and psylocke
@@ -16,9 +33,9 @@ namespace MarvelRPG
 
             //if the gamestate has a party use that one
 
-            if (gameState.Party.Count > 0)
+            if (gameState.CombatParty.Count > 0)
             {
-                Init(gameState.Party);
+                Init(gameState.CombatParty);
             }
             else
             {
@@ -68,10 +85,11 @@ namespace MarvelRPG
 
         }
 
+
         private bool Next()
         {
-
             m_partyIndex++;
+
             //if we have 1 member...
             //just flip the party on a new turn
             //i want a custom iterator that just lets this happen
@@ -83,7 +101,16 @@ namespace MarvelRPG
                 m_Turn++;
                 m_currentParty = (isPlayerParty) ? m_enemyParty : m_playerParty;
             }
+            //Func < bool, int > f = (player) => 
+            //{
+            //    int index = (player) ? m_playerIndex : m_enemyIndex;
+            //    return index;
+            //};
+            if (isPlayerParty) m_playerIndex = m_partyIndex;
+            else if (!isPlayerParty) m_enemyIndex = m_partyIndex;
 
+            Console.WriteLine(m_playerIndex);
+            Console.WriteLine(m_enemyIndex);
 
             return isPlayerParty;
         }
@@ -154,8 +181,8 @@ namespace MarvelRPG
 
 
 
-
-
+        public Unit CurrentEnemy { get { return m_enemyParty[m_enemyIndex]; } }
+        public Unit CurrentPlayer { get { return m_playerParty[m_playerIndex]; } }
         public Unit CurrentUnit { get { return m_currentParty[m_partyIndex]; } }
         public Party PlayerParty { get { return m_playerParty; } }
         public Party EnemyParty { get { return m_enemyParty; } }
@@ -197,6 +224,8 @@ namespace MarvelRPG
         private string m_resolutionText;
         private int m_partyIndex;
         private int m_Turn;
+        private int m_enemyIndex;
+        private int m_playerIndex;
 
 
 

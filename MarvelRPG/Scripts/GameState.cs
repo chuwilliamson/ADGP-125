@@ -25,12 +25,16 @@ namespace MarvelRPG
     [Serializable]
     public class GameState
     {
+
+     
         private GameState()
         {
-            _party = new Party();
-            _characterLibrary = new Dictionary<string, Unit>();
-            _abilityLibrary = new Dictionary<string, Abilities>();
-            _abilities = new Abilities();
+            m_enemyParty = new Party();
+            m_playerParty = new Party();
+            m_combatParty = new Party();
+            m_characterLibrary = new Dictionary<string, Unit>();
+            m_abilityLibrary = new Dictionary<string, Abilities>();
+            m_abilities = new Abilities();
             GenerateAbilities(Utilities.apath + "Abilities");
             GenerateClasses();
         }
@@ -47,11 +51,11 @@ namespace MarvelRPG
             if (!Directory.Exists(Utilities.apath))
                 Directory.CreateDirectory(Utilities.apath);
 
-            _abilities = Utilities.DeserializeXML<Abilities>(file);
+            m_abilities = Utilities.DeserializeXML<Abilities>(file);
 
-            if (_abilities != null)
+            if (m_abilities != null)
             {
-                foreach (Ability ability in _abilities.Members)
+                foreach (Ability ability in m_abilities.Members)
                 {
                     if (AbilityLibrary.ContainsKey(ability.Character))
                         AbilityLibrary[ability.Character].Add(ability);
@@ -83,7 +87,7 @@ namespace MarvelRPG
                 }
             }
 
-            Utilities.SerializeXML("Abilities", _abilities, Utilities.apath);
+            Utilities.SerializeXML("Abilities", m_abilities, Utilities.apath);
 
             return true;
         }
@@ -100,30 +104,17 @@ namespace MarvelRPG
             foreach (var s in v)
             {
                 string name = s.ToString();
-                string unitFile = Utilities.upath + name + ".xml";
-
-                //does the file exist already?
-
-
-                Unit u = (File.Exists(unitFile)) ? Utilities.DeserializeXML<Unit>(unitFile) : Utilities.FetchUnit(name);
-
+                string unitFile = Utilities.upath + name + ".xml"; 
+                Unit u = (File.Exists(unitFile)) ? Utilities.DeserializeXML<Unit>(unitFile) : Utilities.FetchUnit(name); 
                 //if not go get it from the wiki
                 name = name.Replace("_", " ");
-                //Abilities a;
-                //AbilityLibrary.TryGetValue(name, out a);
+                 
                 Abilities a = new Abilities(AbilityLibrary[name][0]);
-                //attach abilities to it
-
-                //Ability def = new Ability("yeaaaa");
-                //if (a == null) { a = new Abilities(); a.Add(def); }
-                u.Abilities = a;
-
-
-                //save it
-
-
+                //attach abilities to it 
+                u.Abilities = a; 
+                //save it 
                 //put it in library
-                _characterLibrary.Add(name, u);
+                m_characterLibrary.Add(name, u);
                 Utilities.SerializeXML(name, u, Utilities.upath);
 
             }
@@ -132,10 +123,13 @@ namespace MarvelRPG
         }
 
         #region private
-        private Party _party;
-        private Dictionary<string, Unit> _characterLibrary;
-        private Dictionary<string, Abilities> _abilityLibrary;
-        private Abilities _abilities;
+        private Party m_playerParty;
+        private Party m_enemyParty;
+        private Party m_combatParty;
+        private Dictionary<string, Unit> m_characterLibrary;
+        private Dictionary<string, Abilities> m_abilityLibrary;
+        private Abilities m_abilities;
+        
 
 
         #endregion
@@ -156,14 +150,22 @@ namespace MarvelRPG
 
         public int PartySize
         {
-            get { return _party.Count; }
+            get { return m_combatParty.Count; }
+        }
+        public Party EnemyParty
+        {
+            get { return m_enemyParty; }
+        }
+        public Party PlayerParty
+        {
+            get { return m_playerParty; }
         }
         /// <summary>
         /// the combat party
         /// </summary>
-        public Party Party
+        public Party CombatParty
         {
-            get { return _party; }
+            get { return m_combatParty; }
 
         }
         /// <summary>
@@ -171,7 +173,7 @@ namespace MarvelRPG
         /// </summary>
         public Dictionary<string, Unit> CharacterLibrary
         {
-            get { return _characterLibrary; }
+            get { return m_characterLibrary; }
 
         }
         /// <summary>
@@ -179,7 +181,7 @@ namespace MarvelRPG
         /// </summary>
         public Dictionary<string, Abilities> AbilityLibrary
         {
-            get { return _abilityLibrary; }
+            get { return m_abilityLibrary; }
 
         }
         /// <summary>
@@ -187,7 +189,7 @@ namespace MarvelRPG
         /// </summary>
         public Abilities Abilities
         {
-            get { return _abilities; }
+            get { return m_abilities; }
         }
 
         #endregion 

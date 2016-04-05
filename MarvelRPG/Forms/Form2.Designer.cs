@@ -36,13 +36,11 @@
             this.abilityBox1 = new System.Windows.Forms.TextBox();
             this.abilityBox2 = new System.Windows.Forms.TextBox();
             this.textBox3 = new System.Windows.Forms.TextBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.unitBox1 = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.button4 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.defendButton1 = new System.Windows.Forms.Button();
-            this.leftFlipButton = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.unitBox2 = new System.Windows.Forms.TextBox();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -50,7 +48,7 @@
             this.button3 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
-            this.groupBox1.SuspendLayout();
+            this.groupBox1 = new System.Windows.Forms.Panel();
             this.panel1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -59,7 +57,7 @@
             // partyBox1
             // 
             this.partyBox1.Enabled = false;
-            this.partyBox1.Location = new System.Drawing.Point(13, 539);
+            this.partyBox1.Location = new System.Drawing.Point(4, 410);
             this.partyBox1.Margin = new System.Windows.Forms.Padding(1);
             this.partyBox1.Multiline = true;
             this.partyBox1.Name = "partyBox1";
@@ -82,7 +80,7 @@
             // 
             // pauseButton
             // 
-            this.pauseButton.Location = new System.Drawing.Point(307, 775);
+            this.pauseButton.Location = new System.Drawing.Point(543, 775);
             this.pauseButton.Name = "pauseButton";
             this.pauseButton.Size = new System.Drawing.Size(266, 65);
             this.pauseButton.TabIndex = 5;
@@ -92,15 +90,16 @@
             // 
             // combatLog
             // 
+            this.combatLog.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.combatLog.Enabled = false;
             this.combatLog.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.combatLog.Location = new System.Drawing.Point(305, 114);
+            this.combatLog.Location = new System.Drawing.Point(0, 744);
             this.combatLog.Margin = new System.Windows.Forms.Padding(1);
             this.combatLog.Multiline = true;
             this.combatLog.Name = "combatLog";
             this.combatLog.ReadOnly = true;
             this.combatLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.combatLog.Size = new System.Drawing.Size(270, 606);
+            this.combatLog.Size = new System.Drawing.Size(1471, 118);
             this.combatLog.TabIndex = 9;
             this.combatLog.Text = "Combat Log";
             // 
@@ -110,12 +109,12 @@
             this.turnBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.turnBox.Enabled = false;
             this.turnBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 71.99999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.turnBox.Location = new System.Drawing.Point(305, 8);
+            this.turnBox.Location = new System.Drawing.Point(1179, 744);
             this.turnBox.Margin = new System.Windows.Forms.Padding(1);
             this.turnBox.Multiline = true;
             this.turnBox.Name = "turnBox";
             this.turnBox.ReadOnly = true;
-            this.turnBox.Size = new System.Drawing.Size(270, 104);
+            this.turnBox.Size = new System.Drawing.Size(270, 118);
             this.turnBox.TabIndex = 14;
             this.turnBox.Text = "2";
             this.turnBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -123,7 +122,7 @@
             // abilityBox1
             // 
             this.abilityBox1.Enabled = false;
-            this.abilityBox1.Location = new System.Drawing.Point(13, 724);
+            this.abilityBox1.Location = new System.Drawing.Point(1, 629);
             this.abilityBox1.Margin = new System.Windows.Forms.Padding(1);
             this.abilityBox1.Multiline = true;
             this.abilityBox1.Name = "abilityBox1";
@@ -147,7 +146,7 @@
             // textBox3
             // 
             this.textBox3.Enabled = false;
-            this.textBox3.Location = new System.Drawing.Point(305, 732);
+            this.textBox3.Location = new System.Drawing.Point(1, 703);
             this.textBox3.Margin = new System.Windows.Forms.Padding(1);
             this.textBox3.Multiline = true;
             this.textBox3.Name = "textBox3";
@@ -156,23 +155,10 @@
             this.textBox3.TabIndex = 17;
             this.textBox3.Text = "Active Party: textBox3";
             // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.unitBox1);
-            this.groupBox1.Controls.Add(this.abilityBox1);
-            this.groupBox1.Controls.Add(this.partyBox1);
-            this.groupBox1.Controls.Add(this.panel1);
-            this.groupBox1.Location = new System.Drawing.Point(1, 8);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(300, 800);
-            this.groupBox1.TabIndex = 18;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "groupBox1";
-            // 
             // unitBox1
             // 
             this.unitBox1.Enabled = false;
-            this.unitBox1.Location = new System.Drawing.Point(13, 632);
+            this.unitBox1.Location = new System.Drawing.Point(4, 501);
             this.unitBox1.Margin = new System.Windows.Forms.Padding(1);
             this.unitBox1.Multiline = true;
             this.unitBox1.Name = "unitBox1";
@@ -186,17 +172,16 @@
             this.panel1.Controls.Add(this.button4);
             this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.defendButton1);
-            this.panel1.Controls.Add(this.leftFlipButton);
-            this.panel1.Location = new System.Drawing.Point(13, 445);
+            this.panel1.Location = new System.Drawing.Point(1, 284);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(268, 81);
+            this.panel1.Size = new System.Drawing.Size(139, 122);
             this.panel1.TabIndex = 20;
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(139, 45);
+            this.button4.Location = new System.Drawing.Point(3, 84);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(126, 33);
+            this.button4.Size = new System.Drawing.Size(130, 33);
             this.button4.TabIndex = 17;
             this.button4.Text = "End Turn";
             this.button4.UseVisualStyleBackColor = true;
@@ -219,24 +204,16 @@
             this.defendButton1.Text = "Skill";
             this.defendButton1.UseVisualStyleBackColor = true;
             // 
-            // leftFlipButton
-            // 
-            this.leftFlipButton.Location = new System.Drawing.Point(139, 6);
-            this.leftFlipButton.Name = "leftFlipButton";
-            this.leftFlipButton.Size = new System.Drawing.Size(126, 33);
-            this.leftFlipButton.TabIndex = 12;
-            this.leftFlipButton.Text = "Flip";
-            this.leftFlipButton.UseVisualStyleBackColor = true;
-            // 
             // groupBox2
             // 
+            this.groupBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.groupBox2.Controls.Add(this.unitBox2);
             this.groupBox2.Controls.Add(this.panel2);
             this.groupBox2.Controls.Add(this.partyBox2);
             this.groupBox2.Controls.Add(this.abilityBox2);
-            this.groupBox2.Location = new System.Drawing.Point(579, 8);
+            this.groupBox2.Location = new System.Drawing.Point(901, 28);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(300, 800);
+            this.groupBox2.Size = new System.Drawing.Size(300, 712);
             this.groupBox2.TabIndex = 19;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "groupBox2";
@@ -300,23 +277,32 @@
             this.button6.Text = "Flip";
             this.button6.UseVisualStyleBackColor = true;
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Location = new System.Drawing.Point(13, 4);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(856, 274);
+            this.groupBox1.TabIndex = 22;
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(909, 862);
+            this.ClientSize = new System.Drawing.Size(1471, 862);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.unitBox1);
             this.Controls.Add(this.textBox3);
+            this.Controls.Add(this.abilityBox1);
             this.Controls.Add(this.turnBox);
+            this.Controls.Add(this.partyBox1);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.combatLog);
             this.Controls.Add(this.pauseButton);
             this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
             this.Name = "Form2";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form2";
             this.Load += new System.EventHandler(this.Form2_Load);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
@@ -335,9 +321,7 @@
         private System.Windows.Forms.TextBox abilityBox1;
         private System.Windows.Forms.TextBox abilityBox2;
         private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Button leftFlipButton;
         private System.Windows.Forms.Button defendButton1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button4;
@@ -349,5 +333,6 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.TextBox unitBox1;
         private System.Windows.Forms.TextBox unitBox2;
+        private System.Windows.Forms.Panel groupBox1;
     }
 }
