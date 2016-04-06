@@ -25,10 +25,14 @@ namespace MarvelRPG
         {
             InitializeComponent();
         }
-        
+        void Form1_GiveFeedback(object sender, GiveFeedbackEventArgs e)
+        {
+            Console.WriteLine("GIVE FEEDBACK");
+        }
         private void Form1Load(object sender, EventArgs e)
         {
-           
+            this.AllowDrop = false;
+            GiveFeedback += Form1_GiveFeedback;
             var values = Enum.GetValues(typeof(Characters));
             
             int num = 0;
@@ -62,7 +66,7 @@ namespace MarvelRPG
                     xoffset += width + xPadding ;
 
                 panel1.Controls.Add(c);
-                
+                break;
                 
 
             }
@@ -190,18 +194,23 @@ namespace MarvelRPG
 
         private void partyBox1_DragEnter(object sender, DragEventArgs e)
         {
+            Cursor.Current = Cursor.Current;
+            Console.WriteLine("\nDrag Enter:{0}" , partyBox1.Name);
             e.Effect = DragDropEffects.Copy;
         }
 
 
         private void partyBox2_DragEnter(object sender, DragEventArgs e)
         {
+            Cursor.Current = Cursor.Current;
+            Console.WriteLine("\nDrag Enter:{0}", partyBox2.Name);
             e.Effect = DragDropEffects.Copy;
         }
 
         int offset = 25;
         private void partyBox1_DragDrop(object sender, DragEventArgs e)
         {
+            Cursor.Current = Cursor.Current; 
             int numControls = partyBox1.Controls.Count;
 
             Label l = new Label();
@@ -226,6 +235,7 @@ namespace MarvelRPG
 
         private void partyBox2_DragDrop(object sender, DragEventArgs e)
         {
+            Cursor.Current = Cursor.Current;
             int numControls = partyBox2.Controls.Count;
 
 
@@ -248,5 +258,11 @@ namespace MarvelRPG
  
         }
         #endregion events
+
+        private void panel1_GiveFeedback(object sender, GiveFeedbackEventArgs e)
+        {
+            Console.WriteLine("FEEDBACKPANEL");
+            e.UseDefaultCursors = false;
+        }
     }
 }

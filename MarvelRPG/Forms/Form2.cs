@@ -32,17 +32,17 @@ namespace MarvelRPG
             //this.left = new Card(p1[0].Name, pictureBox1, leftCardBack);
             //this.right = new Card(p2[0].Name, pictureBox2, rightCardBack);
            // this.current = left;
-            this.playerActions = new ActionGroup(ref panel1);
-            this.enemyActions = new ActionGroup(ref panel2);
+            //this.playerActions = new ActionGroup(ref panel1);
+            //this.enemyActions = new ActionGroup(ref panel2);
             //add the onclick events for the actions
-            foreach (Button b in playerActions.Buttons)
-                b.Click += onClick;
-            foreach (Button b in enemyActions.Buttons)
-                b.Click += onClick;
+            //foreach (Button b in playerActions.Buttons)
+            //    b.Click += onClick;
+            //foreach (Button b in enemyActions.Buttons)
+            //    b.Click += onClick;
 
             //update the cards... will need to do this after every turn is finished
-            Utilities.updateBox(ref partyBox1, ref p1);
-            Utilities.updateBox(ref partyBox2, ref p2);
+            //Utilities.updateBox(ref partyBox1, ref p1);
+            //Utilities.updateBox(ref partyBox2, ref p2);
             //set players turn to first always for now
             InitForm();
             UpdateForm(true);
@@ -54,16 +54,16 @@ namespace MarvelRPG
         {
             //left
             
-            groupBox1.Text = combat.CurrentPlayer.Name;
-            abilityBox1.Text = combat.CurrentPlayer.Abilities[0].Description;
-            unitBox1.Text = "Health: " + combat.CurrentPlayer.Health.ToString();
-            groupBox1.Controls.Add(UI.CardLibrary[combat.CurrentPlayer.Name]);
+            cardBox2.Text = combat.CurrentPlayer.Name;
+            //abilityBox1.Text = combat.CurrentPlayer.Abilities[0].Description;
+            //unitBox1.Text = "Health: " + combat.CurrentPlayer.Health.ToString();
+            cardBox2.Controls.Add(UI.CardLibrary[combat.CurrentPlayer.Name]);
            
             //right
-            groupBox3.Text = combat.CurrentEnemy.Name;
-            abilityBox2.Text = combat.CurrentEnemy.Abilities[0].Description;
-            unitBox2.Text = "Health: " + combat.CurrentPlayer.Health.ToString();
-            groupBox3.Controls.Add(UI.CardLibrary[combat.CurrentEnemy.Name]);
+            cardBox1.Text = combat.CurrentEnemy.Name;
+            //abilityBox2.Text = combat.CurrentEnemy.Abilities[0].Description;
+            //unitBox2.Text = "Health: " + combat.CurrentPlayer.Health.ToString();
+            cardBox1.Controls.Add(UI.CardLibrary[combat.CurrentEnemy.Name]);
         }
         private static void onAttackClick(object o, EventArgs e)
         {
@@ -140,24 +140,24 @@ namespace MarvelRPG
             if(current != null)
                 current.Flipped = (current.Flipped) ? false : false;
             //left
-            groupBox1.Text = combat.CurrentPlayer.Name;
-            abilityBox1.Text = combat.CurrentPlayer.Abilities[0].Description;
-            unitBox1.Text = "Health: " + combat.CurrentPlayer.Health.ToString();
-            groupBox1.Controls.Add(UI.CardLibrary[combat.CurrentPlayer.Name]);
+            cardBox2.Text = combat.CurrentPlayer.Name;
+            //abilityBox1.Text = combat.CurrentPlayer.Abilities[0].Description;
+            //unitBox1.Text = "Health: " + combat.CurrentPlayer.Health.ToString();
+            cardBox2.Controls.Add(UI.CardLibrary[combat.CurrentPlayer.Name]);
             //right
-            groupBox3.Text = combat.CurrentEnemy.Name;
-            abilityBox2.Text = combat.CurrentEnemy.Abilities[0].Description;
-            unitBox2.Text = "Health: " + combat.CurrentEnemy.Health.ToString();
-            groupBox3.Controls.Add(UI.CardLibrary[combat.CurrentEnemy.Name]);
+            cardBox1.Text = combat.CurrentEnemy.Name;
+            //abilityBox2.Text = combat.CurrentEnemy.Abilities[0].Description;
+            //unitBox2.Text = "Health: " + combat.CurrentEnemy.Health.ToString();
+            cardBox1.Controls.Add(UI.CardLibrary[combat.CurrentEnemy.Name]);
 
             turnBox.Text = combat.Turn.ToString();
             textBox3.Text = "Current Party: " + combat.CurrentParty + Environment.NewLine
                           + "Current Unit: " + combat.CurrentUnit.Name;
             combatLog.Text += combat.ResolutionText + Environment.NewLine;
             //set the playerbuttons active state
-            playerActions.SetActive(player);
+            //playerActions.SetActive(player);
             //set the enemybuttons active state
-            enemyActions.SetActive(!player);
+           // enemyActions.SetActive(!player);
         }
 
         /// <summary>

@@ -108,10 +108,13 @@
             // panel1
             // 
             this.panel1.AutoScroll = true;
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Location = new System.Drawing.Point(12, 12);
             this.panel1.Name = "panel1";
+            this.panel1.Padding = new System.Windows.Forms.Padding(5);
             this.panel1.Size = new System.Drawing.Size(1006, 976);
             this.panel1.TabIndex = 16;
+            this.panel1.GiveFeedback += new System.Windows.Forms.GiveFeedbackEventHandler(this.panel1_GiveFeedback);
             // 
             // Form1
             // 

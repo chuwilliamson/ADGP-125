@@ -60,21 +60,22 @@ namespace MarvelRPG
                 if (m_front == null)
                 {
                     m_front = new PictureBox();
-                    //m_front.Anchor = AnchorStyles.Left;
+                    
                     m_front.BorderStyle = BorderStyle.None;
-                   // m_front.Location = m_location;
+                   
                     m_front.Name = m_name;
                     m_front.Size = m_size;
                     m_front.SizeMode = PictureBoxSizeMode.StretchImage;
                     
-                    //m_front.SizeChanged += onSizeChange;
-                    m_front.MouseLeave += onMouseExit;
-                    m_front.MouseEnter += onMouseEnter;
-                    m_front.MouseMove += onMouseMove;
+                     
+                    //m_front.MouseLeave += onMouseExit;
+                   // m_front.MouseEnter += onMouseEnter;
+                   // m_front.MouseMove += onMouseMove;
+                   
                     m_front.MouseDown += onMouseDown;
-                    m_front.MouseUp += onMouseUp;
+                   // m_front.MouseUp += onMouseUp;
                     m_front.QueryContinueDrag += onQueryContinueDrag;
-                    m_front.Cursor = Cursors.Hand;
+                    //m_front.Cursor = Cursors.Cu;
                     m_front.Padding = new Padding(10);
                     m_front.BackgroundImage = global::MarvelRPG.Properties.Resources.Card_Background;
                     m_front.BackgroundImageLayout = ImageLayout.Stretch;
@@ -94,7 +95,7 @@ namespace MarvelRPG
                 if (m_back == null)
                 {
                     m_back = new RichTextBox();
-                    m_back.BorderStyle = BorderStyle.Fixed3D;
+                   // m_back.BorderStyle = BorderStyle.Fixed3D;
                    // m_back.Location = m_front.Location;
                     m_back.Margin = new Padding(1);
                     m_back.Multiline = true;
@@ -103,7 +104,7 @@ namespace MarvelRPG
                     m_back.Enabled = false;
                     m_back.Text = "no text";
                     m_back.Size = m_front.Size; 
-                    m_back.Cursor = Cursors.Hand;
+                    //m_back.Cursor = Cursors.Hand;
 
                 }
                 return m_back;
@@ -135,29 +136,39 @@ namespace MarvelRPG
             Controls.Add(rt);
 
             Flipped = false;
-
+            this.AllowDrop = true;
+            
             Utilities.UpdateDescription(name, ref p, ref rt);
 
         }
-         
+ 
+
+ 
         #region Drag Events
+  
         public void onQueryContinueDrag(object o, QueryContinueDragEventArgs e)
-        {
-            PictureBox p = o as PictureBox;
+        { 
             switch (e.Action)
             {
                 case DragAction.Cancel:
+                    Console.WriteLine("Cancel Drag");
                     break;
                 case DragAction.Drop:
-                    m_front.Enabled = false;
-                    Console.WriteLine("juhrop");
+                   
+                    Console.WriteLine("\nDrop");
                     break;
                 case DragAction.Continue:
-                    
-                   // p.Location = new Point(xPos, yPos);
+                    Bitmap focusBMP = new Bitmap(this.Width, this.Height);
+                    DrawToBitmap(focusBMP, new Rectangle(Point.Empty, focusBMP.Size));
+  
+
+                    Cursor cur = new Cursor(focusBMP.GetHicon());
+                    Cursor.Current = cur;
+                    Console.Write("\rDragAction.Continue {0} {1}", MousePosition.X, MousePosition.Y);
                     break;
             }
         }
+      
         #endregion Drag Events
 
         #region Mouse Events
@@ -166,8 +177,8 @@ namespace MarvelRPG
             switch (e.Button)
             {
                 case MouseButtons.Left:
-                    m_front.DoDragDrop(m_front.Name, DragDropEffects.Copy | DragDropEffects.Move);
-                   
+                    Console.WriteLine("\nMouseDownLeft");
+                    m_front.DoDragDrop(m_front.Name, DragDropEffects.Copy );                   
                     break;
                 case MouseButtons.Right:
                     Flipped = !Flipped;
@@ -202,7 +213,7 @@ namespace MarvelRPG
         }
         private void onMouseEnter(object o, EventArgs e)
         {
-            //Console.WriteLine("Enter: " + this.CardName);
+            Console.WriteLine("Enter: " + this.CardName);
             //current = o as PictureBox;
 
 
@@ -234,23 +245,15 @@ namespace MarvelRPG
         }
         private void onMouseExit(object o, EventArgs e)
         {
+            Console.WriteLine("Exit {0}", this.Name);
             //Form.ActiveForm.Controls.Remove(m_display);
             //m_front.BorderStyle = BorderStyle.FixedSingle;
-            m_front.BorderStyle = BorderStyle.None;
+          //  m_front.BorderStyle = BorderStyle.None;
             //Console.WriteLine(Form.ActiveForm.Controls.Count);
             //Console.WriteLine("Exit: " + this.CardName);
         }
         #endregion Mouse Events
-
-
-        protected void SetActive(bool state)
-        {
-            if (state)
-            {
-                Front.BringToFront();
-            }
-        }
-
+ 
         private void InitializeComponent()
         {
             this.SuspendLayout();
@@ -265,10 +268,10 @@ namespace MarvelRPG
             this.DoubleBuffered = true;
             this.MaximumSize = new System.Drawing.Size(240, 460);
             this.Name = "Card";
-            this.Size = new System.Drawing.Size(236, 459);
-            this.DoubleBuffered = true;
+            this.Size = new System.Drawing.Size(236, 459); 
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
             this.ResumeLayout(false);
+            this.UseWaitCursor = false;
 
         }
     }
