@@ -207,7 +207,7 @@ namespace MarvelRPG
             //xPos = e.X;
             //yPos = e.Y;
             //Point pos = new Point(xPos, yPos);
-            //Console.Write("\rPos: {0}, {1}", pos, current.Name);
+            Console.Write("\rPos: {0}, {1}", e.X, e.Y);
 
 
         }
@@ -268,10 +268,8 @@ namespace MarvelRPG
             this.DoubleBuffered = true;
             this.MaximumSize = new System.Drawing.Size(240, 460);
             this.Name = "Card";
-            this.Size = new System.Drawing.Size(236, 459); 
-            this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
+            this.Size = new System.Drawing.Size(240, 459);
             this.ResumeLayout(false);
-            this.UseWaitCursor = false;
 
         }
     }

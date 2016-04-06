@@ -66,7 +66,7 @@ namespace MarvelRPG
                     xoffset += width + xPadding ;
 
                 panel1.Controls.Add(c);
-                break;
+               
                 
 
             }
