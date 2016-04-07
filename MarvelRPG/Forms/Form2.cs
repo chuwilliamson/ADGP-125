@@ -60,10 +60,9 @@ namespace MarvelRPG
             {
                 Card c = UI.CardLibrary[u.Name];
                 listView1.Controls.Add(c);
-                c.Dock = DockStyle.Left;
-               // c.Location = new Point(0, 0);
-               // c.AutoSize = true; 
-                //x += c.Width ;
+                 c.Dock = DockStyle.Left;
+               
+     
             }
             x = 0;
 
@@ -73,8 +72,8 @@ namespace MarvelRPG
             {
                 Card c = UI.CardLibrary[u.Name];
                 listView2.Controls.Add(c);
-                c.Dock = DockStyle.Left;
-                x += c.Width ;
+                 c.Dock = DockStyle.Left;
+                 
             }
         }
         GameState gs = GameState.instance;

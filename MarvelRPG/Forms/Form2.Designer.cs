@@ -32,8 +32,8 @@
             this.combatLog = new System.Windows.Forms.TextBox();
             this.turnBox = new System.Windows.Forms.TextBox();
             this.listView1 = new System.Windows.Forms.ListView();
-            this.listView2 = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.listView2 = new System.Windows.Forms.ListView();
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
@@ -81,12 +81,16 @@
             // 
             this.listView1.Alignment = System.Windows.Forms.ListViewAlignment.Left;
             this.listView1.AllowColumnReorder = true;
+            this.listView1.BackColor = System.Drawing.Color.White;
+            this.listView1.BackgroundImage = global::MarvelRPG.Properties.Resources.banner2;
+            this.listView1.BackgroundImageTiled = true;
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1});
-            this.listView1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.listView1.Location = new System.Drawing.Point(250, 510);
+            this.listView1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.listView1.Location = new System.Drawing.Point(250, 0);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(1221, 489);
+            this.listView1.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.listView1.TabIndex = 18;
             this.listView1.UseCompatibleStateImageBehavior = false;
             // 
@@ -94,13 +98,14 @@
             // 
             this.listView2.Alignment = System.Windows.Forms.ListViewAlignment.Left;
             this.listView2.AllowColumnReorder = true;
+            this.listView2.BackgroundImage = global::MarvelRPG.Properties.Resources.banner1;
             this.listView2.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader2});
             this.listView2.Cursor = System.Windows.Forms.Cursors.Default;
             this.listView2.Dock = System.Windows.Forms.DockStyle.Top;
             this.listView2.FullRowSelect = true;
             this.listView2.GridLines = true;
-            this.listView2.Location = new System.Drawing.Point(250, 0);
+            this.listView2.Location = new System.Drawing.Point(250, 489);
             this.listView2.Name = "listView2";
             this.listView2.Size = new System.Drawing.Size(1221, 504);
             this.listView2.TabIndex = 19;
