@@ -45,7 +45,7 @@ namespace MarvelRPG
             //Utilities.updateBox(ref partyBox2, ref p2);
             //set players turn to first always for now
             InitForm();
-            UpdateForm(true);
+            //UpdateForm(true);
             
 
 
@@ -53,18 +53,31 @@ namespace MarvelRPG
         private void InitForm()
         {
             //left
-            
-            cardBox2.Text = combat.CurrentPlayer.Name;
-            //abilityBox1.Text = combat.CurrentPlayer.Abilities[0].Description;
-            //unitBox1.Text = "Health: " + combat.CurrentPlayer.Health.ToString();
-            cardBox2.Controls.Add(UI.CardLibrary[combat.CurrentPlayer.Name]);
-           
+
+ 
+            int x = 0;
+            foreach (Unit u in gs.PlayerParty.units)
+            {
+                Card c = UI.CardLibrary[u.Name];
+                listView1.Controls.Add(c);
+                c.Dock = DockStyle.Left;
+               // c.Location = new Point(0, 0);
+               // c.AutoSize = true; 
+                //x += c.Width ;
+            }
+            x = 0;
+
             //right
-            cardBox1.Text = combat.CurrentEnemy.Name;
-            //abilityBox2.Text = combat.CurrentEnemy.Abilities[0].Description;
-            //unitBox2.Text = "Health: " + combat.CurrentPlayer.Health.ToString();
-            cardBox1.Controls.Add(UI.CardLibrary[combat.CurrentEnemy.Name]);
+ 
+            foreach (Unit u in gs.EnemyParty.units)
+            {
+                Card c = UI.CardLibrary[u.Name];
+                listView2.Controls.Add(c);
+                c.Dock = DockStyle.Left;
+                x += c.Width ;
+            }
         }
+        GameState gs = GameState.instance;
         private static void onAttackClick(object o, EventArgs e)
         {
         }
@@ -140,20 +153,23 @@ namespace MarvelRPG
             if(current != null)
                 current.Flipped = (current.Flipped) ? false : false;
             //left
-            cardBox2.Text = combat.CurrentPlayer.Name;
+            listView1.Text = combat.CurrentPlayer.Name;
             //abilityBox1.Text = combat.CurrentPlayer.Abilities[0].Description;
             //unitBox1.Text = "Health: " + combat.CurrentPlayer.Health.ToString();
-            cardBox2.Controls.Add(UI.CardLibrary[combat.CurrentPlayer.Name]);
+            Card c = UI.CardLibrary[combat.CurrentPlayer.Name];
+            c.Dock = DockStyle.Left;
+            listView1.Controls.Add(c);
+
             //right
-            cardBox1.Text = combat.CurrentEnemy.Name;
+            listView1.Text = combat.CurrentEnemy.Name;
             //abilityBox2.Text = combat.CurrentEnemy.Abilities[0].Description;
             //unitBox2.Text = "Health: " + combat.CurrentEnemy.Health.ToString();
-            cardBox1.Controls.Add(UI.CardLibrary[combat.CurrentEnemy.Name]);
+            listView1.Controls.Add(UI.CardLibrary[combat.CurrentEnemy.Name]);
 
-            turnBox.Text = combat.Turn.ToString();
-            textBox3.Text = "Current Party: " + combat.CurrentParty + Environment.NewLine
-                          + "Current Unit: " + combat.CurrentUnit.Name;
-            combatLog.Text += combat.ResolutionText + Environment.NewLine;
+            //turnBox.Text = combat.Turn.ToString();
+            //textBox3.Text = "Current Party: " + combat.CurrentParty + Environment.NewLine
+            //              + "Current Unit: " + combat.CurrentUnit.Name;
+            //combatLog.Text += combat.ResolutionText + Environment.NewLine;
             //set the playerbuttons active state
             //playerActions.SetActive(player);
             //set the enemybuttons active state

@@ -9,12 +9,14 @@ namespace MarvelRPG
             m_playerParty = player;
             m_enemyParty = enemy;
             m_currentParty = m_playerParty;
-            m_partyIndex = 0;
-            m_resolutionText = "\r\nno resolution";
+            
             Init(m_playerParty, m_enemyParty);
         }
         private void Init(Party p, Party e)
         {
+            Unit u = GameState.instance.CharacterLibrary["Scarlet Witch"];
+            if (e.Count <= 0)
+                e.Add(u);
             m_currentParty = m_playerParty;
             m_partyIndex = 0;
             m_playerIndex = 0;
@@ -25,57 +27,9 @@ namespace MarvelRPG
         /// <summary>
         /// create a test instance of combat with hulk and psylocke
         /// </summary>
-        public TestCombat()
-        {
-
-            m_enemyParty = new Party();
-            m_playerParty = new Party();
-
-            //if the gamestate has a party use that one
-
-            if (gameState.CombatParty.Count > 0)
-            {
-                Init(gameState.CombatParty);
-            }
-            else
-            {
-                Init();
-            }
-
-
-        }
-
-        private void Init(Party p)
-        {
-
-            Unit hulk = gameState.CharacterLibrary["Hulk"];
-            Unit wolverine = gameState.CharacterLibrary["Thor"];
-            m_enemyParty.Add(hulk);
-            m_enemyParty.Add(wolverine);
-
-            m_playerParty = p;
-            m_currentParty = m_playerParty;
-            m_partyIndex = 0;
-            m_resolutionText = "\r\nno resolution";
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="withoutParty"></param>
-        private void Init()
-        {
-            Unit psylocke = gameState.CharacterLibrary["Psylocke"];
-            Unit hulk = gameState.CharacterLibrary["Hulk"];
-            Unit wolverine = gameState.CharacterLibrary["Thor"];
-            Unit rogue = gameState.CharacterLibrary["Rogue"];
-            m_playerParty.Add(psylocke);
-            m_playerParty.Add(rogue);
-            m_enemyParty.Add(hulk);
-            m_enemyParty.Add(wolverine);
-            m_currentParty = m_playerParty;
-            m_partyIndex = 0;
-            m_resolutionText = "\r\nno resolution";
-        }
+         
+ 
+       
 
         /// <summary>
         /// 

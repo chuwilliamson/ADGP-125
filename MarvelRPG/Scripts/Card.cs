@@ -260,6 +260,7 @@ namespace MarvelRPG
             // 
             // Card
             // 
+            this.AllowDrop = true;
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.Transparent;
             this.BackgroundImage = global::MarvelRPG.Properties.Resources.Card_Background;
@@ -268,7 +269,7 @@ namespace MarvelRPG
             this.DoubleBuffered = true;
             this.MaximumSize = new System.Drawing.Size(240, 460);
             this.Name = "Card";
-            this.Size = new System.Drawing.Size(240, 459);
+            this.Size = new System.Drawing.Size(240, 460);
             this.ResumeLayout(false);
 
         }

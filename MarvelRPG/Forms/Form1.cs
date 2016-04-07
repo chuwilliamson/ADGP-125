@@ -88,8 +88,8 @@ namespace MarvelRPG
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-            Party p = gs.CombatParty;
-            if (p.units.Count <= 0)
+            bool empty=(gs.PlayerParty.Count + gs.EnemyParty.Count <= 0) ? true : false;
+            if (empty)
             {
                 MessageBox.Show("Party is Empty.. Please add members.");
                 return;
@@ -102,7 +102,7 @@ namespace MarvelRPG
 
             saveFileDialog.Filter = "XML Files | *.xml";
             saveFileDialog.DefaultExt = "xml";
-
+            Party p = gs.PlayerParty;
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 string fileName = Path.GetFileName(saveFileDialog.FileName);
@@ -129,9 +129,14 @@ namespace MarvelRPG
             fileName = selectFileDialog.FileName;
             fileName = fileName.Replace(".xml", "");
             Party p = Utilities.DeserializeXML<Party>(fileName);
+            foreach(Unit u in p.units)
+            {
+                gs.PlayerParty.Add(u);
+            }
+             
 
 
-            Utilities.updateBox(ref partyBox1, ref p);
+            Utilities.updateBox(ref partyBox1, ref p); 
         }
 
         private void removeButton_Click(object sender, EventArgs e)
@@ -222,7 +227,7 @@ namespace MarvelRPG
 
 
             Unit u = Utilities.DeserializeXML<Unit>(Utilities.upath + l.Text);
-            Unit tmp = gs.CombatParty.units.Find(x => x.Name == u.Name);
+            Unit tmp = gs.PlayerParty.units.Find(x => x.Name == u.Name);
 
             if (tmp == null)
             {
@@ -247,7 +252,7 @@ namespace MarvelRPG
             l.Text = l.Text.Replace("_", " "); 
             Unit u = Utilities.DeserializeXML<Unit>(Utilities.upath + l.Text);
 
-            Unit tmp = gs.CombatParty.units.Find(x => x.Name == u.Name);
+            Unit tmp = gs.EnemyParty.units.Find(x => x.Name == u.Name);
 
             if (tmp == null)
             {
