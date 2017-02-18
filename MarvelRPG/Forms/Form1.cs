@@ -6,21 +6,14 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-
+using MarvelRPG.Singletons;
 
 namespace MarvelRPG
-{
-
-   
+{ 
     public partial class Form1 : Form
-    {
-
-        
+    { 
         private string currentSelection = "";
-        private GameState gs = GameState.instance;
-        /// <summary>
-        /// Default form initialization
-        /// </summary>
+        private GameState gs = GameState.Instance; 
         public Form1()
         {
             InitializeComponent();
@@ -176,23 +169,18 @@ namespace MarvelRPG
             this.Hide();
             //create a combat context
             Party player = gs.PlayerParty;
-            Party enemy = gs.EnemyParty;
-            TestCombat tc = new TestCombat(player,enemy);
-            
-            //give it to form2 to process
-            Form2 combat = new Form2(ref tc);
-
+            Party enemy = gs.EnemyParty; 
             if (partyBox1.Controls.Count <= 0)
                 MessageBox.Show("No party selected... loading default parties.");
 
 
             string partyText = Environment.NewLine;
-            foreach (Unit u in tc.PlayerParty.units)
+            foreach (Unit u in GameState.Instance.PlayerParty.units)
                 partyText += u.Name + Environment.NewLine;
 
 
             MessageBox.Show("Combat Party " + partyText);
-            combat.ShowDialog();
+           
             this.Close();
         }
        

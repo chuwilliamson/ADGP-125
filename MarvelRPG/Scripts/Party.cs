@@ -48,8 +48,7 @@ namespace MarvelRPG
     [Serializable]
     public class Unit : IAttributes, IBaseStats
     {
-        private Unit() {  }
-
+       public Unit() {  }
         
         public Unit(string n, int d, int s, int f, int spd, int e, int i)
         {

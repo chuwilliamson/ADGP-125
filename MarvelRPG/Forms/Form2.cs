@@ -3,91 +3,76 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using System.Drawing;
+using MarvelRPG.Singletons;
+using System.Xml.Serialization;
+using System.IO;
 
 namespace MarvelRPG
 {
+    public class Combat
+    {
+        public Combat() { }
+        private static Combat m_instance;
+        public static Combat Instance
+        {
+            get
+            {
+                if(m_instance == null)
+                {
+                    m_instance = new Combat();
+                }
+                return m_instance;
+            }
+        }
+        public Party EnemyParty { get; set; }
+        public Party PlayerParty { get; set; }
+
+    }
     public partial class Form2 : Form
     {
         public Form2()
         {
             InitializeComponent();
         }
-        public Form2(ref TestCombat tc)
-        {
-            InitializeComponent();
-            combat = tc;
-            
-        }
-        List<Card> Cards;
+        Combat combat;
+
         private void Form2_Load(object sender, EventArgs e)
         {
-            Party p1 = new Party();
-            Party p2 = new Party();
-            Cards = new List<Card>();
-            p1 = combat.PlayerParty;
-            p2 = combat.EnemyParty;
-            
-            this.Text = "Combat";
-       
-            //this.left = new Card(p1[0].Name, pictureBox1, leftCardBack);
-            //this.right = new Card(p2[0].Name, pictureBox2, rightCardBack);
-           // this.current = left;
-            //this.playerActions = new ActionGroup(ref panel1);
-            //this.enemyActions = new ActionGroup(ref panel2);
-            //add the onclick events for the actions
-            //foreach (Button b in playerActions.Buttons)
-            //    b.Click += onClick;
-            //foreach (Button b in enemyActions.Buttons)
-            //    b.Click += onClick;
-
-            //update the cards... will need to do this after every turn is finished
-            //Utilities.updateBox(ref partyBox1, ref p1);
-            //Utilities.updateBox(ref partyBox2, ref p2);
-            //set players turn to first always for now
-            InitForm();
-            //UpdateForm(true);
-            
-
-
+            List<Card> Cards = new List<Card>(); 
+            this.Text = "Combat"; 
         }
         private void InitForm()
         {
-            //left
-
- 
-            int x = 0;
-            foreach (Unit u in gs.PlayerParty.units)
+            
+            using(var u1 = GameState.Instance.PlayerParty.units.GetEnumerator())
+            using(var u2 = GameState.Instance.PlayerParty.units.GetEnumerator())
             {
-                Card c = UI.CardLibrary[u.Name];
-                listView1.Controls.Add(c);
-                 c.Dock = DockStyle.Left;
-               
-     
+                while(u1.MoveNext() && u2.MoveNext())
+                {
+                    listView1.Controls.Add(UI.CardLibrary[u1.Current.Name]);
+                    listView2.Controls.Add(UI.CardLibrary[u2.Current.Name]);
+                    UI.CardLibrary[u1.Current.Name].Dock = DockStyle.Left;                    
+                    UI.CardLibrary[u2.Current.Name].Dock = DockStyle.Left;
+                }
             }
-            x = 0;
-
-            //right
- 
-            foreach (Unit u in gs.EnemyParty.units)
-            {
-                Card c = UI.CardLibrary[u.Name];
-                listView2.Controls.Add(c);
-                 c.Dock = DockStyle.Left;
-                 
-            }
+                
         }
-        GameState gs = GameState.instance;
+        public static T Deserialize<T>(string fileName) where  T : new()
+        {
+            var serializer = new  XmlSerializer(typeof(T));
+            var path = Environment.CurrentDirectory + "../Saves/" + fileName + ".xml";
+            using(var reader = new StreamReader(path))
+                return (T)serializer.Deserialize(reader);            
+        }
+
         private static void onAttackClick(object o, EventArgs e)
         {
         }
         private static void onSkillClick(object o, EventArgs e)
         {
-
         }
         private void onEndTurnClick(object o, EventArgs e)
-        {
-            Button b = o as Button;
-            UpdateForm(combat.Update(b.Name));
+        {  
         }
         private static void onFlipClick(object o, EventArgs e)
         {
@@ -102,9 +87,9 @@ namespace MarvelRPG
         /// <param name="e"></param>
         private void onClick(object o, EventArgs e)
         {
-            
+
             Button b = (Button)o;
-            if (b == null)
+            if(b == null)
                 return;
 
             string name = b.Text;
@@ -112,29 +97,18 @@ namespace MarvelRPG
 
 
             //buttons that do not feed fsm
-            if (name == "Flip")
-            { 
+            if(name == "Flip")
+            {
                 return;
             }
 
             //buttons that feed the fsm
-            if (name == "Attack")
+            if(name == "Attack")
             {
                 Form4 target = new Form4();
                 target.Controls.Add(MakeBox());
                 target.ShowDialog();
-            }
-
-            
-                //send the button name to fsm
-                //if it's a valid input it will be handled their
-                //tc.Update(name) will return the party who is active            
-                UpdateForm(combat.Update(name));
-                //relevant information for the UI is
-                //combat info string
-                //party info Party
-                //unit info Unit
-            
+            } 
         }
         private void pauseButton_Click(object sender, EventArgs e)
         {
@@ -142,75 +116,7 @@ namespace MarvelRPG
             pause.ShowDialog();
         }
 
-        /// <summary>
-        /// state is either a player or an enemy
-        /// </summary>
-        /// <param name="player">the party state. True for player. False for other</param>
-        private void UpdateForm(bool player)
-        {
-            //if the card is flipped over then turn it back to the picture
-            if(current != null)
-                current.Flipped = (current.Flipped) ? false : false;
-            //left
-            listView1.Text = combat.CurrentPlayer.Name;
-            //abilityBox1.Text = combat.CurrentPlayer.Abilities[0].Description;
-            //unitBox1.Text = "Health: " + combat.CurrentPlayer.Health.ToString();
-            Card c = UI.CardLibrary[combat.CurrentPlayer.Name];
-            c.Dock = DockStyle.Left;
-            listView1.Controls.Add(c);
-
-            //right
-            listView1.Text = combat.CurrentEnemy.Name;
-            //abilityBox2.Text = combat.CurrentEnemy.Abilities[0].Description;
-            //unitBox2.Text = "Health: " + combat.CurrentEnemy.Health.ToString();
-            listView1.Controls.Add(UI.CardLibrary[combat.CurrentEnemy.Name]);
-
-            //turnBox.Text = combat.Turn.ToString();
-            //textBox3.Text = "Current Party: " + combat.CurrentParty + Environment.NewLine
-            //              + "Current Unit: " + combat.CurrentUnit.Name;
-            //combatLog.Text += combat.ResolutionText + Environment.NewLine;
-            //set the playerbuttons active state
-            //playerActions.SetActive(player);
-            //set the enemybuttons active state
-           // enemyActions.SetActive(!player);
-        }
-
-        /// <summary>
-        /// abilities button group
-        /// should support future created buttons
-        /// </summary>
-        internal class ActionGroup
-        {
-
-            public ActionGroup(ref Panel p)
-            {
-                _buttons = new Dictionary<string, Button>();
-                
-                foreach (Control c in p.Controls)
-                {
-                    string key = c.Text.Replace(" ", "").ToLower();
-                    _buttons.Add(key, (Button)c);
-                }
-            }
-
-            private Dictionary<string, Button> _buttons;
-            public List<Button> Buttons
-            {
-                get { return _buttons.Values.ToList(); }
-            }
-            public string[] ButtonNames { get { return _buttons.Keys.ToArray<string>(); } }
-
-            public void SetActive(bool state)
-            {
-                foreach (KeyValuePair<string, Button> b in _buttons)
-                    b.Value.Enabled = state;
-            }
-
-        }
-
-       
-
-
+ 
         /// <summary>
         /// make a button 
         /// </summary>
@@ -248,9 +154,9 @@ namespace MarvelRPG
             gb.TabStop = false;
             gb.Text = "Enemies";
             int offset = 0;
-            if (combat != null)
+            if(combat != null)
             {
-                foreach (Unit u in combat.EnemyParty.units)
+                foreach(Unit u in combat.EnemyParty.units)
                 {
                     //validClasses.Add(v.ToString());
                     string name = u.Name.ToString();
@@ -295,11 +201,11 @@ namespace MarvelRPG
             f.Close();
         }
 
-        private TestCombat combat;
-        private Card left, right;
+        //private TestCombat combat;
+        //private Card left, right;
         private static Card current;
-        private ActionGroup playerActions;
-        private ActionGroup enemyActions;
+        //private ActionGroup playerActions;
+        //private ActionGroup enemyActions;
 
 
 

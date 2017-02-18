@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using MarvelRPG.Singletons;
 
 namespace MarvelRPG
 {
@@ -9,8 +10,7 @@ namespace MarvelRPG
     {
         public Form4()
         {
-            InitializeComponent();
-            
+            InitializeComponent(); 
         }
 
         public void Form4_Load()

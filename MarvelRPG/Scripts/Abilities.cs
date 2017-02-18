@@ -35,9 +35,7 @@ namespace MarvelRPG
         public Ability this[int key]
         {
             get { return _members[key]; }
-        }
-
-
+        } 
     }
 
 
@@ -45,7 +43,6 @@ namespace MarvelRPG
     [Serializable]
     public class Ability
     {
-
         private Ability getAbilities(string id)
         {
             //*[@id="content"]/div[2]/div/h3/span/a[1]
@@ -56,20 +53,16 @@ namespace MarvelRPG
             HtmlNodeCollection info;
             string marvelData = "http://marvelheroes.info/power/";
 
-            var webGet = new HtmlWeb();
-
-
+            var webGet = new HtmlWeb(); 
             var document = webGet.Load(marvelData + id);
             if (document != null)
             {
-
                 //name of character            
                 xpath = "//*[@id=\"content\"]/div[2]/div/h3/span/a[2]";
                 info = document.DocumentNode.SelectNodes(xpath);
                 if (info != null)
                 {
                     character = info[0].InnerText;
-
                     //name of ability
                     xpath = "//*[@id=\"tooltip\"]/span[1]";
                     info = document.DocumentNode.SelectNodes(xpath);
@@ -79,11 +72,7 @@ namespace MarvelRPG
                     xpath = "//*[@id=\"tooltip\"]/span[4]";
                     info = document.DocumentNode.SelectNodes(xpath);
                     description = info[0].InnerText;
-
-
                     Ability ability = new Ability(character, name, description);
-
-
                     return ability;
                 }
 

@@ -1,14 +1,11 @@
-﻿using System;
-
+﻿using System; 
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
 using System.Linq;
-using HtmlAgilityPack;
-using System.Resources;
-using System.Drawing;
+using HtmlAgilityPack;  
 
 namespace MarvelRPG
 {
@@ -72,19 +69,21 @@ namespace MarvelRPG
         }
 
 
-        public static bool UpdateDescription<T>(string name, ref PictureBox pb, ref T tb)
+        public static Tuple<string,string> UpdateDescription<T>(string name, ref PictureBox pb, ref T tb)
         {
-            pb.Image = (Bitmap)Properties.Resources.ResourceManager.GetObject(name);
-            if (pb.Image == null)
-                pb.Image = MarvelRPG.Properties.Resources.noimage;
+            //pb.Image = (Bitmap)Properties.Resources.ResourceManager.GetObject(name);
+            //if (pb.Image == null)
+            //    pb.Image = MarvelRPG.Properties.Resources.noimage;
           
            
 
             name = name.Replace("_", " ");
             ///create a temporary character
             string path = Utilities.path + @"\Units\";
-            Unit tmpChar = GameState.instance.CharacterLibrary[name];
-            Abilities tmpAbl = tmpChar.Abilities;
+            Unit tmpChar = new Unit();
+          
+            //GameState.Instance.CharacterLibrary[name];
+
             string s0 = name + Environment.NewLine + Environment.NewLine;
             string s1 = "Durability: " + tmpChar.Durability.ToString() + Environment.NewLine;
             string s2 = "Fighting: " + tmpChar.Fighting.ToString() + Environment.NewLine;
@@ -95,20 +94,11 @@ namespace MarvelRPG
             string s7 = "ABILITIES:" + Environment.NewLine;
             
 
-            foreach (Ability a in tmpAbl.Members)
+            foreach (Ability a in tmpChar.Abilities)
                 s7 += a.Name + Environment.NewLine;
-
-            Type type = typeof(T);
-                      
-            var box = new Control();
-            //hashtag begin janky
-            if (type == typeof(TextBox)) box = tb as TextBox;
-            if (type == typeof(RichTextBox)) box = tb as RichTextBox;
-
-            box.Text = s0 + s6+ s1 + s2 + s3 + s4 + s5  + s7;
-
-            return true;
-
+             
+            return  new Tuple<string,string>(s0 + s6 + s1 + s2 + s3 + s4 + s5, s7);
+      
         }
 
  
